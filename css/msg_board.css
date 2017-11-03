@@ -1,0 +1,206 @@
+
+body{
+    margin: 0;
+    background-color: #CCC;
+}
+bod *{
+     -webkit-text-size-adjust: /*100%;禁止用户缩放 */
+    -webkit-user-select: none;
+}
+a,button,input{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);/*有点击效果阴影 */
+}
+button，input{
+    -webkit-appearance: none;/*清楚外观*/
+    border-radius: 0;
+}
+a{
+    text-decoration: none;
+}
+input{
+    outline: none;/*去掉外框 */
+}
+img{
+    vertical-align: middle;/*去掉间隙 */
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+.clearfix：after{
+    content: '';
+    display: block;/* 清楚浮动*/
+    clear: both;
+}
+#header{
+    background-color: #f5f0f0;
+    border: 2px rgb(212, 191, 191) inset;
+    border-top: none;
+    border-left: none;
+    text-align: center;
+    float: none;
+    border-radius: 0  0 1rem 1rem;
+    height:0.7rem;
+    width:80%;
+    opacity: 0.8;
+    margin: 0 auto ;
+    padding: 0; 
+    font-size: 0.1rem;
+    
+}
+#container{
+    width:70%;
+    margin: 0 auto;
+}
+@media screen and (max-width:980px){
+    #header{
+        width: 100%;
+    }
+    #container{
+        width:100%;   
+    }
+}
+#header p{
+    
+    font-size: 0.2rem;
+    display: inline-block;
+    margin: 0;
+    margin-right: 0.2rem;
+    padding: 0;
+    
+   
+}
+#header img{
+    
+    margin:0 ;
+    padding: 0;
+    width: 0.8rem;
+    height: 100%;
+    border-radius: 0.8rem;
+
+    
+}
+#header img:hover{
+    
+    animation: head 2s;
+    cursor: pointer;
+}
+@keyframes head{
+    25%{transform: rotateY(90deg)}
+    50%{transform: rotateY(180deg)}
+    75%{transform: rotateY(271deg)}
+    100%{transform: rotateY(360deg)}
+}
+h2{
+    text-align: center;
+    font-size: 0.581113rem;
+    color: rgb(59, 114, 59);
+    padding-bottom:20px; 
+    margin-bottom: 0;
+    border-bottom: 1px solid black;
+}
+#discuss{
+    
+    width: 100%;
+    height: auto;
+    margin-top: 0.351391rem;
+    border-bottom: 1px solid black;
+}
+@media screen and (min-width:764px){
+    #discuss{
+        
+        width: 80%;
+        margin: 0 auto;
+        
+    }
+}
+#discuss:after{
+    content: '';
+    display: block;/* 清楚浮动*/
+    clear: both;
+}
+#discuss img{
+    float: left;
+    width:0.851391rem;
+    height: 0.851391rem;
+    display: inline block;
+    border-radius: 0.851391rem;
+    margin: 0.351391rem;
+    margin-bottom: 0;
+}
+#text{
+    font-size: 20px;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    margin-bottom:0.351391rem ;
+    margin-left:0.351391rem;
+    word-break:break-all;
+    text-indent: 20px;
+    width: 62.5%;
+}
+.time{
+    font-size: 10px;
+    margin-bottom: 0;
+    margin-left: 0.351391rem;
+}
+#user_id{
+    display: inline-block;
+    font-size:  0.581113rem;
+    text-align: center;
+    margin-top:  0.381113rem ;
+    margin-bottom: 0;
+    float: left;
+    padding: 0;
+}
+#pro{
+    width:25%;
+    height: auto;
+    float: right;
+    text-align: center;
+    vertical-align: middle;
+    opacity: 0.8;
+    margin: 0.381113rem;
+    padding: 0;
+}
+#pro img{
+    display: inline block;
+    margin-top: 1.2rem;
+    margin-left: 0.089rem;
+    vertical-align: middle;
+}
+#pro p{
+    display: inline-block;
+    margin: 0;
+    font-size: 0.34261rem;
+}
+#footer{
+    width: 80%;
+    margin: 10px auto;
+    padding: 0;
+
+}
+
+#footer textarea{
+    width:60%;
+    font-size: 18px;
+    height: 2rem;
+    border: 1px rgb(128, 128, 146) inset;
+}
+#footer button{
+    border-radius: 1px;
+    margin-bottom:9px;
+}
+#jump{
+
+    display: block;
+    margin: 0 auto;
+    color: #337964;
+    position: absolute;
+    
+    font-size: 0.2rem;
+    text-align: center;
+  
+}
