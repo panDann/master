@@ -535,6 +535,23 @@ a{
 		display: none
 	}
 }
+#hint{
+	font-size: 0.2rem;
+	position: absolute;
+	
+	color: rgb(29, 25, 25);
+	padding: 5px;
+	border-radius: 4px;
+	border: 1px solid #309; 
+	border-left-style: dashed;
+	top: 0.937rem;
+	left: 7rem;
+	animation: hint 10s;
+}
+@keyframes hint{
+	1%{top: 0.9rem}
+	30%{top: 0.2rem}	
+}
 #mid_u1_l1_v1 {
 
 	width:100%;
