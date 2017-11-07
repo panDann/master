@@ -462,6 +462,8 @@ a{
 		display: none;
 	}
 }
+#hint{
+	display:none;
 #middle{
 	width:70%;
 	height:6.856rem;
