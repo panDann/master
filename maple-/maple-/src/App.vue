@@ -1,21 +1,34 @@
 <template>
-  <div>
-    <Header></Header>
+  <div >
+    <Header @left-change="leftChange"></Header>
+    <Content :left="leftMenu"></Content>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header";
+import Content from "./components/Content";
 
 export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      leftMenu:false,
     }
   },
   components:{
-    Header
+    Header,
+    Content,
+  },
+  mounted(){
+   
+  },
+  methods:{
+    leftChange(va){
+      this.leftMenu=va;
+    },
+   
   }
 }
 </script>
@@ -26,6 +39,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  position: relative;
   color: #2c3e50;
   margin-top: 60px;
 }

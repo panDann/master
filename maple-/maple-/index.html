@@ -4,10 +4,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0,width=device-width,user-scalable=no">
     <link href="https://cdn.bootcss.com/minireset.css/0.0.2/minireset.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <title>maple-</title>
   </head>
+  <!-- <script>
+      (function(){
+            var doc=document.documentElement,
+                docW=doc.clientWidth,
+                docResize= 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recycle=function(){
+                  if(!docW)return;
+                  if(docW>998){
+                     doc.style.fontSize="16px";
+                  }else{
+                     doc.style.fontSize=16*(docW / 988)+"px";
+                  }
+
+                }
+                window.addEventListener(docResize, recycle, false);
+                document.addEventListener('DOMContentLoaded', recycle, false);
+      })()
+  </script> -->
+  <style>
+  @media screen and (min-width:988px){
+          html{
+            font-size: 20px;
+          }
+  }
+  @media screen and (max-width:988px){
+          html{
+            font-size: 16px;
+          }
+  }
+  </style>
   <body>
     <div id="app"></div>
-    <script src="/dist/build.js"></script>
+    <script src="./dist/build.js"></script>
   </body>
 </html>
