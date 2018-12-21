@@ -1,58 +1,55 @@
 <template>
-    <div >
-       <!-- <transition name="header-left-menu-tran"> -->
-                <div class="header-left-menu" v-show="left" @click="cancelBubble($event)">
-                   <span >1313</span> 
-                </div>
-      <!-- </transition> -->
-      <div class="content">
-              <h1>h1</h1>
-              <p>
-                  学习嘛，无非是深度和广度。首先，我们来探讨一下深度。题主是做前端开发的，前端不就是html css js三剑客。其中，html css就不提了，剩下的不就是js的学习深度。js的深度靠什么提高？不是任何框架，也不是任何库，就是js它本身。万变不离其宗嘛，所有的库和框架，都是基于js写的。学会了和泥巴，烧砖，砌墙，就算砌不出vue react anguler那样漂亮又稳定的高楼大厦，但是自己砌个小平房什么的，还是戳卓有余的。而且，这是深入学习框架的必经之路，没有任何可以在js基础不好的情况下，写出流行的框架出来。但是，这里其实我们忽略了一个问题---那就是我们自身的因素。
-                  学习嘛，无非是深度和广度。首先，我们来探讨一下深度。题主是做前端开发的，前端不就是html css js三剑客。其中，html css就不提了，剩下的不就是js的学习深度。js的深度靠什么提高？不是任何框架，也不是任何库，就是js它本身。万变不离其宗嘛，所有的库和框架，都是基于js写的。学会了和泥巴，烧砖，砌墙，就算砌不出vue react anguler那样漂亮又稳定的高楼大厦，但是自己砌个小平房什么的，还是戳卓有余的。而且，这是深入学习框架的必经之路，没有任何可以在js基础不好的情况下，写出流行的框架出来。但是，这里其实我们忽略了一个问题---那就是我们自身的因素。学习嘛，无非是深度和广度。首先，我们来探讨一下深度。题主是做前端开发的，前端不就是html css js三剑客。其中，html css就不提了，剩下的不就是js的学习深度。js的深度靠什么提高？不是任何框架，也不是任何库，就是js它本身。万变不离其宗嘛，所有的库和框架，都是基于js写的。学会了和泥巴，烧砖，砌墙，就算砌不出vue react anguler那样漂亮又稳定的高楼大厦，但是自己砌个小平房什么的，还是戳卓有余的。而且，这是深入学习框架的必经之路，没有任何可以在js基础不好的情况下，写出流行的框架出来。但是，这里其实我们忽略了一个问题---那就是我们自身的因素。学习嘛，无非是深度和广度。首先，我们来探讨一下深度。题主是做前端开发的，前端不就是html css js三剑客。其中，html css就不提了，剩下的不就是js的学习深度。js的深度靠什么提高？不是任何框架，也不是任何库，就是js它本身。万变不离其宗嘛，所有的库和框架，都是基于js写的。学会了和泥巴，烧砖，砌墙，就算砌不出vue react anguler那样漂亮又稳定的高楼大厦，但是自己砌个小平房什么的，还是戳卓有余的。而且，这是深入学习框架的必经之路，没有任何可以在js基础不好的情况下，写出流行的框架出来。但是，这里其实我们忽略了一个问题---那就是我们自身的因素。
+      <div class="content" @click="cancelBubble($event)">
+            <!-- <div class="content-username">
 
-                    作者：陈随易
-                    链接：https://www.zhihu.com/question/67596091/answer/511095954
-                    来源：知乎
-                    著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+            </div> -->
+            <div class="content-left">
+              <div v-for="v in dataList" :key="v.title" class="first-content-item" @click="transferShwoP(v)">
+              <h3>{{v.title}}</h3>
+              <p :class="{'first-content-item-p':v.id}">
+                 3211313
+学习嘛，无非是深度和广度。首先，我们来探讨一下深度。<span style="color:#409EFF">var</span> 题主是做前端开发的，前端不就是html css js三剑客。其中，html css就不提了，剩下的不就是js的学习深度。js的深度靠什么提高？不是任何框架，也不是任何库，就是js它本身。万变不离其宗嘛，所有的库和框架，都是基于js写的。学会了和泥巴，烧砖，砌墙，就算砌不出vue react anguler那样漂亮又稳定的高楼大厦，但是自己砌个小平房什么的，还是戳卓有余的。而且，这是深入学习框架的必经之路，没有任何可以在js基础不好的情况下，写出流行的框架出来。但是，这里其实我们忽略了一个问题---那就是我们自身的因素。
               </p>
+              </div>
+              
+            </div>
+            <!-- <div class="content-right">
+
+            </div> -->
       </div>
-    </div>
 </template>
 <script>
+    import { mapState,mapActions } from 'vuex'
     export default {
         data () {
             return {
-             
             }
         },
-        props:["left"],// 控制左侧菜单
         created(){
             
         },
         mounted(){
                this.controlLeftMenu()
                window.addEventListener("resize",this.controlLeftMenu)  
-              
+            //    this.dataList=this.$store.state.first_page.dataList;
+            //    this.$store.state.first_page.dispatch("getData")
+               if(!this.dataList){
+                  console.log(this.dataList,"123")
+                  this.$store.dispatch("getData")
+                  console.log(this.dataList,"123")
+               }
         },
         watch:{
-            left:function(newV,oldV){
-                //  if(newV){
-                //     document.body.style.overflow="hidden"
-                //  }else{
-                //     document.body.style.overflow="auto"
-                //  }
-            }
+           
+        },
+        computed:{
+            ...mapState({
+               leftChange:"leftChange",
+               dataList:state=>state.first_page.dataList,
+            }),
         },
         methods:{
-        
-            leftChange(val){
-                this.isShowLeft=val
-                if(val){
-                    alert(1)
-                    document.body.style.overflow="hidden"
-                }
-            },
+         
             controlLeftMenu(){
                 var leftDiv=document.getElementsByClassName("header-left-menu")[0],
                     doc=document.documentElement,
@@ -65,12 +62,11 @@
                     leftDiv.style.marginTop=parseInt(headerHeight)+"px";
             },
             cancelBubble(e){
-                // var e=e||window.event
-                // e.preventDefault()
-                // e.stopPropagation()
-                // e.cancelBubble=true;
-                // return false
-            }
+                this.$store.commit("leftChangeState",false)
+            },
+            transferShwoP(obj){
+                    obj.id=!obj.id
+            },
       
         },
     }
@@ -86,29 +82,35 @@
     margin: 3.5rem 0;
     overflow:hidden;
     border-radius: .2rem;
-    width: 80%;
+    width: 40rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
     height: auto;
     left: 50%;
     transform: translate(-50%)
 
 }
- .header-left-menu{
-        position: fixed;
-        left: 0;
-        transition: transform .3s cubic-bezier(0.075, 0.82, 0.165, 1);
-        z-index: 999;
-        background: snow;
-        filter: drop-shadow(2px 0 2px rgb(172, 161, 161));
+@media screen and (max-width: 988px){
+    .content{
+        width: 88%;
     }
-    .header-left-menu-tran-leave-to,.header-left-menu-tran-enter{
-            transform: translateX(-10rem)
-    }
-    .header-left-menu-tran-leave-active{
-        transition: transform .3s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
-    .header-left-menu-tran-enter-active{
-        transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
+}
+.content-username{
+    width: 200px;
+    /* background: rgb(228, 225, 225); */
+    margin-right: 2rem;
+}
+.content-left{
+    width: 100%;
+}
+.content-right{
+    width: 200px;
+    /* background: rgb(236, 233, 233); */
+    margin-left: 2rem;
+}
+
+
 
 h1{
     font-size: 2rem;
@@ -132,5 +134,23 @@ h5{
 }
 p{
     text-indent: 2rem;
+}
+.first-content-item{
+    margin: .4rem 0;
+    border-bottom: .5px solid rgb(150, 155, 155);
+    padding: .4rem;
+    border: .5px solid rgb(220, 224, 224);
+    border-radius: .4rem;
+}
+.first-content-item:hover{
+    cursor: pointer;
+    box-shadow: 0px 1px 5px black;
+}
+.first-content-item-p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* word-wrap: none;
+     */
+     white-space: nowrap;
 }
 </style>

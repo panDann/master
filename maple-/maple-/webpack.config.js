@@ -79,7 +79,15 @@ module.exports = {
     historyApiFallback: true,
     noInfo: true,
     overlay: true,
-    host:"0.0.0.0"
+    host:"0.0.0.0",
+    proxy: {
+      '/api': {
+        target: 'http://localhost:9000',
+        // pathRewrite: {'^/api' : ''},
+        secure:false,
+        changeOrigin: true
+      }
+    }
   },
   performance: {
     hints: false

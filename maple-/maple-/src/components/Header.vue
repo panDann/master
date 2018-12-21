@@ -1,7 +1,16 @@
 <template>
     <div class="header">
         <div class="header-left">
-            <i class="fa fa-align-justify" @click="test"></i>
+            <i class="fa fa-align-justify" @click="test" id="header-left"></i>
+        </div>
+        <div class="header-center">
+            <ul id="header-center">
+                   <li class="header-left-menu-item-pc first"><router-link to="/first">首页</router-link></li>
+                   <li class="header-left-menu-item-pc web_front" ><router-link to="/web_front">web前端</router-link></li>
+                   <li class="header-left-menu-item-pc golang_service"><router-link to="/golang_service">golang服务</router-link></li>
+                   <li class="header-left-menu-item-pc mysql_application"><router-link to="/mysql_application">MySQL应用</router-link></li>
+                   <li class="header-left-menu-item-pc about_maple"><router-link to="/about_maple">关于始主</router-link></li>
+            </ul>
         </div>
         <div class="header-right">
             <form action="">
@@ -11,22 +20,93 @@
     </div>
 </template>
 <script>
+    import { mapState } from 'vuex'
     export default {
         data () {
             return {
                 isShowLeft:false,
+                scrollStart:document.documentElement.scrollTop,
+
             }
         },
         created(){
             
         },
-        mounted(){
+        watch:{
+            $route:function(newV,oldV){
+                var pcHeader=document.getElementsByClassName("header-left-menu-item-pc"),
+                    path=newV.path.replace(/\//g,"");
+                    for(let i=0,l=pcHeader.length;i<l;i++){
+                             if(pcHeader[i].classList.contains(path)){
+                                pcHeader[i].classList.add("pc-router-active")
+                            }else{
+                                pcHeader[i].classList.remove("pc-router-active")
+                            }
+                    }
+                sessionStorage.routerState=newV.path;
+            },
+            scrollStart:function(n,o){
+                // alert(1)
+                // console.log(n,o)
               
+                var sub=o-n,
+                    headerDiv=document.getElementsByClassName('header')[0],
+                    topButton=document.getElementsByClassName("top-button")[0]
+                    // initailTop=document.documentElement.scrollTop||document.body.scrollTop,
+
+                if(o==0){
+                    //  headerDiv.classList.remove("header-scroll")
+                    return
+                }
+                if(sub<0){
+                     headerDiv.style.backgroundColor="rgb(188, 204, 214)";
+                     topButton.classList.remove("top-button-active")
+                     headerDiv.classList.add("header-scroll")
+                }else{
+                     headerDiv.style.backgroundColor="white";
+                     headerDiv.classList.remove("header-scroll")
+                     topButton.classList.add("top-button-active")
+                }
+                if(n==0){
+                     topButton.classList.remove("top-button-active")
+                }
+            }
+        },
+        computed:mapState({
+            left:"leftChange",
+        }),
+        mounted(){
+              this.checkRouter()
+              this.controlHeader()
         },
         methods:{
             test(){
-                this.isShowLeft=!this.isShowLeft
-                this.$emit("left-change",this.isShowLeft)
+                if(this.left){
+                  this.$store.commit("leftChangeState",false)
+                }else{
+                  this.$store.commit("leftChangeState",true)
+                }
+            },
+            checkRouter(){
+                 var routePath=this.$route.path
+                 if(routePath=="/"){
+                        this.$router.push("/first")
+                 }
+                 var pcHeader=document.getElementsByClassName("header-left-menu-item-pc"),
+                    path=routePath.replace(/\//g,"");
+                    for(let i=0,l=pcHeader.length;i<l;i++){
+                            if(pcHeader[i].classList.contains(path)){
+                                pcHeader[i].classList.add("pc-router-active")
+                            }else{
+                                pcHeader[i].classList.remove("pc-router-active")
+                            }
+                    }
+            },
+            controlHeader(){
+                var self=this
+                window.addEventListener("scroll",function(){
+                    self.scrollStart=document.documentElement.scrollTop||document.body.scrollTop
+                },false)
             },
             
         },
@@ -34,22 +114,24 @@
 </script>
 
 <style scoped>
-    
+
     .header{
-        --height:3rem;
+         --height:3rem;
         height: 3rem;
         width: 100%;
         position: fixed;
         z-index: 999;
         line-height: 3rem;
-        background: #409EFF;
+        background: white;
         display: flex;
         color:snow;
         padding: 0 .8rem;
         flex-flow: row nowrap;
         justify-content: space-between;
         align-items: center;
-        filter:drop-shadow(0 2px 5px rgb(185, 151, 151))
+        transition: background-color .3s linear;
+        filter:drop-shadow(0 2px 5px rgb(185, 151, 151));
+        border-bottom: .5px solid rgb(219, 216, 216);
     }
     .header-right form {
         display: flex;
@@ -57,12 +139,12 @@
     }
     *::placeholder{
         opacity: 0.9;
-        color: snow;
+        color: rgb(22, 175, 111);
     }
     .search{
         outline: none;
         border: none;
-        color: snow;
+        color: rgb(45, 194, 137);
         -webkit-appearance: none;
         display: inline-block;
         background: none;
@@ -73,14 +155,34 @@
     }
     .search-bar{
         height: 2rem;
-        color:snow;
+        color:rgb(54, 190, 127);
         display: inline-block;
         width: 2rem;
     }
 
     .search:focus{
-        border-bottom: .5px rgb(240, 237, 237) solid;
+        border-bottom: .5px #409EFF solid;
     }
-   
+    .header-left{
+        color: rgb(82, 189, 114);
+    }
+    .header-left-menu-item-pc a{
+        text-decoration: none;
+        color:snow;
+    }
+    .header-left-menu-item-pc:hover{
+        border-bottom:.1rem solid rgb(33, 71, 196); 
+    }
+    .pc-router-active{
+        border-bottom:.1rem solid rgb(33, 71, 196); 
+    }
+    .header-scroll div ul li a{
+        color: rgb(12, 13, 14);
+    }  
+    .header div ul li a{
+        color: rgb(12, 13, 14);
+    } 
+    
+
   
 </style>
