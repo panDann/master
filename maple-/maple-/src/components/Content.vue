@@ -31,13 +31,13 @@
         mounted(){
                this.controlLeftMenu()
                window.addEventListener("resize",this.controlLeftMenu)  
+               this.$store.dispatch("getData")
             //    this.dataList=this.$store.state.first_page.dataList;
             //    this.$store.state.first_page.dispatch("getData")
-               if(!this.dataList){
-                  console.log(this.dataList,"123")
-                  this.$store.dispatch("getData")
-                  console.log(this.dataList,"123")
-               }
+            //    if(!this.dataList){
+            //       this.$store.dispatch("getData")
+            //    }
+                  
         },
         watch:{
            

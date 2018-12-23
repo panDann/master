@@ -9,7 +9,7 @@
                    <li class="header-left-menu-item">关于始主</li>
                 </div>
       </transition>
-    <Header ></Header>
+    <Header></Header>
     <router-view></router-view>
     <div class="top-button" @click="scrollToTop">
       <i class="fa fa-angle-up"></i>
@@ -156,4 +156,5 @@ li {
     /* filter: drop-shadow(0px 2px 5px rgb(107, 156, 197)); */
     border-bottom: .5px solid #409EFF;   
 }
+
 </style>

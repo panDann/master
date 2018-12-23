@@ -17,6 +17,7 @@
                 <input type="search" class="search"  placeholder="搜索关键字"><i class="search-bar"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 30 26"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></i>
             </form>
         </div>
+     <div class="loading" v-show="loading"></div>
     </div>
 </template>
 <script>
@@ -26,11 +27,15 @@
             return {
                 isShowLeft:false,
                 scrollStart:document.documentElement.scrollTop,
-
             }
         },
-        created(){
-            
+       computed:mapState({
+            left:"leftChange",
+            loading:"loading"
+        }),
+        mounted(){
+              this.checkRouter()
+              this.controlHeader()
         },
         watch:{
             $route:function(newV,oldV){
@@ -72,13 +77,7 @@
                 }
             }
         },
-        computed:mapState({
-            left:"leftChange",
-        }),
-        mounted(){
-              this.checkRouter()
-              this.controlHeader()
-        },
+       
         methods:{
             test(){
                 if(this.left){
@@ -183,6 +182,23 @@
         color: rgb(12, 13, 14);
     } 
     
-
+.loading{
+   height: 2px;
+   width: 95%;
+   background: #409EFF;
+   /* margin-top: 2rem; */
+   position: absolute;
+   left: 0;
+   bottom: 0;
+   transition: all 1s linear;
+   animation: loading 1s linear;
+}
+@keyframes loading {
+    0%{width: 10%;
+          }
+    100%{
+        width: 95%;
+        }
+}
   
 </style>

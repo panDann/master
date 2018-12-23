@@ -4,26 +4,33 @@ import axios  from "axios"
 var moduleFirstPage={
     state:{
         test:"11225",
-        dataList:"",
+        dataList:[
+            {title:"maple",
+                id:12,
+            }
+        ],
     },
     mutations:{
         setData(state,data){
              state.dataList=data;
-            //  console.log(state.dataList)
         }
     },
     actions:{
-        getData:function({commit,state},msg){
+        getData:function({commit,state,rootState},msg){
+            console.log(rootState,"root")
+            rootState.loading=true;
             var url="/api/first?number=10",
             self=this,
             sendDat={a:"aaaaa"},
             resData="";
             axios.post(url,JSON.stringify("data"),sendDat)
                     .then(res=>{
+                        console.log(res,'res')
                         var tem=[]
                         res.data.forEach(function(item){
                                 tem.push(JSON.parse(item))
                         });
+                        rootState.loading=true;
                         commit("setData",tem)
                     })
                     .catch(err=>{
@@ -45,21 +52,7 @@ var moduleWebFront={
         }
     },
     actions:{
-        getData:function({commit,state},msg){
-            var url="/api/first?number=10",
-            sendDat={a:"aaaaa"}
-            axios.post(url,JSON.stringify("data"),sendDat)
-                    .then(res=>{
-                            var tem=[]
-                            res.data.forEach(function(item){
-                                    tem.push(JSON.parse(item))
-                            });
-                            commit("setData",tem)
-                    })
-                    .catch(err=>{
-                        console.error(err)
-                    })
-            }
+      
     },
 }
 
@@ -68,6 +61,7 @@ var store={
 
     state:{
         leftChange:false,
+        loading:false,
     },
     mutations:{
         leftChangeState:function(sta,status){
