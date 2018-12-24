@@ -2,7 +2,7 @@
      
       <div class="content-maple">
    
-            <div class="content-maple-left">
+            <div class="content-maple-left" v-if="!isPreview">
               <h5>文章编辑器</h5>
               <div>
                   <span class="code-type-item" title="CSS代码" @click="addCharacter('C')">C</span>
@@ -14,11 +14,20 @@
                   <span class="code-type-item" title="一个段落" @click="addCharacter('P')">p</span>
                   <span class="code-type-item" title="<br>换行符" @click="addCharacter('br')">br</span>
                   <span class="code-type-item" title="加粗" @click="addCharacter('B')">B</span>
-
                 </div>
-                <textarea name="" spellcheck="false"  placeholder="输入文章内容（必填）" v-model="areaContent" id="" class="editor-text"></textarea>
+                <textarea name="" spellcheck="false"  placeholder="输入文章内容（必填）" required v-model="areaContent" id="" class="editor-text"></textarea>
+                <input type="text" class="content-maple-input" placeholder="文章简介（可不填）">
+                <input type="text" class="content-maple-input" placeholder="文章标题（必填）">
+                <div>
+                    <button class="content-maple-butto pupple primary">提 交</button>
+                    <button class="content-maple-butto pupple warning" @click="transferPreview">预 览</button>
+                </div>
             </div>
- 
+            <div class="content-maple-preview" v-else v-html="previewAfter">
+                       {{previewAfter}}
+            </div>
+            <br/>
+            <button v-show="isPreview" class="content-maple-butto pupple warning" @click="transferPreview">退 出 预 览</button>
       </div>
 </template>
 <script>
@@ -31,6 +40,13 @@
         },
       
         mounted(){
+        },
+        computed:{
+            ...mapState({
+                isPreview:state=>state.about_maple.isPreview,
+                mapleContent:state=>state.about_maple.mapleContent,
+                previewAfter:state=>state.about_maple.previewAfter,
+            })
         },
         watch:{
            
@@ -47,11 +63,11 @@
                           break;
                 case ";": endCh=";"
                           break;
-                case "P": endCh="\n<p>\n\n</p>"
+                case "P": endCh="\n<p>\n</p>"
                           break;
                 case "br": endCh="<br/>"
                           break;
-                case "B": endCh="\n<strong>  </strong>"
+                case "B": endCh="<strong></strong>"
                           break;
                 case "C": endCh="\n<Ccode>\n\n</Ccode>"
                           break;
@@ -60,9 +76,15 @@
                 default:break;
              }
              this.areaContent=this.areaContent+endCh
-        },// addC end 
-        parseCss(string){
-            
+         },// addC end 
+       
+        transferPreview(){
+            if(!this.areaContent){ 
+               this.$store.commit("handleError","内 容 为 空")
+               return
+            } 
+            var temPre=this.isPreview;
+            this.$store.commit("mapletransferPreview",{status:!temPre,content:this.areaContent} )
         }
     }
     }
@@ -74,15 +96,11 @@
     /* background: rgb(161, 57, 57); */
     z-index: 0;
     position: absolute;
-    z-index: 0;
     margin: 3.5rem 0;
     /* overflow:hidden; */
     border-radius: .2rem;
-    width: 40rem;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-around;
     height: auto;
+    width: 40%;
     left: 50%;
     transform: translate(-50%)
 }
@@ -146,5 +164,36 @@ h5{
 }
 p{
     text-indent: 2rem;
+}
+.content-maple-input{
+    padding: .3rem;
+    display: block;
+    margin: .2rem 0; 
+    line-height: 1.2rem;
+    outline: none;
+    width: 10rem;
+    border: .5px solid #CCC;
+    -webkit-appearance: none;
+    border-radius: .1rem;
+    /* border-bottom: .5px solid black; */
+}
+.content-maple-butto{
+    border: none;
+    color: snow;
+    position: relative;
+    margin: .2rem 0;
+    padding: .3rem 1.5rem;
+    outline: none;
+    border-radius: .1rem;
+    box-shadow: 1px 0px 5px #CCC;
+}
+.primary{
+    background: #409EFF;
+}
+.warning{
+    background: rgb(231, 78, 224);
+}
+.content-maple-preview{
+    /* background: #409EFF; */
 }
 </style>

@@ -1,0 +1,143 @@
+
+body{
+  counter-reset: div;  
+  position: relative;
+  /* background: rgb(238, 237, 237); */
+  background: snow;
+  /* background: #CCC repeat-y 50% 10% url("./1.jpg") border-box; */
+}
+
+.stretch::before{
+  counter-increment: div;
+  width: 100%;
+  content: "div: "counter(div);
+}
+.pupple{
+  /* background:rgb(207, 88, 201); */
+  /* color:snow; */
+  border: none;
+  overflow: hidden;
+}
+.pupple::before{
+  content: "";
+display: block;
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+/* pointer-events: none; */
+background: rgb(102, 94, 94);
+border-radius: .4rem;
+transform: scale(10, 10);
+opacity: 0;
+transition: transform .5s, opacity .5s,border-radius .5s;
+}
+button,[type=button]{
+  cursor: pointer;
+}
+/* .pupple:active::before{
+  transform: scale(0, 10);
+  opacity: .3;
+  transition: 0s;
+  border-radius: 0;
+} */
+.pupple:active{
+  filter: drop-shadow(0px 5px 5px rgb(128, 128, 128));
+}
+
+.top-button{
+  width: 2rem;
+  text-align: center;
+  line-height: 2rem;
+  height: 2rem;
+  color: snow;
+  background: #409EEF;
+  position: fixed;
+  border-radius: 100%;
+  right: 1rem;
+  bottom: 1rem;
+  transition: transform .3s linear;
+  transform: scale(0);
+  cursor: pointer;
+  box-shadow: 0 2px 5px black;
+}
+.top-button-active{
+  transform: scale(1);
+}
+/* transition */
+.header-left-menu-tran-leave-to,.header-left-menu-tran-enter{
+  transform: translateX(-15rem)
+}
+.header-left-menu-tran-leave-active{
+transition: transform .7s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.header-left-menu-tran-enter-active{
+transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.header-left-sha-tran-leave-to,.header-left-sha-tran-enter{
+  transform: translateX(15rem)
+}
+.header-left-sha-tran-leave-active{
+transition: transform .7s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.header-left-sha-tran-enter-active{
+transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+/* transition */
+h1{
+  font-size: 2rem;
+  font-weight: 100;
+}
+h2{
+  font-size: 1.8rem;
+  font-weight: 100;
+}
+h3{
+  font-size: 1.6rem;
+  font-weight: 100;
+}
+h4{
+  font-size: 1.4rem;
+  font-weight: 200;
+}
+h5{
+  font-size: 1.2rem;
+  font-weight: 100;
+}
+p{
+  text-indent: 2rem;
+}
+@media screen and (min-width:988px){
+  html{
+    font-size: 18px;
+  }
+}
+@media screen and (max-width:988px){
+  html{
+    font-size: 16px;
+  }
+}
+
+.code-div{
+  background: black;
+  opacity: .9;
+  padding: 1rem;
+  border-radius: .2rem;
+  text-align: left;
+  width: 90%;
+  color: snow;
+  height: auto;
+  min-height: 3rem;
+  overflow: hidden;
+}
+.code-css-span{
+   text-indent: 2rem;
+   display: inline-block;
+   margin-left: .2rem;
+   color: rgb(236, 222, 22);
+}
+.code-var-span{
+  color: rgb(17, 93, 192);
+}
+

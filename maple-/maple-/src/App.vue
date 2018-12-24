@@ -2,11 +2,15 @@
   <div >
     <transition name="header-left-menu-tran">
                 <div class="header-left-menu" v-show="leftChange" >
-                   <li class="header-left-menu-item" > <router-link to="/first">首页</router-link></li>
-                   <li class="header-left-menu-item" ><router-link to="/web_front">web前端</router-link></li>
-                   <li class="header-left-menu-item"><router-link to="/golang_service">golang服务</router-link></li>
-                   <li class="header-left-menu-item">MySQL应用</li>
-                   <li class="header-left-menu-item">关于始主</li>
+                   <li class="header-left-menu-item" @click="transferRouter('/first')"> <router-link to="/first">首页</router-link></li>
+                   <li class="header-left-menu-item" @click="transferRouter('/web_front')"><router-link to="/web_front">web前端</router-link></li>
+                   <li class="header-left-menu-item" @click="transferRouter('/golang_service')"><router-link to="/golang_service">golang服务</router-link></li>
+                   <li class="header-left-menu-item" @click="transferRouter('/mysql_application')"><router-link to="/mysql_application">MySQL应用</router-link></li>
+                   <li class="header-left-menu-item" @click="transferRouter('/about_maple')"><router-link to="/about_maple">关于始主</router-link></li>
+                </div>
+      </transition>
+      <transition name="header-left-sha-tran">
+                <div class="header-left-menu-shadow" v-show="leftChange" @click="cancelBubble()">
                 </div>
       </transition>
     <Header></Header>
@@ -14,6 +18,9 @@
     <div class="top-button" @click="scrollToTop">
       <i class="fa fa-angle-up"></i>
     </div>
+     <div class="app-message-box" v-show="messagebox.show">
+       {{messagebox.msg}}<span>&#10006;</span>
+     </div>
   </div>
 </template>
 
@@ -35,6 +42,7 @@ export default {
    computed:{
             ...mapState({
                leftChange:"leftChange",
+               messagebox:"messagebox",
                dataList:state=>state.first_page.dataList,
             }),
   },
@@ -62,21 +70,30 @@ export default {
        },10)
        
     },
-    cancelBubble(e){
-                     this.$store.commit("leftChangeState",false)
+    transferRouter(path){
+        this.$router.push(path)
+        this.$store.commit("leftChangeState",false)
+    },
+    cancelBubble(){
+        this.$store.commit("leftChangeState",false)
     },
      controlLeftMenu(){
                 var leftDiv=document.getElementsByClassName("header-left-menu")[0],
+                    leftDivShadow=document.getElementsByClassName("header-left-menu-shadow")[0],
                     doc=document.documentElement,
                     docWidth=doc.clientWidth||400,
                     docHeight=doc.clientHeight||600,
                     docFontSize=document.defaultView.getComputedStyle(doc,null).fontSize||doc.currentStyle.fontSize,
                     headerHeight=document.defaultView.getComputedStyle(document.getElementsByClassName("header")[0],null).height||document.getElementsByClassName("header")[0].currentStyle.height;
                     leftDiv.style.width=docWidth/2+"px";
+                    leftDivShadow.style.width=docWidth/2+"px";
+                    leftDivShadow.style.height=docHeight-parseInt(headerHeight)+"px";
                     leftDiv.style.height=docHeight-parseInt(headerHeight)+"px";
+                    leftDivShadow.style.marginTop=parseInt(headerHeight)+"px";
                     leftDiv.style.marginTop=parseInt(headerHeight)+"px";
+
       },
-  }
+    }
 }
 </script>
 
@@ -92,9 +109,9 @@ export default {
   margin-top: 60px;
 }
 
-h1, h2 {
-  font-weight: normal;
-}
+// h1, h2 {
+//   font-weight: normal;
+// }
 
 ul {
   list-style-type: none;
@@ -132,19 +149,11 @@ li {
         position: fixed;
         left: 0;
         transition: transform .3s cubic-bezier(0.075, 0.82, 0.165, 1);
-        z-index: 999;
+        z-index: 9;
         background: snow;
         filter: drop-shadow(2px 0 2px rgb(172, 161, 161));
     }
-    .header-left-menu-tran-leave-to,.header-left-menu-tran-enter{
-            transform: translateX(-10rem)
-    }
-    .header-left-menu-tran-leave-active{
-        transition: transform .3s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
-    .header-left-menu-tran-enter-active{
-        transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
+    
 .header-left-menu-item{
     width: 100%;
     text-align: center;
@@ -156,5 +165,47 @@ li {
     /* filter: drop-shadow(0px 2px 5px rgb(107, 156, 197)); */
     border-bottom: .5px solid #409EFF;   
 }
-
+.header-left-menu-item a{
+  text-decoration: none;
+}
+// z-index 9
+.header-left-menu-shadow{
+  background: black;
+  opacity: 0.5;
+  position: fixed;
+  right: 0;
+  transition: transform .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  z-index: 9;
+}
+.app-message-box{
+  position: fixed;
+  bottom: 2rem;
+  text-align: center;
+  line-height: 3rem;
+  left: 1rem;
+  background: black;
+  opacity: .7;
+  color: snow;
+  border-radius: .1rem;
+  height: 3rem;
+  width: auto;
+  min-width: 20rem;
+  // display: block;
+  visibility: visible;
+  animation: appbox .5s linear;
+}
+@keyframes appbox {
+  0%{ opacity: .3;}
+  100%{ opacity: .7;}
+}
+.app-message-box span{
+  -webkit-appearance: none;
+  float: right;
+  margin-right: 1rem;
+  color: snow;
+}
+// .app-message-box span:hover{
+//     opacity: .9;
+//     cursor: pointer;
+// }
 </style>

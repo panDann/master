@@ -1,5 +1,5 @@
 <template>
-      <div class="content" @click="cancelBubble($event)">
+      <div class="content" >
             <!-- <div class="content-username">
 
             </div> -->
@@ -31,12 +31,11 @@
         mounted(){
                this.controlLeftMenu()
                window.addEventListener("resize",this.controlLeftMenu)  
-               this.$store.dispatch("getData")
             //    this.dataList=this.$store.state.first_page.dataList;
             //    this.$store.state.first_page.dispatch("getData")
-            //    if(!this.dataList){
-            //       this.$store.dispatch("getData")
-            //    }
+               if(!this.dataList.length){
+                  this.$store.dispatch("getData")
+               }
                   
         },
         watch:{
@@ -61,9 +60,7 @@
                     leftDiv.style.height=docHeight-parseInt(headerHeight)+"px";
                     leftDiv.style.marginTop=parseInt(headerHeight)+"px";
             },
-            cancelBubble(e){
-                this.$store.commit("leftChangeState",false)
-            },
+            
             transferShwoP(obj){
                     obj.id=!obj.id
             },
