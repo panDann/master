@@ -16,10 +16,10 @@
                   <span class="code-type-item" title="加粗" @click="addCharacter('B')">B</span>
                 </div>
                 <textarea name="" spellcheck="false"  placeholder="输入文章内容（必填）" required v-model="areaContent" id="" class="editor-text"></textarea>
-                <input type="text" class="content-maple-input" placeholder="文章简介（可不填）">
-                <input type="text" class="content-maple-input" placeholder="文章标题（必填）">
+                <input type="text" class="content-maple-input" v-model="areaSummary" placeholder="文章简介（可不填）">
+                <input type="text" class="content-maple-input" v-model="areaTitle" placeholder="文章标题（必填）">
                 <div>
-                    <button class="content-maple-butto pupple primary">提 交</button>
+                    <button class="content-maple-butto pupple primary" @click="submitContent">提 交</button>
                     <button class="content-maple-butto pupple warning" @click="transferPreview">预 览</button>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                        {{previewAfter}}
             </div>
             <br/>
-            <button v-show="isPreview" class="content-maple-butto pupple warning" @click="transferPreview">退 出 预 览</button>
+            <button v-show="isPreview" class="button pupple warning" @click="transferPreview">退 出 预 览</button>
       </div>
 </template>
 <script>
@@ -35,11 +35,20 @@
     export default {
         data () {
             return {
-             areaContent:""
+             areaContent:"",
+             areaSummary:"",
+             areaTitle:"",
             }
         },
       
         mounted(){
+            if(this.mapleContent){
+                this.areaContent=this.mapleContent
+            }
+        },
+        beforeRouteLeave(to,from,next){
+               this.$store.commit("mapleCacheContent",this.areaContent)
+               next()
         },
         computed:{
             ...mapState({
@@ -84,8 +93,21 @@
                return
             } 
             var temPre=this.isPreview;
-            this.$store.commit("mapletransferPreview",{status:!temPre,content:this.areaContent} )
-        }
+           var t= this.$store.commit("mapletransferPreview",{status:!temPre,
+                                                       content:this.areaContent,
+                                                       title:this.areaTitle,
+                                                       summary:this.areaSummary} )
+        },
+        submitContent(){
+              if(!this.areaContent||!this.areaTitle){
+                   this.$store.commit("handleError","内容与标题为必填项")
+                   return
+              }
+              this.$store.dispatch("mapleSendContent",{
+                                                       content:this.areaContent,
+                                                       title:this.areaTitle,
+                                                       summary:this.areaSummary})
+        },
     }
     }
 </script>
@@ -177,23 +199,7 @@ p{
     border-radius: .1rem;
     /* border-bottom: .5px solid black; */
 }
-.content-maple-butto{
-    border: none;
-    color: snow;
-    position: relative;
-    margin: .2rem 0;
-    padding: .3rem 1.5rem;
-    outline: none;
-    border-radius: .1rem;
-    box-shadow: 1px 0px 5px #CCC;
-}
-.primary{
-    background: #409EFF;
-}
-.warning{
-    background: rgb(231, 78, 224);
-}
-.content-maple-preview{
-    /* background: #409EFF; */
-}
+
+
+
 </style>

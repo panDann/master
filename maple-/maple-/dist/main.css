@@ -86,27 +86,49 @@ transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 /* transition */
 h1{
-  font-size: 2rem;
+  font-size: 30px;
   font-weight: 100;
 }
 h2{
-  font-size: 1.8rem;
+  font-size: 24px;
   font-weight: 100;
 }
 h3{
-  font-size: 1.6rem;
+  font-size: 18px;
   font-weight: 100;
 }
 h4{
-  font-size: 1.4rem;
+  font-size: 16px;
   font-weight: 200;
 }
 h5{
-  font-size: 1.2rem;
+  font-size: 12px;
   font-weight: 100;
 }
 p{
   text-indent: 2rem;
+}
+.primary{
+  background: #409EFF;
+}
+.warning{
+  background: rgb(231, 78, 224);
+}
+.info{
+  background: rgb(189, 177, 186);
+}
+.info:hover{
+  background: #409EFF;
+}
+button{
+  border: none;
+  color: snow;
+  position: relative;
+  margin: .2rem 0;
+  padding: .3rem 1.5rem;
+  outline: none;
+  border-radius: .1rem;
+  box-shadow: 1px 0px 5px #CCC;
 }
 @media screen and (min-width:988px){
   html{
@@ -118,7 +140,7 @@ p{
     font-size: 16px;
   }
 }
-
+/* code area */
 .code-div{
   background: black;
   opacity: .9;
@@ -128,8 +150,15 @@ p{
   width: 90%;
   color: snow;
   height: auto;
+  margin: .2rem 0;
   min-height: 3rem;
-  overflow: hidden;
+  overflow: scroll;
+  -ms-overflow-style: none;
+}
+
+.code-div::-webkit-scrollbar{
+   height: 0;
+   width: 0;
 }
 .code-css-span{
    text-indent: 2rem;
@@ -140,4 +169,18 @@ p{
 .code-var-span{
   color: rgb(17, 93, 192);
 }
+.code-comment-span{
+  color: rgb(25, 100, 25);
+}
+.code-title{
+  font-size: 1.4rem;
+}
+.code-summary{
+    text-indent: 2rem;
+    font-size: 1.1rem;
+}
 
+.code-if-span{
+  color: rgb(193, 57, 211);
+}
+/* code area */

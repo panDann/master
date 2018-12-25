@@ -4,14 +4,12 @@
 
             </div> -->
             <div class="content-left">
-              <div v-for="v in dataList" :key="v.title" class="first-content-item" @click="transferShwoP(v)">
-              <h3>{{v.title}}</h3>
-              <p :class="{'first-content-item-p':v.id}">
-                 3211313
-学习嘛，无非是深度和广度。首先，我们来探讨一下深度。<span style="color:#409EFF">var</span> 题主是做前端开发的，前端不就是html css js三剑客。其中，html css就不提了，剩下的不就是js的学习深度。js的深度靠什么提高？不是任何框架，也不是任何库，就是js它本身。万变不离其宗嘛，所有的库和框架，都是基于js写的。学会了和泥巴，烧砖，砌墙，就算砌不出vue react anguler那样漂亮又稳定的高楼大厦，但是自己砌个小平房什么的，还是戳卓有余的。而且，这是深入学习框架的必经之路，没有任何可以在js基础不好的情况下，写出流行的框架出来。但是，这里其实我们忽略了一个问题---那就是我们自身的因素。
-              </p>
+              <div v-for="v in dataList" :key="v.id" class="first-content-item" @click="transferShwoP(v)">
+                <h3>{{v.title}}</h3>
+                <p :class="{'first-content-item-div':!v.isUnfold}" v-html="v.content">
+                </p>
+               <button  class="button pupple info" @click="foldContent(v,$event)">{{!v.isUnfold? "展开":"收起"}}文章</button>
               </div>
-              
             </div>
             <!-- <div class="content-right">
 
@@ -31,8 +29,6 @@
         mounted(){
                this.controlLeftMenu()
                window.addEventListener("resize",this.controlLeftMenu)  
-            //    this.dataList=this.$store.state.first_page.dataList;
-            //    this.$store.state.first_page.dispatch("getData")
                if(!this.dataList.length){
                   this.$store.dispatch("getData")
                }
@@ -45,6 +41,7 @@
             ...mapState({
                leftChange:"leftChange",
                dataList:state=>state.first_page.dataList,
+               previewed:"previewed"
             }),
         },
         methods:{
@@ -62,8 +59,43 @@
             },
             
             transferShwoP(obj){
-                    obj.id=!obj.id
+                    
             },
+            foldContent(obj){
+                    obj.isUnfold=!obj.isUnfold
+                    if(obj.isParsed==false){
+                        this.$store.commit("commonParseCode",obj)
+                        obj.content=this.previewed;
+                        // obj.content=this.parseCode(obj)
+                        obj.isParsed=true
+                    }
+            },
+            parseCode(obj){
+                var temString=obj.content.toString()
+                // var reCodeEnd=/<\/(J|C|G|M|H)code>/ig
+                temString=temString.replace(/<(C|J|H|M|G)code>/ig,"<div class='code-div'><pre><code>")
+                                .replace(/<\/(C|J|H|M|G)code>/ig,"</code></pre></div>")
+                                .replace(/(var\s|func\s|function\s|let\s|const\s)/ig,"<span class='code-var-span'>$1</span>")
+                                .replace(/(return\s|if\b|else\b|for\b|while\b)/ig,"<span class='code-if-span'>$1</span>")
+                                
+                                //    .replace(/\n/ig,"<br/>")
+                                //    .replace(/\s/ig,"&nbsp;")
+                temString=temString.replace(/\-/ig,"MAPLE")
+                                .replace(/(?=\b\w+?:\W+)/ig,"<span class='code-css-span'>")
+                                .replace(/\:/g,":</span>")
+                                .replace(/MAPLE/g,"-")
+                                .replace(/(\/\/.+?\n)/g,"<span class='code-comment-span'>$1</span>")
+                                //    .replace(/;/g,";<br/>")
+                                //    .replace(/(\{|\})/g,"$1<br/>")
+            
+                // if(obj.summary){
+                //     temString= "<h3 class='code-summary'>简介："+obj.summary+"</h3>"+temString
+                // }
+                // if(obj.title){
+                //     temString= "<h2 class='code-title'>"+obj.title+"</h2>"+temString
+                // }
+                return temString
+            }
       
         },
     }
@@ -140,14 +172,12 @@ p{
     border-radius: .4rem;
 }
 .first-content-item:hover{
-    cursor: pointer;
     box-shadow: 0px 1px 5px black;
 }
-.first-content-item-p{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* word-wrap: none;
-     */
+.first-content-item-div{
+     overflow: hidden;
+     height: 1.5rem;
+     text-overflow: ellipsis;
      white-space: nowrap;
 }
 </style>
