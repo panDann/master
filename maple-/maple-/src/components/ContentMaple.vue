@@ -164,26 +164,7 @@
     line-height: 1.5rem;
     font-size: 1rem;
 }
-h1{
-  font-size: 2rem;
-  font-weight: 100;
-}
-h2{
-  font-size: 1.8rem;
-  font-weight: 100;
-}
-h3{
-  font-size: 1.6rem;
-  font-weight: 100;
-}
-h4{
-  font-size: 1.4rem;
-  font-weight: 300;
-}
-h5{
-  font-size: 1.2rem;
-  font-weight: 100;
-}
+
 p{
     text-indent: 2rem;
 }

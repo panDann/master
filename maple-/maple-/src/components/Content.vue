@@ -4,12 +4,16 @@
 
             </div> -->
             <div class="content-left">
-              <div v-for="v in dataList" :key="v.id" class="first-content-item" @click="transferShwoP(v)">
-                <h3>{{v.title}}</h3>
-                <p :class="{'first-content-item-div':!v.isUnfold}" v-html="v.content">
-                </p>
-               <button  class="button pupple info" @click="foldContent(v,$event)">{{!v.isUnfold? "展开":"收起"}}文章</button>
-              </div>
+                <transition-group name="content-item-tran">
+                    <div v-for="v in dataList" :key="v.id" class="first-content-item" >
+                        <h3>{{v.title}}</h3>
+                        <p :class="{'first-content-item-div':!v.isUnfold}" v-html="v.content">
+                        </p>
+                        <div class="content-float-bottom">
+                         <button  class="button pupple info" @click="foldContent(v,$event)">{{!v.isUnfold? "展开":"收起"}}文章</button>
+                        </div>
+                    </div>
+                </transition-group>
             </div>
             <!-- <div class="content-right">
 
@@ -58,9 +62,6 @@
                     leftDiv.style.marginTop=parseInt(headerHeight)+"px";
             },
             
-            transferShwoP(obj){
-                    
-            },
             foldContent(obj){
                     obj.isUnfold=!obj.isUnfold
                     if(obj.isParsed==false){
@@ -69,32 +70,33 @@
                         // obj.content=this.parseCode(obj)
                         obj.isParsed=true
                     }
+                    var floatDiv=document.getElementsByClassName("content-float-bottom"),
+                        floatArr=[],
+                        parentArr=[]
+                    var self=this;
+                    for(var i=0,l=floatDiv.length;i<l;i++){
+                           floatArr.push(self.getOffset(floatDiv[i]))
+                           parentArr.push(self.getOffset(floatDiv[i].parentElement))
+                        }
+                    window.onscroll=function(){
+                       
+                         for(var i=0,l=parentArr.length;i<l;i++){
+                             if(parentArr[i]<window.pageYOffset&&window.pageYOffset<parentArr[i]+floatArr[i]){
+                                 console.log(i)
+                             }
+                            // console.log(parentArr[i]+200-window.pageYOffset)
+                         }
+                         console.log(window.pageYOffset,window.innerHeight)
+                    }
+                   
             },
-            parseCode(obj){
-                var temString=obj.content.toString()
-                // var reCodeEnd=/<\/(J|C|G|M|H)code>/ig
-                temString=temString.replace(/<(C|J|H|M|G)code>/ig,"<div class='code-div'><pre><code>")
-                                .replace(/<\/(C|J|H|M|G)code>/ig,"</code></pre></div>")
-                                .replace(/(var\s|func\s|function\s|let\s|const\s)/ig,"<span class='code-var-span'>$1</span>")
-                                .replace(/(return\s|if\b|else\b|for\b|while\b)/ig,"<span class='code-if-span'>$1</span>")
-                                
-                                //    .replace(/\n/ig,"<br/>")
-                                //    .replace(/\s/ig,"&nbsp;")
-                temString=temString.replace(/\-/ig,"MAPLE")
-                                .replace(/(?=\b\w+?:\W+)/ig,"<span class='code-css-span'>")
-                                .replace(/\:/g,":</span>")
-                                .replace(/MAPLE/g,"-")
-                                .replace(/(\/\/.+?\n)/g,"<span class='code-comment-span'>$1</span>")
-                                //    .replace(/;/g,";<br/>")
-                                //    .replace(/(\{|\})/g,"$1<br/>")
-            
-                // if(obj.summary){
-                //     temString= "<h3 class='code-summary'>简介："+obj.summary+"</h3>"+temString
-                // }
-                // if(obj.title){
-                //     temString= "<h2 class='code-title'>"+obj.title+"</h2>"+temString
-                // }
-                return temString
+            getOffset(el){
+                var sumOffset=0
+                while(el.offsetParent){
+                        sumOffset+=el.offsetTop
+                        el=el.offsetParent
+                }
+                return sumOffset
             }
       
         },
@@ -107,59 +109,36 @@
     background: snow;
     z-index: 0;
     position: absolute;
-    z-index: 0;
-    margin: 3.5rem 0;
+    margin: 3.5rem auto;
     overflow:hidden;
     border-radius: .2rem;
-    width: 40rem;
+    width: 100%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-around;
     height: auto;
-    left: 50%;
-    transform: translate(-50%)
+    /* left: 0;
+    right: 0; */
+    /* transform: translate(-50%) */
 
 }
+.content-left{
+    width: 40rem;
+}
 @media screen and (max-width: 988px){
-    .content{
+    .content-left{
         width: 88%;
     }
 }
-.content-username{
-    width: 200px;
-    /* background: rgb(228, 225, 225); */
-    margin-right: 2rem;
-}
-.content-left{
-    width: 100%;
-}
-.content-right{
-    width: 200px;
-    /* background: rgb(236, 233, 233); */
-    margin-left: 2rem;
-}
 
 
-
-h1{
-    font-size: 2rem;
-    font-weight: 100;
+.content-float-bottom{
+    padding: .2rem 2rem;
+   
 }
-h2{
-    font-size: 1.8rem;
-    font-weight: 100;
-}
-h3{
-    font-size: 1.6rem;
-    font-weight: 100;
-}
-h4{
-    font-size: 1.4rem;
-    font-weight: 100;
-}
-h5{
-    font-size: 1.2rem;
-    font-weight: 100;
+.content-float-bottom-is-fix{
+    position: fixed;
+    bottom: 0;
 }
 p{
     text-indent: 2rem;

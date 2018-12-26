@@ -113,6 +113,7 @@ var store={
             show:false
         },
         previewed:"",// 公用的文章解析缓存
+        // currentRoute:"",
     },
     mutations:{
         leftChangeState:function(sta,status){
@@ -126,7 +127,10 @@ var store={
         },
         commonParseCode(state,msg){
             state.previewed=parseCode(msg)
-        }
+        },
+        // commonCurrentRoute(sta,route){
+        //     sta.currentRoute=route
+        // }
     },
     actions:{
 
@@ -169,7 +173,7 @@ function  parseCode(obj){
     // if(obj.title){
     //     temString= "<h2 class='code-title'>"+obj.title+"</h2>"+temString
     // }
-    console.log(temString,obj,"tem")
+    // console.log(temString,obj,"tem")
     return temString
 }
 export default store

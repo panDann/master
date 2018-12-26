@@ -6,11 +6,11 @@
         </div>
         <div class="header-center">
             <ul id="header-center">
-                   <li class="header-left-menu-item-pc first"><router-link to="/first">首页</router-link></li>
-                   <li class="header-left-menu-item-pc web_front" ><router-link to="/web_front">web前端</router-link></li>
-                   <li class="header-left-menu-item-pc golang_service"><router-link to="/golang_service">golang服务</router-link></li>
-                   <li class="header-left-menu-item-pc mysql_application"><router-link to="/mysql_application">MySQL应用</router-link></li>
-                   <li class="header-left-menu-item-pc about_maple"><router-link to="/about_maple">关于始主</router-link></li>
+                   <li :class="{'header-left-menu-item-pc':true,'pc-router-active':currentRoute=='/first'}"><router-link to="/first">首页</router-link></li>
+                   <li :class="{'header-left-menu-item-pc':true,'pc-router-active':currentRoute=='/web_front'}" ><router-link to="/web_front">web前端</router-link></li>
+                   <li :class="{'header-left-menu-item-pc':true,'pc-router-active':currentRoute=='/golang_service'}"><router-link to="/golang_service">golang服务</router-link></li>
+                   <li :class="{'header-left-menu-item-pc':true,'pc-router-active':currentRoute=='/mysql_application'}"><router-link to="/mysql_application">MySQL应用</router-link></li>
+                   <li :class="{'header-left-menu-item-pc':true,'pc-router-active':currentRoute=='/about_maple'}"><router-link to="/about_maple">关于始主</router-link></li>
             </ul>
         </div>
         <div class="header-right">
@@ -27,34 +27,40 @@
         data () {
             return {
                 isShowLeft:false,
+                currentRoute:"",
                 scrollStart:document.documentElement.scrollTop,
             }
         },
        computed:mapState({
             left:"leftChange",
-            loading:"loading"
+            loading:"loading",
         }),
         mounted(){
               this.checkRouter()
               this.controlHeader()
         },
         watch:{
-            $route:function(newV,oldV){
-                var pcHeader=document.getElementsByClassName("header-left-menu-item-pc"),
-                    path=newV.path.replace(/\//g,"");
-                    for(let i=0,l=pcHeader.length;i<l;i++){
-                             if(pcHeader[i].classList.contains(path)){
-                                pcHeader[i].classList.add("pc-router-active")
-                            }else{
-                                pcHeader[i].classList.remove("pc-router-active")
-                            }
-                    }
-                sessionStorage.routerState=newV.path;
+            $route:{
+                handler(newV,oldV){
+                        this.currentRoute=newV.path;
+                // var pcHeader=document.getElementsByClassName("header-left-menu-item-pc"),
+                //     mbHeader=document.getElementsByClassName("header-left-menu-item"),
+                //     path=newV.path.replace(/\//g,"");
+                //     for(let i=0,l=pcHeader.length;i<l;i++){
+                //              if(pcHeader[i].classList.contains(path)){
+                //                 pcHeader[i].classList.add("pc-router-active")
+                //                 mbHeader[i].classList.add("mb-router-active")
+                //             }else{
+                //                 pcHeader[i].classList.remove("pc-router-active")
+                //                 mbHeader[i].classList.remove("mb-router-active")
+                //             }
+                //     }
+                    // console.log(this.isShowLeft)
+                // sessionStorage.routerState=newV.path;
+                },
+                immediate:true,
             },
             scrollStart:function(n,o){
-                // alert(1)
-                // console.log(n,o)
-              
                 var sub=o-n,
                     headerDiv=document.getElementsByClassName('header')[0],
                     topButton=document.getElementsByClassName("top-button")[0]
@@ -88,19 +94,20 @@
                 }
             },
             checkRouter(){
-                 var routePath=this.$route.path
-                 if(routePath=="/"){
-                        this.$router.push("/first")
-                 }
-                 var pcHeader=document.getElementsByClassName("header-left-menu-item-pc"),
-                    path=routePath.replace(/\//g,"");
-                    for(let i=0,l=pcHeader.length;i<l;i++){
-                            if(pcHeader[i].classList.contains(path)){
-                                pcHeader[i].classList.add("pc-router-active")
-                            }else{
-                                pcHeader[i].classList.remove("pc-router-active")
-                            }
-                    }
+                        this.currentRoute=this.$route.path;
+                //  var routePath=this.$route.path
+                //  if(routePath=="/"){
+                //         this.$router.push("/first")
+                //  }
+                //  var pcHeader=document.getElementsByClassName("header-left-menu-item-pc"),
+                //     path=routePath.replace(/\//g,"");
+                //     for(let i=0,l=pcHeader.length;i<l;i++){
+                //             if(pcHeader[i].classList.contains(path)){
+                //                 pcHeader[i].classList.add("pc-router-active")
+                //             }else{
+                //                 pcHeader[i].classList.remove("pc-router-active")
+                //             }
+                //     }
             },
             controlHeader(){
                 var self=this

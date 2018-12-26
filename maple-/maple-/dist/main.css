@@ -4,6 +4,7 @@ body{
   position: relative;
   /* background: rgb(238, 237, 237); */
   background: snow;
+  -webkit-font-smoothing: subpixel-antialiased;
   /* background: #CCC repeat-y 50% 10% url("./1.jpg") border-box; */
 }
 
@@ -84,25 +85,35 @@ transition: transform .7s cubic-bezier(0.075, 0.82, 0.165, 1);
 .header-left-sha-tran-enter-active{
 transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-/* transition */
+.content-item-tran-leave-to,.content-item-tran-enter{
+  opacity: .3;
+  transform: translateX(10rem);
+}
+.content-item-tran-leave-active{
+transition: all .7s ease-out;
+}
+.content-item-tran-enter-active{
+transition: all .5s ease-out;
+}
+/* transition  end*/
 h1{
-  font-size: 30px;
+  font-size: 2rem;
   font-weight: 100;
 }
 h2{
-  font-size: 24px;
+  font-size: 1.8rem;
   font-weight: 100;
 }
 h3{
-  font-size: 18px;
+  font-size: 1.6rem;
   font-weight: 100;
 }
 h4{
-  font-size: 16px;
-  font-weight: 200;
+  font-size: 1.4rem;
+  font-weight: 300;
 }
 h5{
-  font-size: 12px;
+  font-size: 1.2rem;
   font-weight: 100;
 }
 p{
@@ -115,10 +126,12 @@ p{
   background: rgb(231, 78, 224);
 }
 .info{
-  background: rgb(189, 177, 186);
+  background: rgb(231, 228, 230);
+  color: #c1b6b6;
 }
 .info:hover{
   background: #409EFF;
+  color: snow;
 }
 button{
   border: none;
@@ -148,7 +161,7 @@ button{
   border-radius: .2rem;
   text-align: left;
   width: 90%;
-  color: snow;
+  color: white;
   height: auto;
   margin: .2rem 0;
   min-height: 3rem;
