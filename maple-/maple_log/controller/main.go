@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"fmt"
 	"database/sql"
-	// "strconv"
+	"strconv"
 	// "io"
 	"time"
 	"encoding/json"
@@ -33,11 +33,12 @@ func main(){
 func  handleFirstPage(w http.ResponseWriter,r *http.Request){
        r.ParseForm()  
 	//   r.ParseMultipartForm(1024)  
-	  limit:=r.URL.Query()["number"][0]
-	  if limit==""{
-		  limit="20"
+	  page_num,_:=strconv.ParseInt(r.URL.Query()["page_num"][0],10,10)
+	  if page_num==0{
+		  page_num=1
 	  }
-	  h_err :=firstPageQuery("Select * From maple_log limit "+limit,w)
+	  offset := strconv.FormatInt((page_num-1)*10,10)+","+strconv.FormatInt(page_num*10,10)
+	  h_err :=firstPageQuery("Select * From maple_log limit "+offset,w)
 	  if h_err !=nil {
 		w.WriteHeader(500)
 		w.Write([]byte("server error"))
@@ -80,7 +81,7 @@ func mapleInsertContent(w http.ResponseWriter,reqContent map[string]string)error
 		res,res_err :=smt.Exec(reqContent["title"],reqContent["content"],"maple",time.Now())
 		checkErr(res_err)
 		lastId,_ :=res.LastInsertId()
-		
+
 		var temDatas=make(map[string]string)
 		if lastId !=0 {
 				temDatas["code"]="10000"

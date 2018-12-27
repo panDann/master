@@ -5,12 +5,12 @@
             </div> -->
             <div class="content-left">
                 <transition-group name="content-item-tran">
-                    <div v-for="v in dataList" :key="v.id" class="first-content-item" >
+                    <div v-for="(v,i) in dataList" :key="v.id" class="first-content-item" >
                         <h3>{{v.title}}</h3>
                         <p :class="{'first-content-item-div':!v.isUnfold}" v-html="v.content">
                         </p>
                         <div class="content-float-bottom">
-                         <button  class="button pupple info" @click="foldContent(v,$event)">{{!v.isUnfold? "展开":"收起"}}文章</button>
+                         <button  class="button pupple info" @click="foldContent(v,i)">{{!v.isUnfold? "展开":"收起"}}文章</button>
                         </div>
                     </div>
                 </transition-group>
@@ -25,6 +25,7 @@
     export default {
         data () {
             return {
+                isCurrentChanged:true,
             }
         },
         created(){
@@ -34,18 +35,21 @@
                this.controlLeftMenu()
                window.addEventListener("resize",this.controlLeftMenu)  
                if(!this.dataList.length){
-                  this.$store.dispatch("getData")
+                  this.$store.dispatch("firstGetData")
                }
                   
         },
         watch:{
-           
+           currentPage:function(n,o){
+               this.isCurrentChanged=true
+           }
         },
         computed:{
             ...mapState({
                leftChange:"leftChange",
                dataList:state=>state.first_page.dataList,
-               previewed:"previewed"
+               currentPage:state=>state.first_page.currentPage,
+               previewed:"previewed",
             }),
         },
         methods:{
@@ -62,32 +66,43 @@
                     leftDiv.style.marginTop=parseInt(headerHeight)+"px";
             },
             
-            foldContent(obj){
+            foldContent(obj,i){
                     obj.isUnfold=!obj.isUnfold
                     if(obj.isParsed==false){
                         this.$store.commit("commonParseCode",obj)
                         obj.content=this.previewed;
-                        // obj.content=this.parseCode(obj)
                         obj.isParsed=true
                     }
                     var floatDiv=document.getElementsByClassName("content-float-bottom"),
                         floatArr=[],
-                        parentArr=[]
+                        parentArr=[],
+                        currentWidth=document.defaultView.getComputedStyle(floatDiv[0].parentElement,null).width||floatDiv[0].parentElement.currentStyle.width
+                        floatDiv[i].classList.remove("content-float-bottom-is-fix")//收起时移除类
                     var self=this;
-                    for(var i=0,l=floatDiv.length;i<l;i++){
+                    setTimeout(()=>{
+                        for(var i=0,l=floatDiv.length;i<l;i++){
                            floatArr.push(self.getOffset(floatDiv[i]))
                            parentArr.push(self.getOffset(floatDiv[i].parentElement))
                         }
+                    },0)
+                    
+                    var winHeight=window.innerHeight
                     window.onscroll=function(){
-                       
                          for(var i=0,l=parentArr.length;i<l;i++){
-                             if(parentArr[i]<window.pageYOffset&&window.pageYOffset<parentArr[i]+floatArr[i]){
-                                 console.log(i)
+                            if(winHeight<floatArr[i]-parentArr[i]){
+                                 if(parentArr[i]+200<winHeight+window.pageYOffset&&winHeight+window.pageYOffset<floatArr[i]){
+                                     floatDiv[i].classList.add("content-float-bottom-is-fix")
+                                     floatDiv[i].style.width=currentWidth
+                                 }else{
+                                     floatDiv[i].classList.remove("content-float-bottom-is-fix")
+                                 }
                              }
-                            // console.log(parentArr[i]+200-window.pageYOffset)
                          }
-                         console.log(window.pageYOffset,window.innerHeight)
-                    }
+                         if(window.pageYOffset+winHeight+200>document.documentElement.scrollHeight&&self.isCurrentChanged){
+                                 self.$store.dispatch("firstGetData")
+                                 self.isCurrentChanged=false
+                         }
+                    };
                    
             },
             getOffset(el){
@@ -139,6 +154,9 @@
 .content-float-bottom-is-fix{
     position: fixed;
     bottom: 0;
+    background: snow;
+    margin: 0;
+    /* width: 100%; */
 }
 p{
     text-indent: 2rem;
@@ -146,16 +164,19 @@ p{
 .first-content-item{
     margin: .4rem 0;
     border-bottom: .5px solid rgb(150, 155, 155);
-    padding: .4rem;
+    padding:0;
     border: .5px solid rgb(220, 224, 224);
     border-radius: .4rem;
+}
+.first-content-item p{
+    padding: .8rem;
 }
 .first-content-item:hover{
     box-shadow: 0px 1px 5px black;
 }
 .first-content-item-div{
      overflow: hidden;
-     height: 1.5rem;
+     height: 2rem;
      text-overflow: ellipsis;
      white-space: nowrap;
 }

@@ -4,24 +4,32 @@ import axios  from "axios"
 var moduleFirstPage={
     state:{
         test:"11225",
-        dataList:[
-            // {title:"maple",
-            //     id:12,
-            // }
-        ],
+        pageSize:10,
+        currentPage:1,
+        dataList:[   ],
+        searchText:"",
+        isSearch:false,
         
     },
     mutations:{
-        setData(state,data){
+        firstSetData(state,data){
              state.dataList=data;
         }
     },
     actions:{
-        getData:function({commit,state,rootState},msg){
+        firstGetData:function({commit,state,rootState},msg){
+            if(state.currentPage>10){
+                handleError(rootState,"考虑性能，停止加载",true)
+                return
+            }
+            var url=""
+            if(state.isSearch){
+                url="/api/first?page_num="+state.currentPage+"&search_text="+state.searchText+""
+            }else{
+                url="/api/first?page_num="+state.currentPage+""
+            }
             rootState.loading=true;
-            var url="/api/first?number=10",
-            sendDat={a:"aaaaa"}
-            axios.post(url,JSON.stringify("data"),sendDat)
+            axios.get(url,)
                     .then(res=>{
                         rootState.loading=false;
                         var temRes=res.data
@@ -32,20 +40,19 @@ var moduleFirstPage={
                                     item=JSON.parse(item)
                                     item["isUnfold"]=false;
                                     item["isParsed"]=false;
-                                    tem.push(item)
+                                    // tem.push(item)
+                                    state.dataList.push(item);
                             });
-                            console.log(tem)
-                            handleError(rootState,"首页已刷新")
-                            commit("setData",tem)
+                            // commit("firstSetData",tem)
+                            state.currentPage++
                         }else{
                             handleError(rootState,temRes.msg)
                         }
-                       
                     })
                     .catch(err=>{
                         console.error(err)
                     })
-            }
+        },
     },
 }
 
@@ -128,6 +135,9 @@ var store={
         commonParseCode(state,msg){
             state.previewed=parseCode(msg)
         },
+        closeError(sta){
+            sta.messagebox.show=false;
+        }
         // commonCurrentRoute(sta,route){
         //     sta.currentRoute=route
         // }
@@ -141,12 +151,14 @@ var store={
         about_maple:moduleAboutMaple
     }
 }
-function handleError(obj,msg){
+var timer=0
+function handleError(obj,msg,isForever){
     obj.messagebox={
         msg:msg,
         show:true,
     }
-    setTimeout(() => {
+    if(isForever) return
+    timer=setTimeout(() => {
         obj.messagebox.show=false;
     }, 3000);
 }

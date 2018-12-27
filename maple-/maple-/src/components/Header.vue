@@ -15,7 +15,7 @@
         </div>
         <div class="header-right">
             <form action="">
-                <input type="search" class="search"  placeholder="搜索关键字"><i class="search-bar"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 30 26"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></i>
+                <input type="search" class="search" v-model="searchText"  placeholder="搜索关键字" @keypress="searchContent($event)"><i class="search-bar"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 30 26"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></i>
             </form>
         </div>
      <div class="loading" v-show="loading"></div>
@@ -31,10 +31,12 @@
                 scrollStart:document.documentElement.scrollTop,
             }
         },
-       computed:mapState({
+       computed:{
+           ...mapState({
             left:"leftChange",
             loading:"loading",
-        }),
+            searchText:sta=>sta.first_page.searchText
+        })},
         mounted(){
               this.checkRouter()
               this.controlHeader()
@@ -43,20 +45,6 @@
             $route:{
                 handler(newV,oldV){
                         this.currentRoute=newV.path;
-                // var pcHeader=document.getElementsByClassName("header-left-menu-item-pc"),
-                //     mbHeader=document.getElementsByClassName("header-left-menu-item"),
-                //     path=newV.path.replace(/\//g,"");
-                //     for(let i=0,l=pcHeader.length;i<l;i++){
-                //              if(pcHeader[i].classList.contains(path)){
-                //                 pcHeader[i].classList.add("pc-router-active")
-                //                 mbHeader[i].classList.add("mb-router-active")
-                //             }else{
-                //                 pcHeader[i].classList.remove("pc-router-active")
-                //                 mbHeader[i].classList.remove("mb-router-active")
-                //             }
-                //     }
-                    // console.log(this.isShowLeft)
-                // sessionStorage.routerState=newV.path;
                 },
                 immediate:true,
             },
@@ -95,19 +83,19 @@
             },
             checkRouter(){
                         this.currentRoute=this.$route.path;
-                //  var routePath=this.$route.path
-                //  if(routePath=="/"){
-                //         this.$router.push("/first")
-                //  }
-                //  var pcHeader=document.getElementsByClassName("header-left-menu-item-pc"),
-                //     path=routePath.replace(/\//g,"");
-                //     for(let i=0,l=pcHeader.length;i<l;i++){
-                //             if(pcHeader[i].classList.contains(path)){
-                //                 pcHeader[i].classList.add("pc-router-active")
-                //             }else{
-                //                 pcHeader[i].classList.remove("pc-router-active")
-                //             }
-                //     }
+                 var routePath=this.$route.path
+                 if(routePath=="/"){
+                        this.$router.push("/first")
+                 }
+          
+            },
+            searchContent(e){
+                var key=e.keyCode
+                if(key=="13"){
+                    e.preventDefault()
+                }
+                // this.$router.push("/first")
+
             },
             controlHeader(){
                 var self=this

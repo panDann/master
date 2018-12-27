@@ -20,7 +20,7 @@
       <i class="fa fa-angle-up"></i>
     </div>
      <div class="app-message-box" v-show="messagebox.show">
-       {{messagebox.msg}}<span>&#10006;</span>
+       {{messagebox.msg}}<span @click="closeHandleError">&#10006;</span>
      </div>
   </div>
 </template>
@@ -104,10 +104,15 @@ export default {
                     leftDiv.style.marginTop=parseInt(headerHeight)+"px";
 
       },
-      checkRouter(){
-                        this.currentRoute=this.$route.path;
-      }
+    checkRouter(){
+                      this.currentRoute=this.$route.path;
+    },
+     closeHandleError(){
+       this.$store.commit("closeError")
      }
+     
+     },
+     
 }
 </script>
 
@@ -177,9 +182,9 @@ li {
     position: relative;
     line-height: 5rem;
     margin: .5rem auto;
-    box-shadow: 0px 1px 1px rgb(56, 139, 187);
+    box-shadow: 2px 2px 15px rgb(56, 139, 187);
     /* filter: drop-shadow(0px 2px 5px rgb(107, 156, 197)); */
-    border-bottom: .5px solid #409EFF;   
+    border-bottom: .5px solid rgb(226, 229, 233);   
 }
 .header-left-menu-item a{
   text-decoration: none;
@@ -226,6 +231,7 @@ li {
   float: right;
   margin-right: 1rem;
   color: snow;
+  cursor: pointer;
 }
 // .app-message-box span:hover{
 //     opacity: .9;
