@@ -1,5 +1,5 @@
 <template>
-      <div class="content" >
+      <div class="content"  id="content-first">
             <!-- <div class="content-username">
 
             </div> -->
@@ -25,56 +25,55 @@
     export default {
         data () {
             return {
+                isCurrentChanged:true,
             }
         },
         created(){
             
         },
         mounted(){
-               this.controlLeftMenu()
-               window.addEventListener("resize",this.controlLeftMenu)  
+               if(this.isSearch) return
                if(!this.dataList.length){
-                  this.$store.dispatch("getData")
+                  this.$store.dispatch("firstGetData")
+               }else{
+                   this.foldContent()
                }
                   
         },
-        watch:{
-           
-        },
+     
         computed:{
             ...mapState({
                leftChange:"leftChange",
                dataList:state=>state.first_page.dataList,
-               previewed:"previewed"
+               isSearch:state=>state.first_page.isSearch,
+               currentPage:state=>state.first_page.currentPage,
+               previewed:"previewed",
             }),
         },
+        watch:{
+           currentPage:function(n,o){
+               this.isCurrentChanged=true
+           },
+           
+        },
         methods:{
-         
-            controlLeftMenu(){
-                var leftDiv=document.getElementsByClassName("header-left-menu")[0],
-                    doc=document.documentElement,
-                    docWidth=doc.clientWidth||400,
-                    docHeight=doc.clientHeight||600,
-                    docFontSize=document.defaultView.getComputedStyle(doc,null).fontSize||doc.currentStyle.fontSize,
-                    headerHeight=document.defaultView.getComputedStyle(document.getElementsByClassName("header")[0],null).height||document.getElementsByClassName("header")[0].currentStyle.height;
-                    leftDiv.style.width=docWidth/2+"px";
-                    leftDiv.style.height=docHeight-parseInt(headerHeight)+"px";
-                    leftDiv.style.marginTop=parseInt(headerHeight)+"px";
-            },
             
             foldContent(obj,i){
-                    obj.isUnfold=!obj.isUnfold
-                    if(obj.isParsed==false){
-                        this.$store.commit("commonParseCode",obj)
-                        obj.content=this.previewed;
-                        // obj.content=this.parseCode(obj)
-                        obj.isParsed=true
-                    }
+                    this.$store.commit("commonContentBodyState")
+                  
                     var floatDiv=document.getElementsByClassName("content-float-bottom"),
                         floatArr=[],
                         parentArr=[],
                         currentWidth=document.defaultView.getComputedStyle(floatDiv[0].parentElement,null).width||floatDiv[0].parentElement.currentStyle.width
+                    if(typeof obj != "undefined"){// 折叠处理
+                        obj.isUnfold=!obj.isUnfold
+                        if(obj.isParsed==false){
+                            this.$store.commit("commonParseCode",obj)
+                            obj.content=this.previewed;
+                            obj.isParsed=true
+                        }
                         floatDiv[i].classList.remove("content-float-bottom-is-fix")//收起时移除类
+                    }// 折叠处理
                     var self=this;
                     setTimeout(()=>{
                         for(var i=0,l=floatDiv.length;i<l;i++){
@@ -82,19 +81,24 @@
                            parentArr.push(self.getOffset(floatDiv[i].parentElement))
                         }
                     },0)
-                    
                     var winHeight=window.innerHeight
-
                     window.onscroll=function(){
                          for(var i=0,l=parentArr.length;i<l;i++){
                             if(winHeight<floatArr[i]-parentArr[i]){
-                                 if(parentArr[i]+200<winHeight+window.pageYOffset&&winHeight+window.pageYOffset<floatArr[i]){
+                                 if(parentArr[i]+300<winHeight+window.pageYOffset&&winHeight+window.pageYOffset<floatArr[i]){
+                                     if(!floatDiv[i])continue
                                      floatDiv[i].classList.add("content-float-bottom-is-fix")
                                      floatDiv[i].style.width=currentWidth
-                                 }else{
+                                 }else if(floatDiv[i]){
                                      floatDiv[i].classList.remove("content-float-bottom-is-fix")
+                                 }else{
+                                     continue
                                  }
                              }
+                         }
+                         if(window.pageYOffset+winHeight+200>document.documentElement.scrollHeight&&self.isCurrentChanged){
+                                 self.$store.dispatch("firstGetData")
+                                 self.isCurrentChanged=false
                          }
                     };
                    

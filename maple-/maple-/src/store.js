@@ -3,23 +3,28 @@ import axios  from "axios"
 
 var moduleFirstPage={
     state:{
-        test:"11225",
+        
         pageSize:10,
         currentPage:1,
-        dataList:[   ],
+        dataList:[],
         searchText:"",
         isSearch:false,
-        
     },
     mutations:{
         firstSetData(state,data){
              state.dataList=data;
+        },
+        firstStartSearch(state,msg){
+            state.isSearch=true
+            state.searchText=msg
+            state.currentPage=1
+            state.dataList=[]
         }
     },
     actions:{
         firstGetData:function({commit,state,rootState},msg){
-            if(state.currentPage>10){
-                handleError(rootState,"考虑性能，停止加载",true)
+            if(state.currentPage>3){
+                handleError(rootState,"性能考虑，停止加载",true)
                 return
             }
             var url=""
@@ -32,18 +37,16 @@ var moduleFirstPage={
             axios.get(url,)
                     .then(res=>{
                         rootState.loading=false;
+                        // rootState.commonContentBodyState=!rootState.commonContentBodyState
                         var temRes=res.data
                         // commit("loadingState",false,{root:true})
                         if(temRes.code==10000){
-                            var tem=[]
                             temRes.msg.forEach(function(item){
                                     item=JSON.parse(item)
                                     item["isUnfold"]=false;
                                     item["isParsed"]=false;
-                                    // tem.push(item)
                                     state.dataList.push(item);
                             });
-                            // commit("firstSetData",tem)
                             state.currentPage++
                         }else{
                             handleError(rootState,temRes.msg)
@@ -58,21 +61,93 @@ var moduleFirstPage={
 
 var moduleWebFront={
     state:{
-        test:"11225",
+        
         dataList:[],
+        searchText:"JS|CSS",
+        currentPage:1,
     },
     mutations:{
-        setData(state,data){
+        webSetData(state,data){
              state.dataList=data;
-        }
-    },
-    actions:{
+        },
       
     },
+    actions:{
+        webGetData:function({commit,state,rootState},msg){
+            if(state.currentPage>3){
+                handleError(rootState,"性能考虑，停止加载",true)
+                return
+            }
+            var  url="/api/first?page_num="+state.currentPage+"&search_text="+state.searchText+""
+            rootState.loading=true;
+            axios.get(url,)
+                    .then(res=>{
+                        rootState.loading=false;
+                        var temRes=res.data
+                        if(temRes.code==10000){
+                            temRes.msg.forEach(function(item){
+                                    item=JSON.parse(item)
+                                    item["isUnfold"]=false;
+                                    item["isParsed"]=false;
+                                    state.dataList.push(item);
+                            });
+                            state.currentPage++
+                        }else{
+                            handleError(rootState,temRes.msg)
+                        }
+                    })
+                    .catch(err=>{
+                        handleError(rootState,"网络故障")
+                    })
+        },
+       },
+}
+var moduleGolangService={
+    state:{
+        
+        dataList:[],
+        searchText:"go",
+        currentPage:1,
+    },
+    mutations:{
+        golangSetData(state,data){
+             state.dataList=data;
+        },
+      
+    },
+    actions:{
+        golangGetData:function({commit,state,rootState},msg){
+            if(state.currentPage>3){
+                handleError(rootState,"性能考虑，停止加载",true)
+                return
+            }
+            var  url="/api/first?page_num="+state.currentPage+"&search_text="+state.searchText+""
+            rootState.loading=true;
+            axios.get(url,)
+                    .then(res=>{
+                        rootState.loading=false;
+                        var temRes=res.data
+                        if(temRes.code==10000){
+                            temRes.msg.forEach(function(item){
+                                    item=JSON.parse(item)
+                                    item["isUnfold"]=false;
+                                    item["isParsed"]=false;
+                                    state.dataList.push(item);
+                            });
+                            state.currentPage++
+                        }else{
+                            handleError(rootState,temRes.msg)
+                        }
+                    })
+                    .catch(err=>{
+                        handleError(rootState,"网络故障")
+                    })
+        },
+       },
 }
 var moduleAboutMaple={// about maple
     state:{
-        test:"11225",
+        
         isPreview:false,
         mapleContent:"",
         previewAfter:"",
@@ -101,7 +176,7 @@ var moduleAboutMaple={// about maple
                         rootState.loading=false;
                         // commit("loadingState",false,{root:true})
                         handleError(rootState,res.data.msg)
-                        commit("setData",tem)
+                        // commit("setData",tem)
                     })
                     .catch(err=>{
                         console.error(err)
@@ -120,6 +195,7 @@ var store={
             show:false
         },
         previewed:"",// 公用的文章解析缓存
+        contentBodyChanged:false,
         // currentRoute:"",
     },
     mutations:{
@@ -135,6 +211,9 @@ var store={
         commonParseCode(state,msg){
             state.previewed=parseCode(msg)
         },
+        commonContentBodyState(state){
+            state.contentBodyChanged=!state.contentBodyChanged
+        },
         closeError(sta){
             sta.messagebox.show=false;
         }
@@ -148,17 +227,17 @@ var store={
     modules:{
         first_page:moduleFirstPage,
         web_front:moduleWebFront,
+        golang_service:moduleGolangService,
         about_maple:moduleAboutMaple
     }
 }
-var timer=0
 function handleError(obj,msg,isForever){
     obj.messagebox={
         msg:msg,
         show:true,
     }
     if(isForever) return
-    timer=setTimeout(() => {
+    setTimeout(() => {
         obj.messagebox.show=false;
     }, 3000);
 }

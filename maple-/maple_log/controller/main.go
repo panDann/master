@@ -31,14 +31,22 @@ func main(){
 }
 
 func  handleFirstPage(w http.ResponseWriter,r *http.Request){
-       r.ParseForm()  
+	   r.ParseForm()  
+	  var queryString,offset string
 	//   r.ParseMultipartForm(1024)  
 	  page_num,_:=strconv.ParseInt(r.URL.Query()["page_num"][0],10,10)
-	  if page_num==0{
-		  page_num=1
+		
+	  offset =`10`+` offset `+strconv.FormatInt((page_num-1)*10,10)
+
+	  if _,ok:=r.URL.Query()["search_text"];ok{
+		 search_text :=r.URL.Query()["search_text"][0]
+		 queryString = `Select * From (Select * From maple_log where title Regexp "`+search_text+`") as t limit `+offset
+	  }else{
+	      queryString ="Select * From maple_log limit "+offset
 	  }
-	  offset := strconv.FormatInt((page_num-1)*10,10)+","+strconv.FormatInt(page_num*10,10)
-	  h_err :=firstPageQuery("Select * From maple_log limit "+offset,w)
+			fmt.Println(offset)
+
+	  h_err :=firstPageQuery(queryString,w)
 	  if h_err !=nil {
 		w.WriteHeader(500)
 		w.Write([]byte("server error"))
@@ -62,7 +70,7 @@ func  handleAboutMapleContent(w http.ResponseWriter,r *http.Request){
 		var temContent =make(map[string]string)
 		for i,v := range r.Form {
 			temContent[i]=string(v[0])
-			fmt.Println(v,i)
+			// fmt.Println(v,i)
 		}
 		err :=mapleInsertContent(w,temContent)
 		if err != nil {
@@ -110,6 +118,7 @@ func firstPageQuery(query string,w http.ResponseWriter) error{
 	}
 
 	var datas []string
+	fmt.Println(len(datas))
 	for result.Next() {
 		err :=result.Scan(scanA...)
 		checkErr(err)
@@ -120,10 +129,11 @@ func firstPageQuery(query string,w http.ResponseWriter) error{
 		tem,_ :=json.MarshalIndent(data,"","  ")
 		datas=append(datas,string(tem))
 	}
+	fmt.Println(len(datas))
 	var temRes =make(map[string]interface{})
 	if len(datas)==0 {
 		temRes["code"]="10001"
-		temRes["msg"]="未查到文章"
+		temRes["msg"]="没有更多文章"
 	}else{
 		temRes["code"]="10000"
 		temRes["msg"]=datas

@@ -15,7 +15,7 @@
         </div>
         <div class="header-right">
             <form action="">
-                <input type="search" class="search" v-model="searchText"  placeholder="搜索关键字" @keypress="searchContent($event)"><i class="search-bar"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 30 26"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></i>
+                <input type="search" spellcheck="false" class="search" v-model="searchText"  placeholder="搜索关键字" @keypress="searchContent($event)"><i class="search-bar" @click="searchContent('click')"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 30 26"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></i>
             </form>
         </div>
      <div class="loading" v-show="loading"></div>
@@ -28,6 +28,10 @@
             return {
                 isShowLeft:false,
                 currentRoute:"",
+                searchText:"",
+                floatDiv:"",
+                floatArr:[],
+                parentArr:[],
                 scrollStart:document.documentElement.scrollTop,
             }
         },
@@ -35,16 +39,18 @@
            ...mapState({
             left:"leftChange",
             loading:"loading",
-            searchText:sta=>sta.first_page.searchText
+            contentBodyChanged:"contentBodyChanged"
         })},
         mounted(){
               this.checkRouter()
               this.controlHeader()
+            //   this.floatDiv=document.getElementsByClassName("content-float-bottom")
         },
         watch:{
             $route:{
                 handler(newV,oldV){
                         this.currentRoute=newV.path;
+                        this.initialFloatDiv()
                 },
                 immediate:true,
             },
@@ -52,10 +58,7 @@
                 var sub=o-n,
                     headerDiv=document.getElementsByClassName('header')[0],
                     topButton=document.getElementsByClassName("top-button")[0]
-                    // initailTop=document.documentElement.scrollTop||document.body.scrollTop,
-
                 if(o==0){
-                    //  headerDiv.classList.remove("header-scroll")
                     return
                 }
                 if(sub<0){
@@ -70,6 +73,9 @@
                 if(n==0){
                      topButton.classList.remove("top-button-active")
                 }
+            },
+            contentBodyChanged:function(n,o){
+                        this.initialFloatDiv()
             }
         },
        
@@ -82,7 +88,7 @@
                 }
             },
             checkRouter(){
-                        this.currentRoute=this.$route.path;
+                 this.currentRoute=this.$route.path;
                  var routePath=this.$route.path
                  if(routePath=="/"){
                         this.$router.push("/first")
@@ -91,19 +97,45 @@
             },
             searchContent(e){
                 var key=e.keyCode
-                if(key=="13"){
-                    e.preventDefault()
+                if(key=="13"||e=="click"){
+                    typeof e=="object"? e.preventDefault():""
+                    if(!this.searchText){
+                        this.$store.commit("handleError","搜索内容不能为空")
+                        return
+                    }
+                    this.$router.push("/first")
+                    this.$store.commit("firstStartSearch",this.searchText)
+                    this.$store.dispatch("firstGetData")
                 }
-                // this.$router.push("/first")
 
             },
             controlHeader(){
                 var self=this
                 window.addEventListener("scroll",function(){
                     self.scrollStart=document.documentElement.scrollTop||document.body.scrollTop
+                  
                 },false)
             },
-            
+            initialFloatDiv(){
+                        this.floatDiv=document.getElementsByClassName("content-float-bottom")
+                        var self=this;
+                       setTimeout(()=>{
+                        for(var i=0,l=self.floatDiv.length;i<l;i++){
+                           self.floatArr.push(self.getOffset(self.floatDiv[i]))
+                           self.parentArr.push(self.getOffset(self.floatDiv[i].parentElement))
+                        //    console.log(sel.floatDiv,sel.floatArr)
+                        }
+                    },0)
+
+            },
+            getOffset(el){
+                var sumOffset=0
+                while(el.offsetParent){
+                        sumOffset+=el.offsetTop
+                        el=el.offsetParent
+                }
+                return sumOffset
+            }
         },
     }
 </script>
@@ -144,8 +176,9 @@
         display: inline-block;
         background: none;
         border-radius: 0;
+        font-size: 16px;
         border-bottom: .5px black solid;
-        padding: .4rem 0;
+        padding: .2rem 0;
         transition: border .5s linear;
     }
     .search-bar{
