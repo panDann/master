@@ -3,7 +3,7 @@
       <div class="content-maple">
    
             <div class="content-maple-left" v-if="!isPreview">
-              <h5>文章编辑器</h5>
+              <h5 style="color:#CCC">文章编辑器</h5>
               <div>
                   <span class="code-type-item" title="CSS代码" @click="addCharacter('C')">C</span>
                   <span class="code-type-item" title="HTML代码" @click="addCharacter('H')">H</span>
@@ -14,8 +14,12 @@
                   <span class="code-type-item" title="一个段落" @click="addCharacter('P')">p</span>
                   <span class="code-type-item" title="<br>换行符" @click="addCharacter('br')">br</span>
                   <span class="code-type-item" title="加粗" @click="addCharacter('B')">B</span>
+                  <span class="code-type-item" title="链接" @click="addCharacter('a')">a</span>
                 </div>
-                <textarea name="" spellcheck="false"  placeholder="输入文章内容（必填）" required v-model="areaContent" id="" class="editor-text"></textarea>
+                <textarea name="" spellcheck="false"  placeholder="输入文章内容（必填）" required v-model="areaContent" 
+                 id="maple-textarea"
+                 class="editor-text"
+                 @keydown="handleCharacter($event)"></textarea>
                 <input type="text" class="content-maple-input" v-model="areaSummary" placeholder="文章简介（可不填）">
                 <input type="text" class="content-maple-input" v-model="areaTitle" placeholder="文章标题（必填）">
                 <div>
@@ -82,9 +86,12 @@
                           break;
                 case "H": endCh="\n<Hcode>\n\n</Hcode>"
                           break;
+                case "a": endCh='<a href="" target="blank"></a>'
+                          break;
                 default:break;
              }
-             this.areaContent=this.areaContent+endCh
+            //  this.areaContent=this.areaContent+endCh
+            this.insertCharacter(endCh)
          },// addC end 
        
         transferPreview(){
@@ -98,6 +105,14 @@
                                                        title:this.areaTitle,
                                                        summary:this.areaSummary} )
         },
+        handleCharacter(e){
+            var e=e||window.event
+            if(e.keyCode==9){
+                e.preventDefault()
+                this.insertCharacter("  ")
+            }
+
+        },
         submitContent(){
               if(!this.areaContent||!this.areaTitle){
                    this.$store.commit("handleError","内容与标题为必填项")
@@ -107,6 +122,23 @@
                                                        content:this.areaContent,
                                                        title:this.areaTitle,
                                                        summary:this.areaSummary})
+        },
+        insertCharacter(ch){
+            var textarea=document.getElementById('maple-textarea'),
+                txtLen=textarea.value.length,
+                selectPos=textarea.selectionStart+ch.length
+                textarea.focus()
+                if(typeof document.selection !='undefined'){
+                    document.selection.createRange().text = str; 
+                    var range = textarea.createTextRange();
+                        range.collapse(true);
+                        range.moveEnd('character', selectPos);
+                        range.moveStart('character', selectPos);
+                        range.select();
+                }else{
+                    textarea.value=textarea.value.substr(0,textarea.selectionStart)+ch+textarea.value.substr(textarea.selectionStart,txtLen)
+                    textarea.setSelectionRange(selectPos,selectPos);
+                }   
         },
     }
     }
@@ -179,6 +211,11 @@ p{
     -webkit-appearance: none;
     border-radius: .1rem;
     /* border-bottom: .5px solid black; */
+}
+.content-maple-preview{
+    display: inline-block;
+    word-wrap: break-word;
+     word-break:break-all; 
 }
 
 

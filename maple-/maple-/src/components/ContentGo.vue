@@ -31,12 +31,23 @@
         created(){
             
         },
+        beforeRouteLeave(to,from,next){
+            this.isCurrentChanged=false;
+            next()
+        },
         mounted(){
+            //    this.$store.commit("commonContentBodyState")
+               var winHeight=window.innerHeight,
+                   self=this;
+               window.addEventListener("scroll",()=>{
+                    if(window.pageYOffset+winHeight+200>document.documentElement.scrollHeight&&self.isCurrentChanged){
+                                 self.$store.dispatch("golangGetData")
+                                 self.isCurrentChanged=false
+                         }
+               },false)
                if(this.isSearch) return
                if(!this.dataList.length){
-                  this.$store.dispatch("firstGetData")
-               }else{
-                   this.foldContent()
+                  this.$store.dispatch("golangGetData")
                }
                   
         },
@@ -44,9 +55,8 @@
         computed:{
             ...mapState({
                leftChange:"leftChange",
-               dataList:state=>state.first_page.dataList,
-               isSearch:state=>state.first_page.isSearch,
-               currentPage:state=>state.first_page.currentPage,
+               dataList:state=>state.golang_service.dataList,
+               currentPage:state=>state.golang_service.currentPage,
                previewed:"previewed",
             }),
         },
@@ -59,21 +69,19 @@
         methods:{
             
             foldContent(obj,i){
-                    this.$store.commit("commonContentBodyState")
+               this.$store.commit("commonContentBodyState")
                   
                     var floatDiv=document.getElementsByClassName("content-float-bottom"),
                         floatArr=[],
                         parentArr=[],
                         currentWidth=document.defaultView.getComputedStyle(floatDiv[0].parentElement,null).width||floatDiv[0].parentElement.currentStyle.width
-                    if(typeof obj != "undefined"){// 折叠处理
                         obj.isUnfold=!obj.isUnfold
                         if(obj.isParsed==false){
                             this.$store.commit("commonParseCode",obj)
                             obj.content=this.previewed;
                             obj.isParsed=true
-                        }
+                        }// 折叠处理
                         floatDiv[i].classList.remove("content-float-bottom-is-fix")//收起时移除类
-                    }// 折叠处理
                     var self=this;
                     setTimeout(()=>{
                         for(var i=0,l=floatDiv.length;i<l;i++){
@@ -96,13 +104,11 @@
                                  }
                              }
                          }
-                         if(window.pageYOffset+winHeight+200>document.documentElement.scrollHeight&&self.isCurrentChanged){
-                                 self.$store.dispatch("firstGetData")
-                                 self.isCurrentChanged=false
-                         }
+                        
                     };
                    
             },
+          
             getOffset(el){
                 var sumOffset=0
                 while(el.offsetParent){
@@ -145,37 +151,5 @@
 }
 
 
-.content-float-bottom{
-    padding: .2rem 2rem;
-   
-}
-.content-float-bottom-is-fix{
-    position: fixed;
-    bottom: 0;
-    background: snow;
-    margin: 0;
-    /* width: 100%; */
-}
-p{
-    text-indent: 2rem;
-}
-.first-content-item{
-    margin: .4rem 0;
-    border-bottom: .5px solid rgb(150, 155, 155);
-    padding:0;
-    border: .5px solid rgb(220, 224, 224);
-    border-radius: .4rem;
-}
-.first-content-item p{
-    padding: .8rem;
-}
-.first-content-item:hover{
-    box-shadow: 0px 1px 5px black;
-}
-.first-content-item-div{
-     overflow: hidden;
-     height: 2rem;
-     text-overflow: ellipsis;
-     white-space: nowrap;
-}
+
 </style>

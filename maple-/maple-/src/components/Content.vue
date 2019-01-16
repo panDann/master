@@ -31,6 +31,10 @@
         created(){
             
         },
+        beforeRouteLeave(to,from,next){
+            this.isCurrentChanged=false;
+            next()
+        },
         mounted(){
             //    this.$store.commit("commonContentBodyState")
                var winHeight=window.innerHeight,
@@ -105,6 +109,7 @@
                     };
                    
             },
+          
             getOffset(el){
                 var sumOffset=0
                 while(el.offsetParent){
@@ -132,13 +137,11 @@
     flex-flow: row nowrap;
     justify-content: space-around;
     height: auto;
-    /* left: 0;
-    right: 0; */
-    /* transform: translate(-50%) */
 
 }
 .content-left{
     width: 40rem;
+    /* position: relative; */
 }
 @media screen and (max-width: 988px){
     .content-left{
@@ -158,26 +161,5 @@
     margin: 0;
     /* width: 100%; */
 }
-p{
-    text-indent: 2rem;
-}
-.first-content-item{
-    margin: .4rem 0;
-    border-bottom: .5px solid rgb(150, 155, 155);
-    padding:0;
-    border: .5px solid rgb(220, 224, 224);
-    border-radius: .4rem;
-}
-.first-content-item p{
-    padding: .8rem;
-}
-.first-content-item:hover{
-    box-shadow: 0px 1px 5px black;
-}
-.first-content-item-div{
-     overflow: hidden;
-     height: 2rem;
-     text-overflow: ellipsis;
-     white-space: nowrap;
-}
+
 </style>

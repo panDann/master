@@ -9,6 +9,7 @@ var moduleFirstPage={
         dataList:[],
         searchText:"",
         isSearch:false,
+        isPreventLoad:false,
     },
     mutations:{
         firstSetData(state,data){
@@ -23,7 +24,7 @@ var moduleFirstPage={
     },
     actions:{
         firstGetData:function({commit,state,rootState},msg){
-            if(state.currentPage>3){
+            if(state.currentPage>4){
                 handleError(rootState,"性能考虑，停止加载",true)
                 return
             }
@@ -184,6 +185,49 @@ var moduleAboutMaple={// about maple
         }
     },
 }
+var moduleMysqlApplication={
+    state:{
+        
+        dataList:[],
+        searchText:"mysql",
+        currentPage:1,
+    },
+    mutations:{
+        mysqlSetData(state,data){
+             state.dataList=data;
+        },
+      
+    },
+    actions:{
+        mysqlGetData:function({commit,state,rootState},msg){
+            if(state.currentPage>3){
+                handleError(rootState,"性能考虑，停止加载",true)
+                return
+            }
+            var  url="/api/first?page_num="+state.currentPage+"&search_text="+state.searchText+""
+            rootState.loading=true;
+            axios.get(url,)
+                    .then(res=>{
+                        rootState.loading=false;
+                        var temRes=res.data
+                        if(temRes.code==10000){
+                            temRes.msg.forEach(function(item){
+                                    item=JSON.parse(item)
+                                    item["isUnfold"]=false;
+                                    item["isParsed"]=false;
+                                    state.dataList.push(item);
+                            });
+                            state.currentPage++
+                        }else{
+                            handleError(rootState,temRes.msg)
+                        }
+                    })
+                    .catch(err=>{
+                        handleError(rootState,"网络故障")
+                    })
+        },
+       },
+}
 
 var store={
 
@@ -228,7 +272,8 @@ var store={
         first_page:moduleFirstPage,
         web_front:moduleWebFront,
         golang_service:moduleGolangService,
-        about_maple:moduleAboutMaple
+        about_maple:moduleAboutMaple,
+        mysql_application:moduleMysqlApplication
     }
 }
 function handleError(obj,msg,isForever){
@@ -246,16 +291,16 @@ function  parseCode(obj){
     // var reCodeEnd=/<\/(J|C|G|M|H)code>/ig
     temString=temString.replace(/<(C|J|H|M|G)code>/ig,"<div class='code-div'><pre><code>")
                        .replace(/<\/(C|J|H|M|G)code>/ig,"</code></pre></div>")
-                       .replace(/(var\s|func\s|function\s|let\s|const\s)/ig,"<span class='code-var-span'>$1</span>")
-                       .replace(/(return\s|if\b|else\b|for\b|while\b)/ig,"<span class='code-if-span'>$1</span>")
+                       .replace(/(var\s|func\s|function\s|let\s|const\s|\bset\s|import\s)/ig,"<span class='code-var-span'>$1</span>")
+                       .replace(/(return\s|if\b|else\b|for\b|while\b|[^\.]go\s)/ig,"<span class='code-if-span'>$1</span>")
                     //    .replace(/\n/ig,"<br/>")
                     //    .replace(/\s/ig,"&nbsp;")
     temString=temString.replace(/\-/ig,"MAPLE")
-                       .replace(/(?=\b\w+?:\W+)/ig,"<span class='code-css-span'>")
-                       .replace(/\:/g,":</span>")
+                       .replace(/(?=\b\w+?:(\s|\w))/ig,"<span class='code-css-span'>")
+                       .replace(/(?=:(\s|\w))/g,"</span>")
                        .replace(/MAPLE/g,"-")
                        .replace(/(\/\/.+?\n)/g,"<span class='code-comment-span'>$1</span>")
-                    //    .replace(/;/g,";<br/>")
+                       .replace(/\n/g,"<br/>")
                     //    .replace(/(\{|\})/g,"$1<br/>")
     
     if(obj.summary){

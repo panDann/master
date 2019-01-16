@@ -4,7 +4,7 @@ package main
 import (
 	"log"
 	"net/http"
-	"fmt"
+	// "fmt"
 	"database/sql"
 	"strconv"
 	// "io"
@@ -26,8 +26,16 @@ func main(){
 	checkErr(sql_err)
 	sql_err = db.Ping()
 	checkErr(sql_err)
-
+	// timer :=time.NewTicker(time.Second*3).C
+	// go func ()  {
+	// 	for i := range timer {
+	// 		fmt.Println(i)
+	// 	}
+		
+	// }()
 	createServer("9000")
+	
+	
 }
 
 func  handleFirstPage(w http.ResponseWriter,r *http.Request){
@@ -40,11 +48,11 @@ func  handleFirstPage(w http.ResponseWriter,r *http.Request){
 
 	  if _,ok:=r.URL.Query()["search_text"];ok{
 		 search_text :=r.URL.Query()["search_text"][0]
-		 queryString = `Select * From (Select * From maple_log where title Regexp "`+search_text+`") as t limit `+offset
+		 queryString = `Select * From (Select * From maple_log where title Regexp "`+search_text+`") as t order BY create_time desc limit `+offset
 	  }else{
-	      queryString ="Select * From maple_log limit "+offset
+	      queryString ="Select * From maple_log order BY create_time desc limit "+offset
 	  }
-			fmt.Println(offset)
+			// fmt.Println(offset)
 
 	  h_err :=firstPageQuery(queryString,w)
 	  if h_err !=nil {
@@ -118,7 +126,7 @@ func firstPageQuery(query string,w http.ResponseWriter) error{
 	}
 
 	var datas []string
-	fmt.Println(len(datas))
+	// fmt.Println(len(datas))
 	for result.Next() {
 		err :=result.Scan(scanA...)
 		checkErr(err)
@@ -129,7 +137,6 @@ func firstPageQuery(query string,w http.ResponseWriter) error{
 		tem,_ :=json.MarshalIndent(data,"","  ")
 		datas=append(datas,string(tem))
 	}
-	fmt.Println(len(datas))
 	var temRes =make(map[string]interface{})
 	if len(datas)==0 {
 		temRes["code"]="10001"

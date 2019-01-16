@@ -20,7 +20,7 @@
       <i class="fa fa-angle-up"></i>
     </div>
      <div class="app-message-box" v-show="messagebox.show">
-       {{messagebox.msg}}<span @click="closeHandleError">&#10006;</span>
+       {{messagebox.msg}}<span @click="closeHandleError">×</span>
      </div>
   </div>
 </template>
@@ -147,6 +147,7 @@ li {
     #header-left{
         display: none;
     }
+   
 }
 @media screen and (max-width: 998px) {
     #header-center{
@@ -154,6 +155,21 @@ li {
     }
     .content-right{
         display: none;
+    }
+     .app-message-box{
+      top: 3.2rem;
+        position: absolute;
+      text-align: center;
+      line-height: 3rem;
+      margin: 0 1rem;
+    
+      background: black;
+      color: snow;
+      border-radius: .1rem;
+      height: 3rem;
+      width: 100%;
+      min-width: 20rem;
+      animation: appbox .5s linear;
     }
 }
 
@@ -218,8 +234,6 @@ li {
   height: 3rem;
   width: auto;
   min-width: 20rem;
-  // display: block;
-  visibility: visible;
   animation: appbox .5s linear;
 }
 @keyframes appbox {
@@ -229,6 +243,7 @@ li {
 .app-message-box span{
   -webkit-appearance: none;
   float: right;
+  font-size: 2rem;
   margin-right: 1rem;
   color: snow;
   cursor: pointer;

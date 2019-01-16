@@ -5,17 +5,20 @@
             <i class="fa fa-align-justify" @click="test" id="header-left"></i>
         </div>
         <div class="header-center">
-            <ul id="header-center">
-                   <li :class="{'header-left-menu-item-pc':true,'pc-router-active':currentRoute=='/first'}"><router-link to="/first">首页</router-link></li>
-                   <li :class="{'header-left-menu-item-pc':true,'pc-router-active':currentRoute=='/web_front'}" ><router-link to="/web_front">web前端</router-link></li>
-                   <li :class="{'header-left-menu-item-pc':true,'pc-router-active':currentRoute=='/golang_service'}"><router-link to="/golang_service">golang服务</router-link></li>
-                   <li :class="{'header-left-menu-item-pc':true,'pc-router-active':currentRoute=='/mysql_application'}"><router-link to="/mysql_application">MySQL应用</router-link></li>
-                   <li :class="{'header-left-menu-item-pc':true,'pc-router-active':currentRoute=='/about_maple'}"><router-link to="/about_maple">关于始主</router-link></li>
+            <ul id="header-center" @mouseout="checkRouter">
+                   <li class="header-left-item-pc" @mouseover="slideBottomBar('/first')"><router-link to="/first">首页</router-link></li>
+                   <li class="header-left-item-pc" @mouseover="slideBottomBar('/web_front')"><router-link to="/web_front">web前端</router-link></li>
+                   <li class="header-left-item-pc" @mouseover="slideBottomBar('/golang_service')"><router-link to="/golang_service">golang服务</router-link></li>
+                   <li class="header-left-item-pc" @mouseover="slideBottomBar('/mysql_application')"><router-link to="/mysql_application">MySQL应用</router-link></li>
+                   <li class="header-left-item-pc" @mouseover="slideBottomBar('/about_maple')"><router-link to="/about_maple">关于始主</router-link></li>
+                   <li class="header-item-bottom" :style="{'left':headerBottomLeft,'width':headerBottomWidth}"><router-link to=""></router-link></li>
+
             </ul>
         </div>
         <div class="header-right">
             <form action="">
-                <input type="search" spellcheck="false" class="search" v-model="searchText"  placeholder="搜索关键字" @keypress="searchContent($event)"><i class="search-bar" @click="searchContent('click')"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 30 26"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></i>
+                <input type="search" spellcheck="false" class="search" v-model="searchText"  @focus="searchBottom=true" @blur="searchBottom=false" placeholder="搜索关键字" @keypress="searchContent($event)" ><i class="search-bar" @click="searchContent('click')"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 30 26"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></i>
+                <span :class="{'search-bottom':searchBottom}"></span>
             </form>
         </div>
      <div class="loading" v-show="loading"></div>
@@ -29,9 +32,39 @@
                 isShowLeft:false,
                 currentRoute:"",
                 searchText:"",
-                floatDiv:"",
+                floatDiv:"",//App.vue div
                 floatArr:[],
                 parentArr:[],
+                headerItem:[
+                    {name:"/first",
+                     id:0,
+                     width:"",
+                     offsetX:""                   
+                    },
+                    {name:"/web_front",
+                     id:1,
+                     width:"",
+                     offsetX:""                   
+                    },
+                    {name:"/golang_service",
+                     id:2,
+                     width:"",
+                     offsetX:""                   
+                    },
+                    {name:"/mysql_application",
+                     id:3,
+                     width:"",
+                     offsetX:""                   
+                    },
+                    {name:"/about_maple",
+                     id:4,
+                     width:"",
+                     offsetX:""                   
+                    },
+                ],
+                searchBottom:false,
+                headerBottomLeft:"",
+                headerBottomWidth:"",
                 scrollStart:document.documentElement.scrollTop,
             }
         },
@@ -42,6 +75,7 @@
             contentBodyChanged:"contentBodyChanged"
         })},
         mounted(){
+              this.initialFloatDiv()
               this.checkRouter()
               this.controlHeader()
             //   this.floatDiv=document.getElementsByClassName("content-float-bottom")
@@ -62,11 +96,11 @@
                     return
                 }
                 if(sub<0){
-                     headerDiv.style.backgroundColor="rgb(188, 204, 214)";
+                    //  headerDiv.style.backgroundColor="rgb(188, 204, 214)";
                      topButton.classList.remove("top-button-active")
                      headerDiv.classList.add("header-scroll")
                 }else{
-                     headerDiv.style.backgroundColor="white";
+                    //  headerDiv.style.backgroundColor="white";
                      headerDiv.classList.remove("header-scroll")
                      topButton.classList.add("top-button-active")
                 }
@@ -88,11 +122,12 @@
                 }
             },
             checkRouter(){
-                 this.currentRoute=this.$route.path;
-                 var routePath=this.$route.path
-                 if(routePath=="/"){
-                        this.$router.push("/first")
-                 }
+                this.slideBottomBar(this.$route.path)
+                //  this.currentRoute=this.$route.path;
+                //  var routePath=this.$route.path
+                //  if(routePath=="/"){
+                //         this.$router.push("/first")
+                //  }
           
             },
             searchContent(e){
@@ -104,7 +139,7 @@
                         return
                     }
                     this.$router.push("/first")
-                    this.$store.commit("firstStartSearch",this.searchText)
+                    this.$store.commit("firstStartSearch",this.searchText.replace(/\s/,"|"))
                     this.$store.dispatch("firstGetData")
                 }
 
@@ -118,15 +153,26 @@
             },
             initialFloatDiv(){
                         this.floatDiv=document.getElementsByClassName("content-float-bottom")
-                        var self=this;
+                        var headerItem=document.getElementsByClassName("header-left-item-pc"),
+                            self=this;
                        setTimeout(()=>{
-                        for(var i=0,l=self.floatDiv.length;i<l;i++){
-                           self.floatArr.push(self.getOffset(self.floatDiv[i]))
-                           self.parentArr.push(self.getOffset(self.floatDiv[i].parentElement))
-                        //    console.log(sel.floatDiv,sel.floatArr)
-                        }
-                    },0)
-
+                            for(var i=0,l=self.floatDiv.length;i<l;i++){
+                                self.floatArr.push(self.getOffset(self.floatDiv[i]))
+                                self.parentArr.push(self.getOffset(self.floatDiv[i].parentElement))
+                            }
+                        },0)
+                         for(var i=0,l=headerItem.length;i<l;i++){
+                             this.headerItem[i].width=this.getCurrentStyle(headerItem[i],"width")
+                             this.headerItem[i].offsetX=headerItem[i].offsetLeft// get current width and offsetX
+                            }
+            },
+            slideBottomBar(name){
+                 for(var i=0,l=this.headerItem.length;i<l;i++){
+                            if(this.headerItem[i].name==name){
+                                this.headerBottomLeft=this.headerItem[i].offsetX-10+"px"
+                                this.headerBottomWidth=this.headerItem[i].width
+                            }
+                    }
             },
             getOffset(el){
                 var sumOffset=0
@@ -135,6 +181,14 @@
                         el=el.offsetParent
                 }
                 return sumOffset
+            },
+            getCurrentStyle(el,attri){
+                var res = document.defaultView.getComputedStyle(el,null)[attri]||el.currentStyle[attri]
+                if(res){
+                    return res
+                }else{
+                    return null
+                }
             }
         },
     }
@@ -157,16 +211,18 @@
         justify-content: space-between;
         align-items: center;
         transition: background-color .3s linear;
-        filter:drop-shadow(0 2px 5px rgb(185, 151, 151));
+        /* filter:drop-shadow(0 2px 5px rgb(185, 151, 151)); */
+        box-shadow: 0 2px 10px rgb(185, 151, 151);
         border-bottom: .5px solid rgb(219, 216, 216);
     }
     .header-right form {
         display: flex;
+        position: relative;
         flex-flow: row nowrap;
     }
     *::placeholder{
         opacity: 0.9;
-        color: rgb(22, 175, 111);
+        color: rgb(179, 189, 184);
     }
     .search{
         outline: none;
@@ -177,9 +233,26 @@
         background: none;
         border-radius: 0;
         font-size: 16px;
-        border-bottom: .5px black solid;
+        border-bottom: .5px rgb(160, 152, 152) solid;
         padding: .2rem 0;
+        width: 80%;
         transition: border .5s linear;
+    }
+    .search-bottom{
+        /* content: "1231"; */
+        display: inline-block;
+        height: 5%;
+        width:80%;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        background: rgb(23, 26, 25);
+        animation: search-bottom .3s linear;
+    }
+    @keyframes search-bottom {
+        0%{transform: scale(.1)}
+        100%{transform: scale(1)}
+
     }
     .search-bar{
         height: 2rem;
@@ -187,23 +260,28 @@
         display: inline-block;
         width: 2rem;
     }
-
-    .search:focus{
-        border-bottom: .5px #409EFF solid;
-    }
+   
     .header-left{
         color: rgb(82, 189, 114);
     }
-    .header-left-menu-item-pc a{
+    .header-left-item-pc a{
         text-decoration: none;
         color:snow;
     }
-    .header-left-menu-item-pc:hover{
-        border-bottom:.1rem solid rgb(33, 71, 196); 
+    .header-center{
+        position: relative;
     }
-    .pc-router-active{
-        border-bottom:.1rem solid rgb(33, 71, 196); 
+    .header-item-bottom{
+        height: .2rem;
+        position: absolute;
+        bottom: 0;
+        /* clip-path:polygon(50% -100%, 100% 50%, 50% 50%, 0 50%); */
+        /* clip-path: polygon(50% -100%, 100% 100%, 100% 100%, -0% 100%); */
+        transition: all .2s linear;
+        border-radius: .2rem;
+        background: #409EFF
     }
+    
     .header-scroll div ul li a{
         color: rgb(12, 13, 14);
     }  
