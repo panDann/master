@@ -68,6 +68,7 @@
                 scrollStart:document.documentElement.scrollTop,
             }
         },
+       
        computed:{
            ...mapState({
             left:"leftChange",
@@ -220,10 +221,7 @@
         position: relative;
         flex-flow: row nowrap;
     }
-    *::placeholder{
-        opacity: 0.9;
-        color: rgb(179, 189, 184);
-    }
+   
     .search{
         outline: none;
         border: none;

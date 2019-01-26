@@ -22,7 +22,7 @@ type resDatas struct{
 
 func main(){
 	var sql_err error
-	db,sql_err =sql.Open("mysql","root:1125@/maple")
+	db,sql_err =sql.Open("mysql","root:1125@tcp(18.191.241.117:3306)/maple")
 	checkErr(sql_err)
 	sql_err = db.Ping()
 	checkErr(sql_err)

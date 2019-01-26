@@ -8,7 +8,11 @@ body{
   font-family: 'Microsoft YaHei','SF Pro Display',Arial,'PingFang SC',sans-serif;
   /* background: #CCC repeat-y 50% 10% url("./1.jpg") border-box; */
 }
-
+/* *::placeholder{
+  opacity: 0.9;
+  font-size: .2rem;
+  color: rgb(179, 189, 184);
+} */
 .stretch::before{
   counter-increment: div;
   width: 100%;

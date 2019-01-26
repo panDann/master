@@ -20,8 +20,12 @@
                  id="maple-textarea"
                  class="editor-text"
                  @keydown="handleCharacter($event)"></textarea>
-                <input type="text" class="content-maple-input" v-model="areaSummary" placeholder="文章简介（可不填）">
-                <input type="text" class="content-maple-input" v-model="areaTitle" placeholder="文章标题（必填）">
+                <!-- <input type="text" class="content-maple-input" v-model="" > -->
+
+                <maple-input v-model="areaSummary" title="文章简介（可不填）"></maple-input>
+                <maple-input v-model="areaTitle" title="文章标题（必填）"></maple-input>
+
+                <!-- <input type="text" class="content-maple-input" v-model="areaTitle" placeholder="（必填）"> -->
                 <div>
                     <button class="content-maple-butto pupple primary" @click="submitContent">提 交</button>
                     <button class="content-maple-butto pupple warning" @click="transferPreview">预 览</button>
@@ -36,15 +40,24 @@
 </template>
 <script>
     import { mapState,mapActions } from 'vuex'
+    import mapleInput from "../components/maple-input"
     export default {
         data () {
             return {
              areaContent:"",
              areaSummary:"",
              areaTitle:"",
+             testInput:""
             }
         },
-      
+        watch:{
+            testInput(n,o){
+                console.log(n,o,"test")
+            }
+        },
+       components:{
+            "maple-input":mapleInput,
+        },
         mounted(){
             if(this.mapleContent){
                 this.areaContent=this.mapleContent
@@ -61,10 +74,9 @@
                 previewAfter:state=>state.about_maple.previewAfter,
             })
         },
-        watch:{
-           
-        },
+      
         methods:{
+            
          addCharacter(ch){
              var endCh=""
              switch(ch){

@@ -1,9 +1,9 @@
 
-import ContentF from "./components/Content"
-import ContentGo from "./components/ContentGo"
-import ContentMySQL from "./components/ContentMySQL"
-import ContentWeb from "./components/ContentWeb"
-import ContentMaple from "./components/ContentMaple"
+import ContentF from "./main/Content"
+import ContentGo from "./main/ContentGo"
+import ContentMySQL from "./main/ContentMySQL"
+import ContentWeb from "./main/ContentWeb"
+import ContentMaple from "./main/ContentMaple"
 
 var router=[
     {

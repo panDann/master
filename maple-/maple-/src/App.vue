@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import Header from "./components/Header";
-import Content from "./components/Content";
+import Header from "./main/Header";
+import Content from "./main/Content";
 import { mapState,mapActions } from 'vuex'
 export default {
   name: 'app',
