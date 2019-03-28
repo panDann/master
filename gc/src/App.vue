@@ -2,41 +2,37 @@
     <div class="layout">
         <Layout>
             <Header>
-                <Menu mode="horizontal" theme="dark" active-name="1">
+                <Menu mode="horizontal" theme="dark" active-name="home" @on-select="transfer">
                     <div class="layout-logo">广财基建</div>
                     <div class="layout-nav">
-                        <MenuItem name="1">
+                        <!-- <MenuItem name="home" >
                             <Icon type="ios-navigate"></Icon>
-                            Item 1
+                             首页
                         </MenuItem>
-                        <MenuItem name="2">
+                        <MenuItem name="work_duty">
                             <Icon type="ios-keypad"></Icon>
-                            Item 2
+                            工作职责
                         </MenuItem>
-                        <MenuItem name="3">
+                        <MenuItem name="work_status">
                             <Icon type="ios-analytics"></Icon>
-                            Item 3
+                            工作状态
                         </MenuItem>
-                        <MenuItem name="4">
+                        <MenuItem name="policy">
                             <Icon type="ios-paper"></Icon>
-                            Item 4
+                            政策法规
                         </MenuItem>
+                        <MenuItem name="item_link">
+                            <Icon type="ios-paper"></Icon>
+                            项目链接
+                        </MenuItem> -->
                     </div>
                 </Menu>
             </Header>
-            <Content :style="{padding: '0 50px'}">
-                <Breadcrumb :style="{margin: '20px 0'}">
-                    <BreadcrumbItem>Home</BreadcrumbItem>
-                    <BreadcrumbItem>Components</BreadcrumbItem>
-                    <BreadcrumbItem>Layout</BreadcrumbItem>
-                </Breadcrumb>
-                <Card>
-                    <div style="min-height: 600px;">
-                        Content
-                    </div>
-                </Card>
+            <Content :style="{padding: '0 15rem'}">
+                <router-view></router-view>
+              
             </Content>
-            <Footer class="layout-footer-center">2011-2016 &copy; TalkingData</Footer>
+            <!-- <Footer class="layout-footer-center">2011-2016 &copy; TalkingData</Footer> -->
         </Layout>
     </div>
 </template>
@@ -51,6 +47,12 @@
           var container=document.getElementsByClassName("layout")[0]
               container.style.height=window.innerHeight+'px'
               // console.log(container.style)
+        },
+        methods :{
+            transfer(name){
+                // alert(name)
+                this.$router.push({name:name})
+            }
         }
     }
 </script>
@@ -74,7 +76,8 @@
     left: 20px;
 }
 .layout-nav{
-    width: 420px;
+    width: auto;
+    float:right;
     margin: 0 auto;
     margin-right: 20px;
 }
