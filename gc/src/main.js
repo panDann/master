@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import './registerServiceWorker'
+// import './registerServiceWorker'
 
 // import { Button, Table } from 'iview';
 import iView from 'iview'

@@ -8,10 +8,13 @@
                 
                     <div style="min-height: 600px;" >
                       <div class="content-top">
-                        <Row >
-                        <Col span="16">
-                              <Card :bordered="false">
-                                  <Carousel autoplay v-model="activeValue" loop >
+                     
+                              <Card :bordered="false" class="content-top-left">
+                                  <Carousel autoplay 
+                                  v-model="activeValue" 
+                                  loop @on-change="callbackCollapse" 
+                                  :autoplay-speed="3000"
+                                  >
                                   <CarouselItem v-for="(item,index) in imgData" :key="index">  
                                       <div class="item-carousel">
                                         <img :src="item.url" alt="">
@@ -19,31 +22,33 @@
                                   </CarouselItem>
                                    </Carousel>
                               </Card>
-                        </Col>
-                        <Col span="8">
-                          <Card>
-                              <Collapse v-model="value1">
-                                  <Panel name="1">
-                                      史蒂夫·乔布斯
-                                      <p slot="content">史蒂夫·乔布斯（Steve Jobs），1955年2月24日生于美国加利福尼亚州旧金山，美国发明家、企业家、美国苹果公司联合创办人。</p>
-                                  </Panel>
-                                  <Panel name="2">
-                                      斯蒂夫·盖瑞·沃兹尼亚克
-                                      <p slot="content">斯蒂夫·盖瑞·沃兹尼亚克（Stephen Gary Wozniak），美国电脑工程师，曾与史蒂夫·乔布斯合伙创立苹果电脑（今之苹果公司）。斯蒂夫·盖瑞·沃兹尼亚克曾就读于美国科罗拉多大学，后转学入美国著名高等学府加州大学伯克利分校（UC Berkeley）并获得电机工程及计算机（EECS）本科学位（1987年）。</p>
-                                  </Panel>
-                                  <Panel name="3">
-                                      乔纳森·伊夫
-                                      <p slot="content">乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。</p>
-                                  </Panel>
-                              </Collapse>
+                       
+                          <Card class="content-top-right">
+                                <p slot="title">
+                                    <Icon type="ios-film-outline"></Icon>
+                                    核心项目
+                                </p>
+                                <a href="#" slot="extra" @click.prevent="changeLimit">
+                                    <Icon type="ios-loop-strong"></Icon>
+                                    去浏览
+                                </a>
+                                <ul>
+                                    <li class="item-li" v-for="(item,index) in itemData" :key="index">
+                                        <a href="#" target="_blank">{{ item.name }}</a>
+                                      
+                                        <span style="float:right">
+                                            <Icon type="ios-star" v-for="n in 4" :key="n"></Icon><Icon type="ios-star" v-if="item.rate >= 9.5"></Icon><Icon type="ios-star-half" v-else></Icon>
+                                            {{ item.rate }}
+                                        </span>
+                                    </li>
+                                </ul>
                           </Card>
-                        </Col>
-                      </Row>
+                       
                       </div>
                      <div class="content-bottom">
                           <Card>
                              <div class="ctb-item-carousel" >
-                                        <img :src="item.url" alt="" v-for="(item,index) in imgData" :key="index">
+                                        <img :class="{'active-border':index==activeValue}" :src="item.url" alt="" v-for="(item,index) in imgData" :key="index" @click="activeValue=index">
                               </div>
                           </Card>
                      </div>
@@ -53,16 +58,15 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
   },
   data () {
     return {
       activeValue:0,
+      collapseValue:"",
       imgData:[
         {
            url:"http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
@@ -75,7 +79,81 @@ export default {
          {
            url:"http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
         },
+      ],
+      itemData:[
+         {
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },
+          {
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },{
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },{
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },{
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },{
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },
+          {
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },
+          {
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },
+          {
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },
+          {
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },
+          {
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },
+          {
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },
+          {
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },
+          {
+                        name: '项目名称',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+          },
+          
       ]
+    }
+  },
+  methods :{
+    callbackCollapse(value){
+      console.log(value)
     }
   }
 }
@@ -89,11 +167,23 @@ export default {
     // box-shadow 0px 0px 30px 10px #ccc
     img 
         width: 100%;
-        height: 100%;
+        height: 30rem;
 .content-top
-    height 30%
+    height 30rem
+    overflow hidden
+    .content-top-left
+        height 100%
+        width 70%
+        float left 
+    .content-top-right
+        height 100%
+        width 28%
+        box-sizing border-box
+        margin-left 1%
+        overflow-y scroll
+        float right 
 .content-bottom
-    margin-top .5rem
+    margin-top 1rem
 
 .ctb-item-carousel
         width auto 
@@ -102,7 +192,22 @@ export default {
         flex-flow row nowrap
         justify-content space-between
         img 
-             width 20%
-             height 10rem
+             width 15%
+             height 5rem
+             transition all .3s
+             box-sizing border-box
+             
+.active-border
+    //  border solid 1px red
+    box-shadow 0 0 10px 5px #cccccc
+    transform scale(1.1)
+.item-li
+  list-style  none
+  // padding .5rem 0
+  margin  1rem 0
+  background none
+.height-limit
+  height 100%
+  overflow-y scroll
 </style>
 

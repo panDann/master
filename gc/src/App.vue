@@ -2,10 +2,13 @@
     <div class="layout">
         <Layout>
             <Header>
-                <Menu mode="horizontal" theme="dark" active-name="home" @on-select="transfer">
-                    <div class="layout-logo">广财基建</div>
+                <Menu mode="horizontal" theme="dark" :active-name="activeName" @on-select="transfer">
+                    <div class="layout-logo">
+                        <img class="logo" src="./assets/gc_logo.jpg" alt="">
+                        <p class="layout-logo-text">广财基建处</p>
+                    </div>
                     <div class="layout-nav">
-                        <!-- <MenuItem name="home" >
+                        <MenuItem name="home" >
                             <Icon type="ios-navigate"></Icon>
                              首页
                         </MenuItem>
@@ -24,13 +27,15 @@
                         <MenuItem name="item_link">
                             <Icon type="ios-paper"></Icon>
                             项目链接
-                        </MenuItem> -->
+                        </MenuItem>
                     </div>
                 </Menu>
             </Header>
-            <Content :style="{padding: '0 15rem'}">
-                <router-view></router-view>
-              
+            <Content :style="{padding: '0 15rem',position:'relative'}">
+
+                <transition name='ease-in'>
+                  <router-view></router-view>
+                </transition>
             </Content>
             <!-- <Footer class="layout-footer-center">2011-2016 &copy; TalkingData</Footer> -->
         </Layout>
@@ -40,8 +45,13 @@
     export default {
         data (){
           return {
-
+            activeName:"home"
           }
+        },
+        watch :{
+            $route:function(n,o){
+                this.activeName=n.name
+            }
         },
         mounted (){
           var container=document.getElementsByClassName("layout")[0]
@@ -66,14 +76,27 @@
     overflow: hidden;
 }
 .layout-logo{
-    width: 100px;
-    height: 30px;
-    background: #5b6270;
+    width: auto;
+    height: 100%;
+    /* background: #5b6270; */
     border-radius: 3px;
     float: left;
     position: relative;
-    top: 15px;
+    /* top: 15px; */
     left: 20px;
+}
+.layout-logo-text{
+    float: right;
+    color:seashell;
+    /* font-weight:698; */
+    margin-left: 1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+}
+.logo {
+    height: 90%;
+    margin: 5% 0;
+    border-radius: 0 0 40% 40%;
 }
 .layout-nav{
     width: auto;
@@ -83,5 +106,17 @@
 }
 .layout-footer-center{
     text-align: center;
+}
+.ease-in-enter-active, .ease-in-leave-active {
+  transition: opacity  .5s;
+}
+.ease-in-enter/* .ease-in-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  position: absolute;
+}
+.ease-in-leave-to {
+  opacity: 0;
+  position: absolute;
+  transform: scale(0)
 }
 </style>
