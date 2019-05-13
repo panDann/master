@@ -1,32 +1,11 @@
 <template>
-<div class="home">
-    <v-carousel
-      delimiter-icon="stop"
-      prev-icon="mdi-arrow-left"
-      next-icon="mdi-arrow-right"
-    >
-      <v-carousel-item
-        v-for="(item,i) in items"
-        :key="i"
-        :src="item.src"
-        class="home-carousel"
-      ></v-carousel-item>
-    </v-carousel>
-    <div class="home-bottom">
-      <a href="#plan_build">
-       <v-btn  large >
-         <v-icon>book</v-icon>
-         &nbsp;
-         在建工程
-         </v-btn>
-      </a>
-       <v-btn  large >
-         <v-icon>donut_large</v-icon>
-         &nbsp;
-         拟建工程
-         </v-btn>
+  <div class="project">
+    <div class="project-bottom">
+            <div>在建项目</div>
+           
+            <div>拟建项目</div>
     </div>
-    
+
     <div id="plan_build" class="building-project">
       <div class="building-project-item" @click="checkItem">
         <div>
@@ -45,28 +24,14 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-</div>
- 
+  </div>
 </template>
-
 <script>
-  export default {
-    data () {
-      return {
-        items: [
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
-          },
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'
-          },
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
-          },
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
-          }
-        ],
+import { setTimeout } from "timers";
+export default {
+  data() {
+    return {
+      activeName: "project",
       dialog: false,
       buildingData: {
         title: "在建项目",
@@ -76,28 +41,31 @@
       },
 
       modal: false
-      }
+    };
+  },
+  watch: {
+    $route: function(n, o) {
+      this.activeName = n.name;
+    }
+  },
+  mounted() {},
+  beforeDestroy() {},
+  methods: {
+    transfer(name) {
+      // alert(name)
+      this.$router.push({ name: name });
     },
-    methods:{
-checkItem() {
+
+    checkItem() {
       this.dialog = true;
     }
-    }
   }
+};
 </script>
-<style lang="stylus" scoped>
-  .home-carousel
-      height calc(100vh - 8rem)
-  .home-bottom
-      width 60%
-      margin 0 auto 
-      height 4rem
-      display flex
-      align-items center
-      justify-content space-around
-  a {
+
+<style  lang="stylus" scoped>
+a {
   color: #515a6e;
-  text-decoration none
 }
 
 a:hover {
@@ -114,7 +82,7 @@ a:hover {
 }
 
 .building-project {
-  margin: 1rem auto;
+  margin: 0 auto;
   text-align: center;
   cursor: pointer;
 

@@ -1,120 +1,71 @@
 <template>
-  <div class="home">
-               <Breadcrumb :style="{margin: '20px 0'}">
-                    <BreadcrumbItem >子条目1</BreadcrumbItem>
-                    <BreadcrumbItem>子条目2</BreadcrumbItem>
-                    <BreadcrumbItem>子条目3</BreadcrumbItem>
-                     <div class="search-area"> 
-                               <Input placeholder="输入项目名" style="width: auto">
-                                    <Icon type="ios-search" slot="prefix" />
-                                </Input>&nbsp;&nbsp;
-                                <Button type="primary">搜索</Button>
-                      </div>
-                </Breadcrumb>
-                
-                    <div style="min-height: 600px;" >
-                        <Row>
-                            <Col span="5" :offset="(index%4==0? 0:1)"
-                                 v-for="(item,index) in dutyData"
-                                 :key="index">
-                                <Card :bordered="false"
-                                      @click.native="activeModal(index)"
-                                      style="margin-bottom:1.5rem">
-                                    
-                                      <div style="text-align:center">
-                                          <img :src="item.img" class="status-img">
-                                          <h3>{{item.title}}(点击查看详情)</h3>
-                                          <p title="完成度"><Progress :percent="25" /></p>
-                                      </div>
-                                </Card>
-                           </Col>
-                        </Row>
-                    </div>
-                    <Modal v-model="modal" width="50%">
-                        <p slot="header" style="color:#f60;text-align:center">
-                            <Icon type="ios-information-circle"></Icon>
-                            <span>{{dutyData[activeIndex].title}}</span>
-                        </p>
-                        <div style="text-align:center">
-                            <p>{{dutyData[activeIndex].content}}</p>
-                        </div>
-                        
-                    </Modal>
+  <div class="work_status">
+
+    <div style="width:60%;margin:2rem auto;">
+      <v-toolbar>
+    <v-icon>settings_input_antenna</v-icon>
+    <v-toolbar-title>Title</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn flat
+      @click="dialog = true"
+      >详情</v-btn>
+ 
+    </v-toolbar-items>
+  </v-toolbar>
+
+    
+    </div>
+      <v-dialog style="backgroud:red"  v-model="dialog" dark width="600px">
+      <v-card>
+     
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat="flat" @click="dialog = false">关闭</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'home',
-  components: {
-  },
-  data () {
+  name: "home",
+  components: {},
+  data() {
     return {
-      activeIndex:0,
-      modal:false,
-      dutyData:[
+      activeIndex: 0,
+      dialog: false,
+      dutyData: [
         {
-           title:"项目1",
-           content:"项目介绍说明",
-           img:"http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
-        },
-         {
-           title:"项目2",
-           content:"项目介绍说明",
-           img:"http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
-        }, {
-           title:"项目3",
-           content:"项目介绍说明",
-           img:"http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
-        },
-         {
-           title:"项目4",
-           content:"项目介绍说明",
-           img:"http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
-        },
-          {
-           title:"项目1",
-           content:"项目介绍说明",
-           img:"http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
-        },
-         {
-           title:"项目2",
-           content:"项目介绍说明",
-           img:"http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
-        }, {
-           title:"项目3",
-           content:"项目介绍说明",
-           img:"http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
-        },
-         {
-           title:"项目4",
-           content:"项目介绍说明",
-           img:"http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
-        },
+          title: "项目1",
+          content: "项目介绍说明",
+          img:
+            "http://jjc.gdufe.edu.cn/_upload/article/images/07/55/1612f0a44baabbcbb1ee3406f6f4/3e48c9d0-1f93-46ec-b29b-f930ffd28960.jpg"
+        }
+       
       ]
-    }
+    };
   },
-  methods :{
-    callbackCollapse(value){
-      console.log(value)
-    },
-    activeModal(index){
-      this.modal=true
-      this.activeIndex=index
-    }
+  methods: {
+    
   }
-}
+};
 </script>
 
 <style lang="stylus">
 
-.status-img
-    width 90%
-    height 90%
-.search-area
-    float right 
-    position relative
-    right 3rem
+.status-img {
+  width: 90%;
+  height: 90%;
+}
+
+.search-area {
+  float: right;
+  position: relative;
+  right: 3rem;
+}
+
 </style>
 
