@@ -8,7 +8,7 @@
                 
                     <div style="min-height: 600px;" >
                       <div class="content-top">
-                     
+                        
                               <Card :bordered="false" class="content-top-left">
                                   <Carousel autoplay 
                                   v-model="activeValue" 
