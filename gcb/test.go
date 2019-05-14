@@ -12,12 +12,12 @@ import (
 	"path/filepath"
 	"github.com/gorilla/sessions"
 	"io"
-	"regexp"
+	// "regexp"
     // "strings"
     "io/ioutil"
 )
 
-var store = sessions.NewCookieStore([]byte(os.Getenv("fdklsjfalh")))
+
 
 
 type Res struct {
@@ -30,8 +30,15 @@ type Cookie struct {
 	value string 
 }
 
-var db *sql.DB
-var  UPLOAD_PATH,err  = filepath.Abs(filepath.Dir(os.Args[0]))
+var (
+	db *sql.DB
+    UPLOAD_PATH,err  = filepath.Abs(filepath.Dir(os.Args[0]))
+
+	store = sessions.NewCookieStore([]byte(time.Now().Format("2019-02-23 21:33:22")))
+
+	userMaxAge = make(map[string]time.Time)
+	p = fmt.Println
+) 
 
 func main (){
 	var err error
@@ -39,13 +46,12 @@ func main (){
 	checkErr(err)
 	defer db.Close()
 
-	// http.HandleFunc("/",handleSearch)
+	http.HandleFunc("/api/test",handleSearch)
 	// http.HandleFunc("/api/file",handlePhoto)
-	fmt.Println(store)
 
-	re := regexp.MustCompile("^/(.+?)/")
-	res := re.FindStringSubmatch(UPLOAD_PATH)
-	http.HandleFunc(`/`+res[1]+`/`,handleShow)
+	// re := regexp.MustCompile("^/(.+?)/")
+	// res := re.FindStringSubmatch(UPLOAD_PATH)
+	// http.HandleFunc(`/`+res[1]+`/`,handleShow)
 
 	http.HandleFunc("/api/user/login",handleLogin)
 	createServer(":9000")
@@ -68,17 +74,19 @@ func handleSearch(w http.ResponseWriter,r * http.Request){
 	resArr["msg"]=querySelect("select * From test")
 	data,err:=json.Marshal(resArr)
 	checkErr(err)
-	fmt.Println(r.UserAgent())
-	// set cookie
-		expire := time.Now().AddDate(0,0,1)
-		c := http.Cookie{
-			Name:"maple",
-			Value:"ken",
-			Expires : expire,
-			HttpOnly :true,
-		}
-		
-	http.SetCookie(w,&c)
+
+	format := "2006-01-02 15:04:05"
+	t1,err := time.Parse(format,time.Now().Format(format))
+	t2,err := time.Parse(format,userMaxAge["username"].Format(format))
+	if err== nil && t1.After(t2) {
+		fmt.Println("登录已过期",t1,t2)
+	}
+	// sess,_ := store.New(r,"AccessToken")
+	// sess.ID = "maple"  
+	// sess.Values["maple"] = true
+	
+	// sess.Save(r,w)
+	
 	fmt.Fprintf(w,string(data))
 } 
 
@@ -113,8 +121,11 @@ func handleShow(w http.ResponseWriter,r * http.Request){
 
 func handleLogin(w http.ResponseWriter,r * http.Request) {//authentic user login 
 		var res = make(map[string]interface{})
-			sess,_ := store.Get(r,"username")
-				fmt.Println(sess.Values["maple"])
+				store.New(r,"username")
+				sess,_ := store.Get(r,"username")
+				fmt.Println("sess",sess.ID,sess.Values["maple"])
+				
+
 		r.ParseMultipartForm(1024)
 		user := r.Form["user"][0]
 		pass := r.Form["password"][0]
@@ -133,14 +144,19 @@ func handleLogin(w http.ResponseWriter,r * http.Request) {//authentic user login
 			jsonData,err := json.Marshal(res)
 			checkErr(err)
 
-		    sess,_ := store.Get(r,"username")
-			sess.Values["maple"] = true
-			sess.Save(r,w)
+			sess,_ := store.New(r,"username")
+			sess.Values["maple"] = 10
 
-			expire :=time.Now()
-			cookie := http.Cookie{Name:"username",Value:databaseAuth[0]["username"],Expires:expire.AddDate(0,0,1),MaxAge:86400}
-			r.AddCookie(&cookie)
-			http.SetCookie(w,&cookie)
+			userMaxAge["username"] = time.Now().Add(time.Second*20)
+			
+			err = sess.Save(r,w)
+			fmt.Println(err)
+
+			// w.Header().Set("Access-Token",databaseAuth[0]["username"],)
+			// expire :=time.Now()
+			// cookie := http.Cookie{Name:"username",Value:databaseAuth[0]["username"],Expires:expire.Add(time.Second*100),MaxAge:100,HttpOnly:true,}
+			// r.AddCookie(&cookie)
+			// http.SetCookie(w,&cookie)
 
 			fmt.Fprintf(w,string(jsonData))
 			
@@ -159,6 +175,20 @@ func checkErr(err error){
 	if err !=nil {
 		panic(err)
 	}
+}
+// func checkSess(){
+// 	sess,_ := store.Get(r,"AccessToken")
+// 	fmt.Println(r.,sess.Values["maple"])
+// }
+
+func formatRes(w http.ResponseWriter,code int,msg interface{}){
+	var res = make(map[string]interface{})
+
+		res["code"] = code
+		res["msg"] = msg
+		jsonData,err := json.Marshal(res)
+		checkErr(err)
+		fmt.Fprintf(w,string(jsonData))
 }
 
 func querySelect(s string)[]map[string]string {
