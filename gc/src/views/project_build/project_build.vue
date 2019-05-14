@@ -1,29 +1,22 @@
 <template>
   <div class="project">
     <div class="project-bottom">
-            <div>在建项目</div>
-           
-            <div>拟建项目</div>
+      <v-btn  large :color="($route.name=='project_build_building_project'? 'primary':'')" @click="$router.push({name:'project_build_building_project'})">
+         <v-icon>book</v-icon>
+         &nbsp;
+         在建工程
+         </v-btn>
+       <v-btn  large :color="($route.name=='project_build_plan_build'? 'primary':'')"  @click="$router.push({name:'project_build_plan_build'})">
+         <v-icon>donut_large</v-icon>
+         &nbsp;
+         拟建工程
+         </v-btn>
     </div>
-
-    <div id="plan_build" class="building-project">
-      <div class="building-project-item" @click="checkItem">
-        <div>
-          <h1>{{buildingData.title}}</h1>
-          <p>{{buildingData.sammary}}</p>
-        </div>
-        <img class="bpi-img" :src="buildingData.img" alt>
-      </div>
+    <div>
+        <transition name="ease-in">
+       <router-view />
+        </transition>
     </div>
-
-    <v-dialog style="backgroud:red" fullscreen v-model="dialog" dark width="600px">
-      <v-card>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat="flat" @click="dialog = false">关闭</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 <script>

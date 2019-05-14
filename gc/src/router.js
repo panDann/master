@@ -95,7 +95,7 @@ export default new Router({
     {
       path: '/project_build',
       name: 'project_build',
-      redirect: "project_build/plan_build",
+      redirect: "project_build/building_project",
       component: () => import(/* webpackChunkName: "about" */ './views/project_build/project_build.vue'),
       children: [
         {
@@ -107,17 +107,7 @@ export default new Router({
           path: '/project_build/building_project',
           name: "project_build_building_project",
           component: () => import(/* webpackChunkName: "about" */ './views/project_build/view/building_project.vue'),
-        },
-        {
-          path: '/project_build/built_project',
-          name: "project_build_built_project",
-          component: () => import(/* webpackChunkName: "about" */ './views/project_build/view/built_project.vue'),
-        },
-        {
-          path: '/project_build/other_project',
-          name: "project_build_other",
-          component: () => import(/* webpackChunkName: "about" */ './views/project_build/view/other_project.vue'),
-        },
+        }
       ]
     },
   ]

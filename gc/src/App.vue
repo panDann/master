@@ -86,7 +86,12 @@
     font-weight 600
 .gc-nav-container
     height 4rem
-    box-shadow 0 2px 10px 5px #CCC
+    z-index 1
+    position sticky
+    width 100%
+    background #fff
+    top 0
+    box-shadow 0 2px 10px 0px #CCC
     line-height 4rem
     .gc-nav
         display flex 
@@ -99,6 +104,7 @@
         .gc-nav-item
            display inline-block
            padding 0 1rem
+           margin -.1rem 0
         .active-route
            color #409eff
            box-sizing border-box
@@ -107,6 +113,7 @@
       width 100%
       max-width 1980px
       margin 0 auto
+    //   margin-top 4rem
 
 .ease-in-enter-active, .ease-in-leave-active {
   transition: opacity  .5s;
