@@ -7,6 +7,10 @@
     <input type="text" v-model="user">
     <input type="text" v-model="pass">
     <input type="submit" value="submit" @click="authLogin">
+    <div>
+
+    </div>
+    <input type="submit" value="add" @click="addUser">
 
   </div>
 </template>
@@ -49,9 +53,21 @@ export default {
     },
     authLogin(){
         let  sendData= new FormData()
-        sendData.append('user',this.user)
+        sendData.append('username',this.user)
         sendData.append('password',this.pass)
         axios.post("/api/user/login",sendData,)
+             .then(res=>{
+                  console.log(res)
+                  if (res.data.code == 10000) {
+                    localStorage.setItem(`AccessToken`,this.user)
+                  }
+             })
+    },
+    addUser(){
+      let  sendData= new FormData()
+        sendData.append('username',this.user)
+        sendData.append('password',this.pass)
+        axios.post("/api/user/management",sendData,)
              .then(res=>{
                   console.log(res)
                   if (res.data.code == 10000) {
