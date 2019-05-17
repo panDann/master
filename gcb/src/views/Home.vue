@@ -8,9 +8,11 @@
     <input type="text" v-model="pass">
     <input type="submit" value="submit" @click="authLogin">
     <div>
-
-    </div>
     <input type="submit" value="add" @click="addUser">
+    </div>
+    <div>
+     <input type="submit" value="delete" @click="deleteUser">
+    </div>
 
   </div>
 </template>
@@ -68,6 +70,17 @@ export default {
         sendData.append('username',this.user)
         sendData.append('password',this.pass)
         axios.post("/api/user/management",sendData,)
+             .then(res=>{
+                  console.log(res)
+                  if (res.data.code == 10000) {
+                    localStorage.setItem(`AccessToken`,this.user)
+                  }
+             })
+    },
+    deleteUser(){
+      let  sendData= new FormData()
+        sendData.append('ids',this.pass)
+        axios.delete("/api/user/management",{data:sendData},)
              .then(res=>{
                   console.log(res)
                   if (res.data.code == 10000) {
