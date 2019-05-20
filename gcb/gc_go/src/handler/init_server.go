@@ -30,8 +30,17 @@ func CreateServer(port string) error {
 
 func InitHandleFunc(){
 	//  p(*http.Request)
+	//  CreateTable()
 	 http.HandleFunc("/api/user/login",HandleLogin)
 	 http.HandleFunc("/api/user/management",HandleUser)
+	 http.HandleFunc("/api/home",HandleHome)
+	 http.HandleFunc("/api/work_status",HandleWorkStatus)
+	 http.HandleFunc("/api/work_duty",HandleWorkDuty)
+	 http.HandleFunc("/api/item_manager",HandleItemManager)
+	 http.HandleFunc("/api/policy",HandlePolicy)
+	 http.HandleFunc("/api/school_plan",HandleSchoolPlan)
+	 http.HandleFunc("/api/project_build",HandleProjectBuild)
+
 }
 
 func CheckAuth(w http.ResponseWriter,r *http.Request)bool{

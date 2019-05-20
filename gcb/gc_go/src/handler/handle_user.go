@@ -61,7 +61,7 @@ func HandleUser(w http.ResponseWriter,r * http.Request) {//authentic user login
 			r.ParseMultipartForm(1024)
 			user := r.Form["username"][0]
 			pass := r.Form["password"][0]
-			queryStr = `insert into user(username,password) Values ('`+user+`','`+pass+`')`
+			queryStr = `insert into user(username,password,create_time) Values ('`+user+`','`+pass+`',now())`
 			method = "添加成功"
 			break 
 		case "PUT": 
