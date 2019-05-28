@@ -17,7 +17,7 @@ func HandleWorkStatus(w http.ResponseWriter,r * http.Request) {//authentic user 
 		case "GET": 
 			limit:= r.URL.Query()["limit"][0]
 			offset:= r.URL.Query()["offset"][0]
-			queryStr = `Select * from  work_status limit `+limit+` offset `+offset+` `
+			queryStr = `Select id,title,summary,content,create_time,(select count(*) from work_status) count from  work_status limit `+limit+` offset `+offset+` `
 			method = "GET"
 			break 
 		case "POST": 

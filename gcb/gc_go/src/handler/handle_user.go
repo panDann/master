@@ -2,11 +2,16 @@ package handler
 
 import (
 	"net/http"
-    "time"
+	"time"
+	"strings"
 )
 
 func HandleLogin(w http.ResponseWriter,r * http.Request) {//authentic user login 
-			
+	
+	if r.Method == "DELETE" {
+		HandleLogout(w,r)
+		return
+	}
     var res = make(map[string]interface{})
 	r.ParseMultipartForm(1024)
 	user := r.Form["username"][0]
@@ -17,7 +22,7 @@ func HandleLogin(w http.ResponseWriter,r * http.Request) {//authentic user login
 		Fprintf(w,FormatJson(res))
 		return
 	}
-	 // authorication 
+	//  authorication 
 	queryString := `select * From user 
 		                where username="`+user+`" and password="`+pass+`"` 
 	databaseAuth := Query(queryString)
@@ -28,9 +33,9 @@ func HandleLogin(w http.ResponseWriter,r * http.Request) {//authentic user login
 		w.Header().Set("Cookie","")
 		sess,_ := store.New(r,databaseAuth[0]["username"])
 		sess.Values[databaseAuth[0]["username"]] = true
-		userMaxAge[databaseAuth[0]["username"]] = time.Now().Add(time.Second*200)
-		sess.Options.MaxAge = 50
-		sess.Options.HttpOnly = true
+		userMaxAge[databaseAuth[0]["username"]] = time.Now().Add(time.Second*20000)
+		sess.Options.MaxAge = 20000
+		// sess.Options.HttpOnly = true
 		err := sess.Save(r,w)
 		checkErr(err)
 		
@@ -39,6 +44,28 @@ func HandleLogin(w http.ResponseWriter,r * http.Request) {//authentic user login
 		res["msg"] = "用户名或密码不正确"
 	}
 	Fprintf(w,FormatJson(res))
+}
+
+func HandleLogout(w http.ResponseWriter,r * http.Request){
+	var res = make(map[string]interface{})
+
+	if item,ok :=r.Header["Cookie"];!ok{
+		res["code"] = 10000
+		res["msg"] = "退出成功"
+		Fprintf(w,FormatJson(res))
+	}else{
+		for _,v :=range item {
+			cookieKey := strings.Split(v,"=")[0]
+			sess,_ := store.New(r,cookieKey)
+			sess.Options.MaxAge = -1
+			userMaxAge[cookieKey] = time.Now()
+			sess.Save(r,w)
+			res["code"] = 10000
+			res["msg"] = "退出成功"
+			sess.Values[cookieKey] = false
+			Fprintf(w,FormatJson(res))
+		} 
+	}
 }
 
 func HandleUser(w http.ResponseWriter,r * http.Request) {//authentic user login 

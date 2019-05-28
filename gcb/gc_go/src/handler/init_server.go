@@ -41,6 +41,9 @@ func InitHandleFunc(){
 	 http.HandleFunc("/api/school_plan",HandleSchoolPlan)
 	 http.HandleFunc("/api/project_build",HandleProjectBuild)
 
+	 http.HandleFunc("/api/image",HandlePhoto)
+
+
 }
 
 func CheckAuth(w http.ResponseWriter,r *http.Request)bool{
@@ -54,11 +57,14 @@ func CheckAuth(w http.ResponseWriter,r *http.Request)bool{
 	}else{
 		for _,v :=range item {
 			cookieKey := strings.Split(v,"=")[0]
-			sess,_ := store.Get(r,cookieKey)
 			format := "2006-01-02 15:04:05"
 			t1,err := time.Parse(format,time.Now().Format(format))
 			t2,err := time.Parse(format,userMaxAge[cookieKey].Format(format))
 			if err== nil && t1.After(t2) {
+				sess,_ := store.New(r,cookieKey)
+				sess.Options.MaxAge = -1
+				userMaxAge[cookieKey] = time.Now()
+				sess.Save(r,w)
 				res["code"] = 10032
 				res["msg"] = "登录已过期"
 				sess.Values[cookieKey] = false
