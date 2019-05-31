@@ -26,8 +26,9 @@ func HandleProjectBuild(w http.ResponseWriter,r * http.Request) {//authentic use
 			title := r.Form["title"][0]
 			summary := r.Form["summary"][0]
 			content := r.Form["content"][0]
+			image_url := r.Form["image_url"][0]
 			docType:= r.Form["type"][0]
-			queryStr = `insert into project_build(title,summary,content,type,create_time) Values ('`+title+`','`+summary+`','`+content+`','`+docType+`',now())`
+			queryStr = `insert into project_build(title,summary,content,type,image_url,create_time) Values ('`+title+`','`+summary+`','`+content+`','`+docType+`','`+image_url+`',now())`
 			method = "添加成功"
 			break 
 		case "PUT": 
@@ -35,8 +36,9 @@ func HandleProjectBuild(w http.ResponseWriter,r * http.Request) {//authentic use
 			title := r.Form["title"][0]
 			summary := r.Form["summary"][0]
 			content := r.Form["content"][0]
+			image_url := r.Form["image_url"][0]
 			id := r.Form["id"][0]
-			queryStr = `update  project_build set title= '`+title+`',summary='`+summary+`',content='`+content+`' Where id = `+id+``
+			queryStr = `update  project_build set title= '`+title+`',image_url= '`+image_url+`',summary='`+summary+`',content='`+content+`' Where id = `+id+``
 			method = "修改成功"
 			break 
 		case "DELETE": 
