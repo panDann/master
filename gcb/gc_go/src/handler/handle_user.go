@@ -81,7 +81,7 @@ func HandleUser(w http.ResponseWriter,r * http.Request) {//authentic user login
 		case "GET": 
 			limit:= r.URL.Query()["limit"][0]
 		    offset:= r.URL.Query()["offset"][0]
-			queryStr = `Select * From user  limit `+limit+` offset `+offset+``
+			queryStr = `Select *,(select count(*) from user) count From user  limit `+limit+` offset `+offset+``
 			method = "GET"
 			break 
 		case "POST": 
@@ -92,13 +92,8 @@ func HandleUser(w http.ResponseWriter,r * http.Request) {//authentic user login
 			method = "添加成功"
 			break 
 		case "PUT": 
-			r.ParseMultipartForm(1024)
-			user := r.Form["username"][0]
-			pass := r.Form["password"][0]
-			id := r.Form["id"][0]
-			queryStr = `update  user set username= '`+user+`',password='`+pass+`' Where id = `+id+``
-			method = "修改成功"
-			break 
+			checkUserPut(w,r)
+			return 
 		case "DELETE": 
 			r.ParseMultipartForm(1024)
 			ids := r.Form["ids"][0]
@@ -107,6 +102,33 @@ func HandleUser(w http.ResponseWriter,r * http.Request) {//authentic user login
 			break 
 		default:break 
 	}
-	MethodFunc(queryStr,method,w)
 	
+		MethodFunc(queryStr,method,w)
+	
+}
+
+func checkUserPut(w http.ResponseWriter, r *http.Request){
+	 r.ParseMultipartForm(1024)
+	var res = make(map[string]interface{})
+
+	user := r.Form["username"][0]
+	pass := r.Form["password"][0]
+	newPass := r.Form["new_pass"][0]
+	authStr := `select * From user  Where username="`+user+`" and password="`+pass+`"`
+	authRes := Query(authStr)
+	if len(authRes) == 0 {
+		res["code"] = 10001
+		res["msg"] = "原密码不正确"
+		Fprintf(w,FormatJson(res))
+		return
+	}
+
+	queryStr := `update  user set password='`+newPass+`' Where username="`+user+`"`
+	updateRes := Query(queryStr)
+	if len(updateRes) == 0 {
+		res["code"] = 10000
+		res["msg"] = "修改成功"
+		Fprintf(w,FormatJson(res))
+		return
+	}
 }

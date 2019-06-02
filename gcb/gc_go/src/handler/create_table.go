@@ -20,7 +20,7 @@ var tableStr=[]string{
 			title varchar(50) not null,
 			summary varchar(200)  null,
 			content text not null,
-			type enum('destination','department','work','setion','inner') not null, 
+			type enum('destination','department','work','section','inner') not null, 
 			create_time datetime not null
 		)DEFAULT character set utf8 DEFAULT COLLATE utf8_general_ci;`,
 
