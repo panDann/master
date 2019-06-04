@@ -1,30 +1,56 @@
 <template>
-   <div class="country">
-     <v-expansion-panel>
-        <v-expansion-panel-content
-        v-for="(item,i) in 5"
-        :key="i"
-        >
+  <div class="country">
+    <v-expansion-panel>
+      <v-expansion-panel-content v-for="(item,i) in itemData" :key="i">
         <template v-slot:header>
-            <div>Item</div>
+          <div>{{item.title}}</div>
         </template>
         <v-card>
-            <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
+          <v-card-text v-html="item.content">
+
+          </v-card-text>
         </v-card>
-        </v-expansion-panel-content>
+      </v-expansion-panel-content>
     </v-expansion-panel>
-   </div>
+    <v-btn flat color="warning" v-if="itemData.length >=10" @click="togglePage" >更多法规》》</v-btn>
+  </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                value1: '1'
-            }
-        }
+
+import Server from "../../../components/server.js";
+
+export default {
+  data() {
+    return {
+      type: "country",
+      itemData:[],
+      currentPage:1
+    };
+  },
+  mounted(){
+      this.turnPage(1)
+  },
+  methods: {
+    async turnPage(page) {
+      this.loading = true;
+      let url = `/api/policy?limit=${10}&offset=${(page - 1) * 10}&type=${
+        this.type
+      }`;
+      let res = await Server.getMessage(url);
+      if (res.data.msg != null) {
+        this.itemData = res.data.msg;
+      }
+      this.loading = false;
+    },
+    togglePage(){
+        this.currentPage +=1
+        this.turnPage(this.currentPage)
     }
+  }
+};
 </script>
 <style lang="stylus" scoped>
-    .country
-        text-align left 
+.country {
+  text-align: left;
+}
 </style>

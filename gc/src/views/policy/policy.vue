@@ -7,11 +7,11 @@
                       </div>
                       
                       <div :class="{'policy-header-item':true,'active-second-route':($route.name == 'policy_province')}" @click="$router.push({name:'policy_province'})">
-                              <v-icon>home</v-icon>
+                              <v-icon>assessment</v-icon>
                               <p>省市</p>
                       </div>
                       <div :class="{'policy-header-item':true,'active-second-route':($route.name == 'policy_school')}" @click="$router.push({name:'policy_school'})">
-                              <v-icon>home</v-icon>
+                              <v-icon>assignment</v-icon>
                               <p>学校</p>
                       </div>
                       <div :class="{'policy-header-item':true,'active-second-route':($route.name == 'policy_inner')}" @click="$router.push({name:'policy_inner'})">

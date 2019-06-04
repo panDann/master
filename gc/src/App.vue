@@ -87,18 +87,17 @@ export default {
     }
   },
   mounted() {
-    this.checkRouter();
     // console.log(container.style)
+    if(this.$route.path == "/"){
+      this.$router.push({name:"home"})
+    }
   },
   methods: {
     transfer(name) {
       this.activeName = name;
       this.$router.push({ name: name });
     },
-    checkRouter() {
-      console.log(this.$route);
-    },
-    
+   
   }
 };
 </script>

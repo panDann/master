@@ -18,7 +18,7 @@ func HandlePolicy(w http.ResponseWriter,r * http.Request) {//authentic user logi
 			limit:= r.URL.Query()["limit"][0]
 			offset:= r.URL.Query()["offset"][0]
 			docType:= r.URL.Query()["type"][0]
-			queryStr = `Select * from  (Select * From policy where type = '`+docType+`') as tem  limit `+limit+` offset `+offset+` `
+			queryStr = `Select * from  (Select *,(Select count(*) From policy where type = '`+docType+`') count From policy where type = '`+docType+`') as tem order by create_time desc  limit `+limit+` offset `+offset+` `
 			method = "GET"
 			break 
 		case "POST": 

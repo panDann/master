@@ -1,31 +1,56 @@
 <template>
-   <div class="country">
-        <Collapse v-model="value1">
-        <Panel name="1">
-             中华人民共和国建筑法
-            <p slot="content">史蒂夫·乔布斯（Steve Jobs），1955年2月24日生于美国加利福尼亚州旧金山，美国发明家、企业家、美国苹果公司联合创办人。</p>
-        </Panel>
-        <Panel name="2">
-            中华人民共和国政府采购法
-            <p slot="content">斯蒂夫·盖瑞·沃兹尼亚克（Stephen Gary Wozniak），美国电脑工程师，曾与史蒂夫·乔布斯合伙创立苹果电脑（今之苹果公司）。斯蒂夫·盖瑞·沃兹尼亚克曾就读于美国科罗拉多大学，后转学入美国著名高等学府加州大学伯克利分校（UC Berkeley）并获得电机工程及计算机（EECS）本科学位（1987年）。</p>
-        </Panel>
-        <Panel name="3">
-           中华人民共和国招标投标法
-            <p slot="content">乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。</p>
-        </Panel>
-    </Collapse>
-   </div>
+  <div class="country">
+    <v-expansion-panel>
+      <v-expansion-panel-content v-for="(item,i) in itemData" :key="i">
+        <template v-slot:header>
+          <div>{{item.title}}</div>
+        </template>
+        <v-card>
+          <v-card-text v-html="item.content">
+
+          </v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+    <v-btn flat color="warning" v-if="itemData.length >=10" @click="togglePage" >更多法规》》</v-btn>
+  </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                value1: '1'
-            }
-        }
+
+import Server from "../../../components/server.js";
+
+export default {
+  data() {
+    return {
+      type: "province",
+      itemData:[],
+      currentPage:1
+    };
+  },
+  mounted(){
+      this.turnPage(1)
+  },
+  methods: {
+    async turnPage(page) {
+      this.loading = true;
+      let url = `/api/policy?limit=${10}&offset=${(page - 1) * 10}&type=${
+        this.type
+      }`;
+      let res = await Server.getMessage(url);
+      if (res.data.msg != null) {
+        this.itemData = res.data.msg;
+      }
+      this.loading = false;
+    },
+    togglePage(){
+        this.currentPage +=1
+        this.turnPage(this.currentPage)
     }
+  }
+};
 </script>
 <style lang="stylus" scoped>
-    .country
-        text-align left 
+.country {
+  text-align: left;
+}
 </style>

@@ -30,7 +30,7 @@ func CreateServer(port string) error {
 
 func InitHandleFunc(){
 	//  p(*http.Request)
-	//  CreateTable()
+	 CreateTable()
 	 http.HandleFunc("/api/user/login",HandleLogin)
 	 http.HandleFunc("/api/user/management",HandleUser)
 	 http.HandleFunc("/api/home",HandleHome)
