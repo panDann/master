@@ -8,7 +8,7 @@ import (
 
 var (
 	checkErr = check.CheckErr
-	db,err = sql.Open("mysql","root:@guangcai0088@tcp(127.0.0.1:3306)/maple")
+	db,err = sql.Open("mysql","root:1125@tcp(127.0.0.1:3306)/maple")
 )
 
 func Query(s string)[]map[string]string {

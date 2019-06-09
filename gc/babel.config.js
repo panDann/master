@@ -1,5 +1,10 @@
 module.exports = {
+  ignore: [
+    /\/core-js/,
+  ],
   presets: [
-    '@vue/app'
+    '@vue/app',
+    ['@babel/preset-env', { modules: false, useBuiltIns: 'entry' }],
+   
   ]
 }

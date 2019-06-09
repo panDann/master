@@ -2,6 +2,26 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 
+import work_duty from './views/work_duty/work_duty.vue'
+import work_duty_section from './views/work_duty/view/section.vue'
+import work_duty_department from './views/work_duty/view/department.vue'
+import work_duty_jobs from './views/work_duty/view/jobs.vue'
+import work_status from './views/work_status.vue'
+import policy_country from './views/policy/view/country.vue'
+import policy_province from './views/policy/view/province.vue'
+import policy_school from './views/policy/view/school.vue'
+import policy_inner from './views/policy/view/inner.vue'
+import policy from './views/policy/policy.vue'
+import item_manager from './views/item_manager.vue'
+import school_plan from './views/school_plan/school_plan.vue'
+import school_plan_guangzhou from './views/school_plan/view/guangzhou.vue'
+import school_plan_three_water from './views/school_plan/view/three_water.vue'
+import project_build from './views/project_build/project_build.vue'
+import project_build_plan_build from './views/project_build/view/plan_build.vue'
+import project_build_building_project from './views/project_build/view/building_project.vue'
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -17,29 +37,29 @@ export default new Router({
       path: '/work_duty',
       name: 'work_duty',
       redirect: "/work_duty/section",
-      component: () => import(/* webpackChunkName: "about" */ './views/work_duty/work_duty.vue'),
+      component: work_duty,
       children: [
         {
           path: '/work_duty/section',
           name: "work_duty_section",
-          component: () => import(/* webpackChunkName: "about" */ './views/work_duty/view/section.vue'),
+          component: work_duty_section,
         },
         {
           path: '/work_duty/department',
           name: "work_duty_department",
-          component: () => import(/* webpackChunkName: "about" */ './views/work_duty/view/department.vue'),
+          component: work_duty_department,
         },
         {
           path: '/work_duty/jobs',
           name: "work_duty_jobs",
-          component: () => import(/* webpackChunkName: "about" */ './views/work_duty/view/jobs.vue'),
+          component: work_duty_jobs,
         },
       ]
     },
     {
       path: '/work_status',
       name: 'work_status',
-      component: () => import(/* webpackChunkName: "about" */ './views/work_status.vue')
+      component: work_status,
     },
     {
       path: 'policy',
@@ -49,46 +69,46 @@ export default new Router({
         {
           path: '/policy/country',
           name: "policy_country",
-          component: () => import(/* webpackChunkName: "about" */ './views/policy/view/country.vue'),
+          component: policy_country,
         },
         {
           path: '/policy/province',
           name: "policy_province",
-          component: () => import(/* webpackChunkName: "about" */ './views/policy/view/province.vue'),
+          component: policy_province,
         },
         {
           path: '/policy/school',
           name: "policy_school",
-          component: () => import(/* webpackChunkName: "about" */ './views/policy/view/school.vue'),
+          component: policy_school,
         },
         {
           path: '/policy/inner',
           name: "policy_inner",
-          component: () => import(/* webpackChunkName: "about" */ './views/policy/view/inner.vue'),
+          component: policy_inner,
         },
       ],
-      component: () => import(/* webpackChunkName: "about" */ './views/policy/policy.vue'),
+      component: policy,
     },
     {
       path: '/item_manager',
       name: 'item_manager',
-      component: () => import(/* webpackChunkName: "about" */ './views/item_manager.vue')
+      component: item_manager,
     },
     {
       path: '/school_plan',
       name: 'school_plan',
       // redirect: "/school_plan/guangzhou",
-      component: () => import(/* webpackChunkName: "about" */ './views/school_plan/school_plan.vue'),
+      component: school_plan,
       children: [
         {
           path: '/school_plan/guangzhou',
           name: "school_plan_guangzhou",
-          component: () => import(/* webpackChunkName: "about" */ './views/school_plan/view/guangzhou.vue'),
+          component: school_plan_guangzhou,
         },
         {
           path: '/school_plan/three_water',
           name: "school_plan_three_water",
-          component: () => import(/* webpackChunkName: "about" */ './views/school_plan/view/three_water.vue'),
+          component: school_plan_three_water,
         }
       ]
     },
@@ -96,17 +116,17 @@ export default new Router({
       path: '/project_build',
       name: 'project_build',
       redirect: "project_build/building_project",
-      component: () => import(/* webpackChunkName: "about" */ './views/project_build/project_build.vue'),
+      component: project_build,
       children: [
         {
           path: '/project_build/plan_build',
           name: "project_build_plan_build",
-          component: () => import(/* webpackChunkName: "about" */ './views/project_build/view/plan_build.vue'),
+          component: project_build_plan_build,
         },
         {
           path: '/project_build/building_project',
           name: "project_build_building_project",
-          component: () => import(/* webpackChunkName: "about" */ './views/project_build/view/building_project.vue'),
+          component: project_build_building_project,
         }
       ]
     },

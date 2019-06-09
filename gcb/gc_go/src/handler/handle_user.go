@@ -28,7 +28,7 @@ func HandleLogin(w http.ResponseWriter,r * http.Request) {//authentic user login
 	databaseAuth := Query(queryString)
 	if len(databaseAuth) >= 1 {
 		res["code"] = 10000
-		res["msg"] = "登录成功"
+		res["msg"] = user
 		//set user session
 		w.Header().Set("Cookie","")
 		sess,_ := store.New(r,databaseAuth[0]["username"])
