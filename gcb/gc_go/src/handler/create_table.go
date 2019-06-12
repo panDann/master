@@ -7,7 +7,9 @@ var tableStr=[]string{
 			username varchar(20) not null,
 			password varchar(30) not null,
 	    	create_time datetime not null
-	    )DEFAULT character set utf8 DEFAULT COLLATE utf8_general_ci;`,
+		)DEFAULT character set utf8 DEFAULT COLLATE utf8_general_ci;`,
+
+		`insert into user(username,password,create_time) values('admin','123',now());`,
 
 		`create table if not exists home(
 			id int primary key auto_increment,

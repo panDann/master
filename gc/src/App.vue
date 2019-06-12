@@ -3,7 +3,6 @@
     <div class="gc">
       <div class="gc-nav-container">
         <div class="gc-nav">
-          <div class="gc-nav-left">
             <div
               :class="{'gc-nav-item':true,'active-route':activeName=='work_duty'}"
               name="work_duty"
@@ -22,7 +21,6 @@
               name="work_status"
               @click="transfer('work_status')"
             >工作动态</div>
-          </div>
 
           <div
             :class="{'gc-nav-item':true,'active-route':activeName=='home'}"
@@ -32,7 +30,6 @@
             <!-- <Icon type="ios-paper"></Icon> -->
             <span class="home-font">广财基建处</span>
           </div>
-          <div  class="gc-nav-right">
             <div
               :class="{'gc-nav-item':true,'active-route':activeName=='school_plan'}"
               name="school_plan"
@@ -57,7 +54,6 @@
               <!-- <Icon type="ios-paper"></Icon> -->
               项目管理
             </div>
-          </div>
         </div>
       </div>
 
@@ -135,7 +131,7 @@ export default {
       justify-content space-between
     } 
     .gc-nav-right {
-      font-size .8rem
+      font-size 1rem
     }
 
     .gc-nav-item {
