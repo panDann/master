@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     async turnPage(page) {
-      this.loading = true;
       let url = `/api/policy?limit=${10}&offset=${(page - 1) * 10}&type=${
         this.type
       }`;
@@ -40,7 +39,6 @@ export default {
       if (res.data.msg != null) {
         this.itemData = res.data.msg;
       }
-      this.loading = false;
     },
     togglePage(){
         this.currentPage +=1

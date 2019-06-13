@@ -7,6 +7,8 @@ import App from './App.vue'
 import router from './router'
 import Vuetify from 'vuetify/lib'
 import 'vuetify/src/stylus/app.styl'
+import Loading from './components/loading/index'
+
 
 import "current-script-polyfill"
 
@@ -15,10 +17,9 @@ import Notice from './components/notice/index'
 Vue.use(Vuetify, {
   iconfont: 'md',
 })
-
 Vue.config.productionTip = false
-
 Vue.use(Notice)
+Vue.use(Loading)
 
 new Vue({
   router,
