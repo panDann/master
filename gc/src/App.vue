@@ -84,9 +84,9 @@ export default {
   },
   mounted() {
     // console.log(container.style)
-    if(this.$route.path == "/"){
-      this.$router.push({name:"home"})
-    }
+    // if(this.$route.path == "/"){
+    //   this.$router.push({name:"home"})
+    // }
   },
   methods: {
     transfer(name) {

@@ -1,10 +1,11 @@
 <template>
   <div class="country">
-    <img :src="imageUrl" alt>
+    <img :src="imageUrl" alt class="zoom" />
   </div>
 </template>
 <script>
 import Server from "../../../components/server";
+import Blowup from "./blowup.js";
 
 export default {
   data() {
@@ -26,7 +27,17 @@ export default {
       if (res.data.msg != null) {
         let data = res.data.msg;
         this.imageUrl = data[0].image_url;
+        this.initMagnify();
       }
+    },
+    initMagnify() {
+      $(Blowup);
+      $(document).ready(function() {
+        $(".zoom").blowup({
+          width: 250,
+          height: 250
+        });
+      });
     }
   }
 };
@@ -36,13 +47,12 @@ export default {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background: red;
+  background: #cccccc;
 
   img {
     height: 100%;
+    display:block;
     width: 100%;
-
   }
-
 }
 </style>

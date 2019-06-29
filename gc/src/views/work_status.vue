@@ -1,9 +1,9 @@
 <template>
   <div class="work_status">
     <div style="width:60%;margin:1rem auto;"  >
-    <div style=""  v-for="(item, index) in workData" :key="index">
+    <div style="margin-top:.5rem"  v-for="(item, index) in workData" :key="index">
       <v-toolbar>
-        <v-icon>settings_input_antenna</v-icon>
+        <v-icon :color="createColor(item.create_time)">settings_input_antenna</v-icon>
         <v-toolbar-title>{{item.title}}</v-toolbar-title>
         &nbsp;
         &nbsp;
@@ -77,6 +77,17 @@ export default {
     turnPage() {
       this.currentPage += 1;
       this.getMessage(this.currentPage);
+    },
+    createColor(time){
+      let timeStamp = new Date(time).getTime(),
+          subTime = new Date().getTime() - timeStamp
+          console.log(subTime)
+        if(subTime < 86400000 * 3)
+          return "red"
+        if(86400000 * 3 < subTime < 86400000 * 7)
+          return "green"
+        if( 86400000 * 7 < subTime < 86400000 * 30)
+          return "orange"
     }
   }
 };

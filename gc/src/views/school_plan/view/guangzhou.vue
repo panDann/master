@@ -1,10 +1,11 @@
 <template>
   <div class="country">
-    <img :src="imageUrl" alt>
+    <img :src="imageUrl" class="zoom" alt :data-magnify-src="imageUrl" />
   </div>
 </template>
 <script>
 import Server from "../../../components/server";
+import Blowup from "./blowup.js";
 
 export default {
   data() {
@@ -14,6 +15,7 @@ export default {
       type: "guangzhou"
     };
   },
+
   mounted() {
     this.getMessage();
   },
@@ -26,7 +28,17 @@ export default {
       if (res.data.msg != null) {
         let data = res.data.msg;
         this.imageUrl = data[0].image_url;
+        this.initMagnify();
       }
+    },
+    initMagnify() {
+      $(Blowup($,$('.country')));
+      $(document).ready(function() {
+        $(".zoom").blowup({
+          width: 250,
+          height: 250
+        });
+      });
     }
   }
 };
@@ -36,13 +48,14 @@ export default {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background: red;
+  background: #cccccc;
+  position: relative;
+
+ 
 
   img {
     height: 100%;
     width: 100%;
-
   }
-
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <v-carousel delimiter-icon="stop" prev-icon="mdi-arrow-left" next-icon="mdi-arrow-right">
+    <v-carousel hide-delimiters >
       <v-carousel-item
         v-for="(item,i) in items"
         :key="i"
@@ -10,17 +10,12 @@
     </v-carousel>
     <div class="home-bottom">
       <a href="#building_project">
-        <v-btn large>
+        <v-btn  @click="$router.push({name:'project_build'})" >
           <v-icon>book</v-icon>&nbsp;
-          在建工程
+          工程建设
         </v-btn>
       </a>
-      <a href="#plan_build">
-        <v-btn large>
-          <v-icon>donut_large</v-icon>&nbsp;
-          拟建工程
-        </v-btn>
-      </a>
+     
     </div>
 
     <div id="building_project" class="building-project">
@@ -120,8 +115,13 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.home {
+  width 80%
+  margin 1rem auto
+}
 .home-carousel {
   height: calc(100vh - 8rem);
+  
 }
 
 .home-bottom {

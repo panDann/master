@@ -12,6 +12,7 @@ import Loading from './components/loading/index'
 
 import "current-script-polyfill"
 
+
 import Notice from './components/notice/index'
 
 Vue.use(Vuetify, {

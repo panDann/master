@@ -1,21 +1,19 @@
 <template>
-  <div class="policy">
-            <div class="policy-header">
-                <!-- <router-link to="/policy/country">
-                       <div class="policy-header-item">
-                              <Icon type="ios-photos-outline" />
-                              <p>部门</p>
-                      </div>
-                </router-link>
-                      
-                      <div class="policy-header-item">
-                             <Icon type="ios-people-outline" />
-                              <p>科室</p>
-                      </div>
-                      <div class="policy-header-item">
-                              <Icon type="ios-person-outline" />
-                              <p>内部</p>
-                      </div> -->
+  <div class="duty">
+      <div class="duty-center">
+        <button class="duty-center-header">
+          目标定位
+        </button>
+        <p class="dch-summary">基建处工作目标：辅佐学校党政科学决策 ，尊重工程建设基本规律，推行全面精细化管理，实现校园基本建设又好快又高又稳发展</p>
+        <div class="duty-center-content" :style="activeBorderColor" @click="checkItem($event)">
+            <button class="dcc-item" data-id='0'  style="border-color:#f29902;" >工作思路</button>
+            <button class="dcc-item"  data-id='1' style="border-color:pink;" >科室职责</button>
+            <button class="dcc-item" data-id='2' style="border-color:#3eb652;" >内设机构</button>
+            <button class="dcc-item" data-id='3' style="border-color:#4388ca;" >部门职责</button>
+        </div>
+      </div>
+            <!-- <div class="policy-header">
+             
                        <div class="policy-header-item left-arrow">
                              <a href="#destination"><p>目标定位</p></a>  
                        </div> 
@@ -33,23 +31,25 @@
                       </div> 
             </div>
             <div class="router-view">
-                <!-- <router-view>
-               </router-view> -->
                <div class="router-view-item" :id="workType[index]" :style="{'width':(50-Math.ceil(Math.random()*10))+'%','float':(Math.random()>0.5? 'left':'right')}" v-for="(item, index) in dutyData" :key="index">
                         <H2 class="rvi-title">{{item.title}}</H2>
                         <p class="rvi-content" v-html="item.content"></p>
                </div>
-            </div>
-                    <!-- <Modal v-model="modal" width="50%">
-                        <p slot="header" style="color:#f60;text-align:center">
-                            <Icon type="ios-information-circle"></Icon>
-                            <span>{{dutyData[activeIndex].title}}</span>
-                        </p>
-                        <div style="text-align:center">
-                            <p>{{dutyData[activeIndex].content}}</p>
-                        </div>
-                        
-                    </Modal> -->
+            </div> -->
+    <v-dialog style="backgroud:red" v-model="dialog"  width="600px">
+      <v-card>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat="flat" @click="dialog = false">关闭</v-btn>
+          
+        </v-card-actions>
+        <h2 v-html="activeContent.title" style="text-align:center"></h2>
+
+        <v-card-text v-html="activeContent.content"></v-card-text>
+
+      </v-card>
+    </v-dialog>
+              
   </div>
 </template>
 
@@ -57,6 +57,7 @@
 // @ is an alias to /src
 
 import Server from '../../components/server'
+
 
 export default {
   // name: 'home',
@@ -66,13 +67,34 @@ export default {
     return {
       activeIndex:0,
       modal:false,
+      activeContent:{
+        title:'',
+        content:'加载中...'
+      },
+      dialog:false,
+      activeBorderColor:{
+        borderColor:''
+      },
+      colorList:[
+        "#f49805",
+        "pink",
+        "#3eb652",
+        "#4388ca",
+      ],
       workType:[
-        'destination','department','work','section','inner'
+        'work','department','inner','section','destination'
       ],
       position:[1,25,7,12,"target_position"],
       dutyData:[
        
       ]
+    }
+  },
+  watch:{
+    dialog(n,o){
+        if(n == false) {
+          this.activeBorderColor.borderColor = ''
+        }
     }
   },
   mounted() {
@@ -93,6 +115,21 @@ export default {
     activeModal(index){
       this.modal=true
       this.activeIndex=index
+    },
+    checkItem(e){
+      let itemId =  e.target.dataset.id
+          this.activeBorderColor.borderColor = this.colorList[itemId]
+          setTimeout(() => {
+           this.dialog = true
+           this.activeContent = this.matchActiveContent(this.workType[itemId])
+          }, 500);
+    },
+    matchActiveContent(index) {
+        for(let v in this.dutyData) {
+          if(this.dutyData[v].type == index){
+              return this.dutyData[v]
+          }
+        }
     }
   }
 }
@@ -107,44 +144,82 @@ a:hover
 .status-img
     width 90%
     height 90%
-.policy 
+.duty 
     text-align center
-    .policy-header
+    height calc(100vh - 60px)
+    position relative
+    .duty-center
+      position absolute
+      left 0
+      right 0
+      bottom  0 
+      top 0
+      height 80%
+      margin auto
+      text-align center
+     
+      .duty-center-header
+        border-bottom 2px solid black 
+        font-size 1.6rem
+        font-weight 700
+        background snow
+      .dch-summary
+        width 30%
+        min-height 5rem
         margin 1rem auto
-        width  70%
+        border #cccccc solid .5px
+        padding .5rem 
+        text-align left 
+        overflow hidden
+        background #cccccc
+        z-index 1
+        border-radius .4rem
+      .duty-center-content
+        height 70%
+        width 30%
         display flex 
-        flex-flow row nowrap 
-        justify-content space-between
-        .policy-header-item
-            background #58f5e6
-            box-shadow 0 6px 5px 0px #cccccc
-            // color  #CCC  
-            padding .2rem  1rem
-            font-size 1rem
-            height 1.9rem
-            transition all .1s linear
-            position relative
-        .policy-header-item:hover
-            transform scale(1.05)
-    .router-view
-        width 80%
+        flex-flow column nowrap
+        justify-content space-around
+        align-items center
+        padding 1rem 0
+        border-top #4388ca solid .5rem 
+        border-bottom #f49805 solid .5rem 
+        border-left #3eb652 solid .5rem 
+        border-right pink solid .5rem 
+        border-radius 100%
+        margin 2rem auto
+        position relative
+        transition border-color .5s linear
+        box-sizing border-box
+        .dcc-item
+          color black 
+          font-size 1.4rem
+          outline none
+          font-weight 700
+          padding .5rem 1.5rem
+          border 2px solid #cccccc
+          border-radius .4rem
+      .duty-center-content:before 
+        content ''
+        width 1rem
+        height 1rem
+        border #cccccc solid 1px
+        border-radius 100%
+        position absolute
+        background snow
+        left 0
+        right 0
+        top -.75rem
         margin 0 auto
-        text-align center
-        .router-view-item
-            float left
-            margin  .5rem
-            padding .5rem
-            box-shadow 0 5px 10px 1px #cccccc
-            .rvi-content
-                background #cccccc
-                text-indent 1.5rem
-                padding .5rem
-                img 
-                  width 80%!important
-                  margin .5rem auto
-            .rvi-title
-                border-radius .2rem
-                background #f2f55a
+    .duty-center::after 
+        content ''
+        height 25% 
+        position absolute
+        width 1px
+        left 50%
+        top 8%
+        background #cccccc
+        z-index 0
 
 .left-arrow::before 
       content ""

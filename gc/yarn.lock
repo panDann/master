@@ -1574,6 +1574,11 @@ binary-extensions@^1.0.0:
   resolved "https://registry.npm.taobao.org/binary-extensions/download/binary-extensions-1.13.1.tgz#598afe54755b2868a5330d2aff9d4ebb53209b65"
   integrity sha1-WYr+VHVbKGilMw0q/51Ou1Mgm2U=
 
+blowup@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/blowup/-/blowup-1.0.1.tgz#426a9b65bd9425866c83598c164bc5a8f8858b17"
+  integrity sha1-QmqbZb2UJYZsg1mMFkvFqPiFixc=
+
 bluebird@^3.1.1, bluebird@^3.5.1, bluebird@^3.5.3:
   version "3.5.4"
   resolved "https://registry.npm.taobao.org/bluebird/download/bluebird-3.5.4.tgz#d6cc661595de30d5b3af5fcedd3c0b3ef6ec5714"
@@ -4229,6 +4234,18 @@ joi@^14.3.0:
     isemail "3.x.x"
     topo "3.x.x"
 
+jquery-zoom@^1.7.21:
+  version "1.7.21"
+  resolved "https://registry.yarnpkg.com/jquery-zoom/-/jquery-zoom-1.7.21.tgz#9c8cbb40cefaeba288e9dd05a67e5f0f8dcec4f3"
+  integrity sha512-C3aDEt0c4TkPrOPqIs5VAOwBMgitf1I7jEakO15G3QfxdVEivBvUlkiCjfcGQM+FyXdvshpbiEJKDbEdPz2/pw==
+  dependencies:
+    jquery ">=1.7"
+
+jquery@>=1.7, jquery@>=1.7.0, jquery@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
+  integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
+
 js-levenshtein@^1.1.3:
   version "1.1.6"
   resolved "https://registry.npm.taobao.org/js-levenshtein/download/js-levenshtein-1.1.6.tgz#c6cee58eb3550372df8deb85fad5ce66ce01d59d"
@@ -4514,6 +4531,13 @@ lru-cache@^5.1.1:
   integrity sha1-HaJ+ZxAnGUdpXa9oSOhH8B2EuSA=
   dependencies:
     yallist "^3.0.2"
+
+magnify@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/magnify/-/magnify-2.3.3.tgz#e6c97483748467424f44b7e3f1724f34d05ce7bf"
+  integrity sha512-fAM1MrUwqVBG2sS2a8lWoWCyONgF9+QXX85hCzmfLD/xKBM9FgoKMPjiTvrMa9o+fBlaZsKV60Z3ERVU+WEsSg==
+  dependencies:
+    jquery ">=1.7.0"
 
 make-dir@^1.0.0:
   version "1.3.0"
@@ -7687,3 +7711,8 @@ yorkie@^2.0.0:
     is-ci "^1.0.10"
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
+
+zoom@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/zoom/-/zoom-0.0.2.tgz#27f645dceff3abfb5d28bbcc2545158f0716b1bc"
+  integrity sha1-J/ZF3O/zq/tdKLvMJUUVjwcWsbw=

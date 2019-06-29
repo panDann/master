@@ -2,23 +2,23 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 
-import work_duty from './views/work_duty/work_duty.vue'
-import work_duty_section from './views/work_duty/view/section.vue'
-import work_duty_department from './views/work_duty/view/department.vue'
-import work_duty_jobs from './views/work_duty/view/jobs.vue'
-import work_status from './views/work_status.vue'
-import policy_country from './views/policy/view/country.vue'
-import policy_province from './views/policy/view/province.vue'
-import policy_school from './views/policy/view/school.vue'
-import policy_inner from './views/policy/view/inner.vue'
-import policy from './views/policy/policy.vue'
-import item_manager from './views/item_manager.vue'
-import school_plan from './views/school_plan/school_plan.vue'
-import school_plan_guangzhou from './views/school_plan/view/guangzhou.vue'
-import school_plan_three_water from './views/school_plan/view/three_water.vue'
-import project_build from './views/project_build/project_build.vue'
-import project_build_plan_build from './views/project_build/view/plan_build.vue'
-import project_build_building_project from './views/project_build/view/building_project.vue'
+const work_duty =() =>import ('./views/work_duty/work_duty.vue')
+const work_duty_section  =()=> import('./views/work_duty/view/section.vue')
+const work_duty_department  =()=> import('./views/work_duty/view/department.vue')
+const work_duty_jobs  =()=> import('./views/work_duty/view/jobs.vue')
+const work_status  =()=> import('./views/work_status.vue')
+const policy_country  =()=> import('./views/policy/view/country.vue')
+const policy_province  =()=> import('./views/policy/view/province.vue')
+const policy_school  =()=> import('./views/policy/view/school.vue')
+const policy_inner  =()=> import('./views/policy/view/inner.vue')
+const policy  =()=> import('./views/policy/policy.vue')
+const item_manager  =()=> import('./views/item_manager.vue')
+const school_plan  =()=> import('./views/school_plan/school_plan.vue')
+const school_plan_guangzhou  =()=> import('./views/school_plan/view/guangzhou.vue')
+const school_plan_three_water  =()=> import('./views/school_plan/view/three_water.vue')
+const project_build  =()=> import('./views/project_build/project_build.vue')
+const project_build_plan_build  =()=> import('./views/project_build/view/plan_build.vue')
+const project_build_building_project  =()=> import('./views/project_build/view/building_project.vue')
 
 
 

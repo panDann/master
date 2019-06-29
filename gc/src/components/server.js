@@ -13,7 +13,12 @@ axios.interceptors.request.use(function (res) {
         return res
 })
 axios.interceptors.response.use(function(res){
-    document.body.removeChild(l.$el)
+    try {
+      document.body.removeChild(l.$el)
+        
+    } catch (err) {
+
+    }
     if(res.status !=200){
         alert("服务器出错")
         return

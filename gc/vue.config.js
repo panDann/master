@@ -1,9 +1,15 @@
+const webpack = require('webpack')
 module.exports = {
 
     transpileDependencies: [],
     // output:["@babel/polyfill","/dist"],
     configureWebpack:{
-
+        plugins: [
+            new webpack.ProvidePlugin({
+                $: "jquery",
+                jQuery: "jquery"
+            })
+         ],
         devServer: {
             open: process.platform === 'darwin',
             host: '127.0.0.1',
@@ -12,7 +18,7 @@ module.exports = {
             hotOnly: false,
             proxy: {
                 '/api': {
-                    target: 'http://localhost:9000',
+                    target: 'http://3.19.32.76:9000',
                     changeOrigin: true,
                     ws: true,
                     hotOnly:true
