@@ -52,6 +52,12 @@ export default {
       ]
     }
   },
+  mounted() {
+    setTimeout(() => {
+        this.active = true 
+        this.$router.push({name:"school_plan_guangzhou"})
+    }, 1000);
+  },
   methods :{
     callbackCollapse(value){
     },

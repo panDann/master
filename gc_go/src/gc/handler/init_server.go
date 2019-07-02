@@ -40,6 +40,8 @@ func InitHandleFunc(){
 	 http.HandleFunc("/api/policy",HandlePolicy)
 	 http.HandleFunc("/api/school_plan",HandleSchoolPlan)
 	 http.HandleFunc("/api/project_build",HandleProjectBuild)
+	 http.HandleFunc("/api/building_detail",HandleBuildingDetail)
+
 
 	 http.HandleFunc("/api/image",HandlePhoto)
 

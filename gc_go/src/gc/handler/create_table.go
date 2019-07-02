@@ -55,7 +55,8 @@ var tableStr=[]string{
 		)DEFAULT character set utf8 DEFAULT COLLATE utf8_general_ci;`,
 
 		`create table if not exists project_status(
-			project_id int primary key,
+			id int primary key auto_increment,
+			project_id int not null,
 			title varchar(50) not null,
 			summary varchar(200)  null,
 			content text not null,
