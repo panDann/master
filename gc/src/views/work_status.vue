@@ -1,25 +1,24 @@
 <template>
   <div class="work_status">
-    <div style="width:60%;margin:1rem auto;"  >
-    <div style="margin-top:.5rem"  v-for="(item, index) in workData" :key="index">
-      <v-toolbar>
-        <v-icon :color="createColor(item.create_time)">settings_input_antenna</v-icon>
-        <v-toolbar-title>{{item.title}}</v-toolbar-title>
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <span>{{item.create_time}}</span>
-        <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn flat @click="checkItem(item)">详情</v-btn>
-        </v-toolbar-items>
-      </v-toolbar>
-
-    </div>
-      <v-btn color="warning"  @click="turnPage" v-if="workData.length >=10">更多动态>></v-btn>
-
+    <div style="width:60%;margin:1rem auto;">
+      <transition-group name="slide-x-reverse-transition">
+        <div style="margin-top:.5rem" v-for="(item, index) in workData" :key="index">
+          <v-toolbar>
+            <v-icon :color="createColor(item.create_time)">settings_input_antenna</v-icon>
+            <v-toolbar-title>{{item.title}}</v-toolbar-title>&nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <span>{{item.create_time}}</span>
+            <v-spacer></v-spacer>
+            <v-toolbar-items class="hidden-sm-and-down">
+              <v-btn flat @click="checkItem(item)">详情</v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
+        </div>
+      </transition-group>
+      <v-btn color="warning" @click="turnPage" v-if="workData.length >=10">更多动态>></v-btn>
     </div>
 
     <v-dialog style="backgroud:red" v-model="dialog" dark width="600px">
@@ -27,10 +26,8 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green darken-1" flat="flat" @click="dialog = false">关闭</v-btn>
-          
         </v-card-actions>
         <v-card-text v-html="dialogData.content"></v-card-text>
-
       </v-card>
     </v-dialog>
   </div>
@@ -46,14 +43,13 @@ export default {
     return {
       activeIndex: 0,
       dialog: false,
-      workData:[],
-      currentPage:1,
-      dialogData:{}
-     
+      workData: [],
+      currentPage: 1,
+      dialogData: {}
     };
   },
   mounted() {
-    this.getMessage()
+    this.getMessage();
   },
   methods: {
     async getMessage(current) {
@@ -70,24 +66,21 @@ export default {
         this.$Notice("已无跟多动态");
       }
     },
-     checkItem(content) {
+    checkItem(content) {
       this.dialog = true;
-      this.dialogData = content
+      this.dialogData = content;
     },
     turnPage() {
       this.currentPage += 1;
       this.getMessage(this.currentPage);
     },
-    createColor(time){
+    createColor(time) {
       let timeStamp = new Date(time).getTime(),
-          subTime = new Date().getTime() - timeStamp
-          console.log(subTime)
-        if(subTime < 86400000 * 3)
-          return "red"
-        if(86400000 * 3 < subTime < 86400000 * 7)
-          return "green"
-        if( 86400000 * 7 < subTime < 86400000 * 30)
-          return "orange"
+        subTime = new Date().getTime() - timeStamp;
+      console.log(subTime);
+      if (subTime < 86400000 * 3) return "red";
+      if (86400000 * 3 < subTime < 86400000 * 7) return "green";
+      if (86400000 * 7 < subTime < 86400000 * 30) return "orange";
     }
   }
 };

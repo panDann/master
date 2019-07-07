@@ -18,7 +18,12 @@ func HandleProjectBuild(w http.ResponseWriter,r * http.Request) {//authentic use
 			limit:= r.URL.Query()["limit"][0]
 			offset:= r.URL.Query()["offset"][0]
 			docType:= r.URL.Query()["type"][0]
-			queryStr = `Select * from  (Select * From project_build where type = '`+docType+`') as tem  limit `+limit+` offset `+offset+` `
+			if _,ok := r.URL.Query()["is_topping"]; ok {
+				isTopping := r.URL.Query()["is_topping"][0]
+				queryStr = `Select * from  (Select * From project_build where type = '`+docType+`' and is_topping=`+isTopping+`) as tem  limit `+limit+` offset `+offset+` `
+			}else {
+				queryStr = `Select * from  (Select * From project_build where type = '`+docType+`') as tem  limit `+limit+` offset `+offset+` `
+			}
 			method = "GET"
 			break 
 		case "POST": 
@@ -76,7 +81,7 @@ func HandleBuildingDetail(w http.ResponseWriter,r * http.Request) {//authentic u
 			limit:= r.URL.Query()["limit"][0]
 			offset:= r.URL.Query()["offset"][0]
 			projectId:= r.URL.Query()["project_id"][0]
-			p(projectId)
+			
 			queryStr = `Select *,(Select count(*) From project_status where project_id=`+projectId+`) count From (Select * From project_status where project_id=`+projectId+`) tem limit `+limit+` offset `+offset+``
 			method = "GET"
 			break 

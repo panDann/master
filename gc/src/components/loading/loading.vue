@@ -26,12 +26,12 @@ export default {
     animation loading 2s ease-out
     .loading-btn
         position absolute
-        top -.25rem
-        height .5rem
-        width .5rem
+        top -.1rem
+        height .25rem
+        width .25rem
         border-radius 100%
         right 0
-        background linear-gradient(red, blue,pink)
+        background #ffffff
         box-shadow 0 0px 10px 5px #CCC
         animation loading-btn 3s infinite
 

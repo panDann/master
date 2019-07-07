@@ -18,14 +18,26 @@ func HandleItemManager(w http.ResponseWriter,r * http.Request) {//authentic user
 	switch (r.Method) {
 		case "GET": 
 			limit:= r.URL.Query()["limit"][0]
-		    offset:= r.URL.Query()["offset"][0]
-			queryStr = `Select * From item_manager  limit `+limit+` offset `+offset+``
+			offset:= r.URL.Query()["offset"][0]
+			
+			if v,ok := r.URL.Query()["type"]; ok {
+				imageType := v[0]
+				queryStr = `Select * From (Select * from  item_manager  where type='`+imageType+`') as tem limit `+limit+` offset `+offset+``
+
+			}else {
+				queryStr = `Select * From item_manager  limit `+limit+` offset `+offset+``
+			}
 			method = "GET"
 			break 
 		case "POST": 
 			r.ParseMultipartForm(1024)
 			image_url := r.Form["image_url"][0]
-			queryStr = `insert into item_manager(image_url,create_time) Values ('`+image_url+`',now())`
+			if v,ok := r.Form["type"]; ok {
+				imageType := v[0]
+				queryStr = `insert into item_manager(image_url,type,create_time) Values ('`+image_url+`','`+imageType+`',now())`
+			}else {
+				queryStr = `insert into item_manager(image_url,create_time) Values ('`+image_url+`',now())`
+			}
 			method = "添加成功"
 			break 
 		case "PUT": 

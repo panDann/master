@@ -1,21 +1,35 @@
 <template>
   <div class="project">
     <div class="project-bottom">
-      <v-btn  large :color="($route.name=='project_build_building_project'? 'primary':'')" @click="$router.push({name:'project_build_building_project'})">
-         <v-icon>book</v-icon>
-         &nbsp;
-         在建工程
-         </v-btn>
-       <v-btn  large :color="($route.name=='project_build_plan_build'? 'primary':'')"  @click="$router.push({name:'project_build_plan_build'})">
-         <v-icon>donut_large</v-icon>
-         &nbsp;
-         拟建工程
-         </v-btn>
+      <v-btn
+        large
+        :color="($route.name=='project_build_building_project'? 'primary':'')"
+        @click="$router.push({name:'project_build_building_project'})"
+      >
+        <v-icon>book</v-icon>&nbsp;
+        在建工程
+      </v-btn>
+      <v-btn
+        large
+        :color="($route.name=='project_build_plan_build'? 'primary':'')"
+        @click="$router.push({name:'project_build_plan_build'})"
+      >
+        <v-icon>donut_large</v-icon>&nbsp;
+        拟建工程
+      </v-btn>
+      <v-btn
+        large
+        :color="($route.name=='project_build_built_project'? 'primary':'')"
+        @click="$router.push({name:'project_build_built_project'})"
+      >
+        <v-icon>done_all</v-icon>&nbsp;
+        完建工程
+      </v-btn>
     </div>
     <div>
-        <transition name="ease-in">
-       <router-view />
-        </transition>
+      <transition name="slide-x-reverse-transition">
+        <router-view />
+      </transition>
     </div>
   </div>
 </template>
@@ -68,7 +82,6 @@ a:hover {
 .project-bottom {
   width: 60%;
   margin: 1rem auto;
-  
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;

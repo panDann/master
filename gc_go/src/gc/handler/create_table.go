@@ -73,6 +73,7 @@ var tableStr=[]string{
 
 		`create table if not exists item_manager(
 			id int primary key auto_increment,
+			type enum('guangzhou','three_water','item')  null, 
 			image_url varchar(200) not null,
 			create_time datetime not null
 		)DEFAULT character set utf8 DEFAULT COLLATE utf8_general_ci;`}

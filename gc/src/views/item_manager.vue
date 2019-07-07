@@ -1,19 +1,47 @@
 <template>
   <div class="item-manager">
     <div class="item-manager-container">
-      <img
-        :src="item.image_url"
-        alt
-        :style="{'transform':index %2 ==0 ?`rotate(${Math.random()*10+5}deg)`:''}"
-        class="imc-img"
-        v-for="(item, index) in imageData"
-        :key="index"
-      >
-      <v-btn color="warning" @click="turnPage" v-if="imageData.length >=10">加载更多>></v-btn>
+      <h2>广东财经大学项目管理</h2>
+      <div>
+        <v-btn flat @click="$router.push({name:'school_scenery'})" color="primary">校园风光 ></v-btn>
+        <v-btn flat color="primary">项目管理 ></v-btn>
+      </div>
+      <v-layout>
+        <v-flex md10 xs12 sm6 offset-md1>
+          <v-card>
+            <v-container grid-list-sm fluid>
+              <v-layout row wrap>
+                <v-flex v-for="(item, index) in imageData" :key="index" xs3 d-flex>
+                  <v-card flat tile class="d-flex">
+                    <v-img
+                      :src="`${item.image_url}?image=${index * 5 + 10}`"
+                      :lazy-src="`https://picsum.photos/10/6?image=${index * 5 + 10}`"
+                      aspect-ratio="1"
+                      class="grey lighten-2 imc-img"
+                      @click="checkImage(item.image_url)"
+                    >
+                      <template v-slot:placeholder>
+                        <v-layout fill-height align-center justify-center ma-0>
+                          <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                        </v-layout>
+                      </template>
+                    </v-img>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>
+        </v-flex>
+      </v-layout>
+         <v-dialog style="backgroud:red" v-model="dialog" dark width="600px">
+        <!-- <v-card-actions>
+          <v-btn color="green darken-1" flat="flat" @click="dialog = false">关闭</v-btn>
+          
+        </v-card-actions> -->
+        <v-img :src="dialogImage"></v-img>
 
-    </div>
-    <div>
-      <v-btn color="warning" >项目管理</v-btn>
+    </v-dialog>
+      <!-- <v-btn color="warning" @click="turnPage" v-if="imageData.length >=10">加载更多>></v-btn> -->
     </div>
   </div>
 </template>
@@ -28,6 +56,7 @@ export default {
     return {
       currentPage: 1,
       dialog: false,
+      dialogImage:'',
       imageData: []
     };
   },
@@ -52,6 +81,10 @@ export default {
     turnPage() {
       this.currentPage += 1;
       this.getMessage(this.currentPage);
+    },
+    checkImage(url) {
+      this.dialog = true
+      this.dialogImage = url;
     }
   }
 };
@@ -60,22 +93,28 @@ export default {
 <style lang="stylus">
 .item-manager {
   // height calc(100vh - 4rem)
-  background: #cccccc;
+  // background: #cccccc;
   overflow: hidden;
   min-height: calc(100vh - 4rem);
 
   .item-manager-container {
     width: 80%;
     margin: 1rem auto;
+    padding: 2rem 0;
+    text-align: center;
     position: relative;
 
     .imc-img {
       margin: 0.5rem;
-      width: 30%;
-      height: 23rem;
+      // border-radius .4rem
       float: left;
-      background: red;
+      background: #cccccc;
       animation: imc-img 1s ease;
+    }
+
+    .img1 {
+      width: 10rem;
+      height: 20rem;
     }
   }
 }

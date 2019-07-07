@@ -16,11 +16,15 @@ const item_manager  =()=> import('./views/item_manager.vue')
 const school_plan  =()=> import('./views/school_plan/school_plan.vue')
 const school_plan_guangzhou  =()=> import('./views/school_plan/view/guangzhou.vue')
 const school_plan_three_water  =()=> import('./views/school_plan/view/three_water.vue')
+
+const school_scenery  =()=> import('./views/school_scenery/index.vue')
+const school_scenery_guangzhou  =()=> import('./views/school_scenery/view/guangzhou.vue')
+const school_scenery_three_water  =()=> import('./views/school_scenery/view/three_water.vue')
+
 const project_build  =()=> import('./views/project_build/project_build.vue')
 const project_build_plan_build  =()=> import('./views/project_build/view/plan_build.vue')
 const project_build_building_project  =()=> import('./views/project_build/view/building_project.vue')
-
-
+const project_build_built_project =()=> import('./views/project_build/view/built_project.vue')
 
 Vue.use(Router)
 
@@ -29,8 +33,11 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/home',
+      path: '/',
       name: 'home',
+      // redirect:{
+      //   name:'home'
+      // },
       component: Home
     },
     {
@@ -113,20 +120,46 @@ export default new Router({
       ]
     },
     {
+      path: '/school_scenery',
+      name: 'school_scenery',
+      redirect: {
+        name:'school_scenery_guangzhou'
+      },
+      component: school_scenery,
+      children: [
+        {
+          path: 'guangzhou',
+          name: "school_scenery_guangzhou",
+          component: school_scenery_guangzhou,
+        },
+        {
+          path: 'three_water',
+          name: "school_scenery_three_water",
+          component: school_scenery_three_water,
+        }
+      ]
+    },
+    {
       path: '/project_build',
       name: 'project_build',
       redirect: "project_build/building_project",
       component: project_build,
       children: [
         {
-          path: '/project_build/plan_build',
+          path: 'plan_build',
           name: "project_build_plan_build",
           component: project_build_plan_build,
         },
         {
-          path: '/project_build/building_project',
+          path: 'building_project',
           name: "project_build_building_project",
           component: project_build_building_project,
+        },
+        ,
+        {
+          path: 'built_project',
+          name: "project_build_built_project",
+          component: project_build_built_project,
         }
       ]
     },

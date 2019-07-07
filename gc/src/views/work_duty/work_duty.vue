@@ -8,8 +8,8 @@
         <div class="duty-center-content" :style="activeBorderColor" @click="checkItem($event)">
             <button class="dcc-item" data-id='0'  style="border-color:#f29902;" >工作思路</button>
             <button class="dcc-item"  data-id='1' style="border-color:pink;" >科室职责</button>
-            <button class="dcc-item" data-id='2' style="border-color:#3eb652;" >内设机构</button>
-            <button class="dcc-item" data-id='3' style="border-color:#4388ca;" >部门职责</button>
+            <!-- <button class="dcc-item" data-id='2' style="border-color:#3eb652;" >内设机构</button> -->
+            <button class="dcc-item" data-id='2' style="border-color:#4388ca;" >部门职责</button>
         </div>
       </div>
             <!-- <div class="policy-header">
@@ -78,11 +78,11 @@ export default {
       colorList:[
         "#f49805",
         "pink",
-        "#3eb652",
+        // "#3eb652",
         "#4388ca",
       ],
       workType:[
-        'work','department','inner','section','destination'
+        'work','department','section','destination'
       ],
       position:[1,25,7,12,"target_position"],
       dutyData:[

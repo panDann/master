@@ -23,7 +23,7 @@
             >工作动态</div>
 
           <div
-            :class="{'gc-nav-item':true,'active-route':activeName=='home'}"
+            :class="{'gc-nav-item':true,'active-route':$route.name=='home'}"
             name="home"
             @click="transfer('home')"
           >
@@ -108,11 +108,14 @@ export default {
 .gc-nav-container {
   height: 4rem;
   z-index: 1;
+  box-sizing border-box;
   position: sticky;
   width: 100%;
   background: #fff;
+  background: linear-gradient(rgba(204,204,204,.2),rgba(255,255,255,.2)); 
   top: 0;
-  box-shadow: 0 2px 10px 0px #CCC;
+  overflow hidden
+  box-shadow: 0 0px 6px 0px #CCC;
   line-height: 4rem;
 
   .gc-nav {
