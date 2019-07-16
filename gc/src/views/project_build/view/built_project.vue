@@ -25,8 +25,11 @@
         <div class="bottom-item-top">
           <h1>{{item.title}}</h1>
           <p>{{item.summary}}</p>
+          <v-btn @click="checkItem(item)" flat color="primary">详情 》</v-btn>
         </div>
-        <img  class="common-img bottom-item-bottom" :src="item.image_url" alt>
+          <div class="bottom-item-bottom">
+           <img class="common-img " :src="item.image_url" alt />
+        </div>
       </div>
     </div>
       <v-btn
@@ -111,71 +114,81 @@ a:hover {
 
   .home-bottom {
     margin: 1rem auto;
-    width 95%
+    width: 100%;
     text-align: center;
+
     img {
-      border-radius .5rem
-      
+      border-radius: 0.5rem;
     }
+
     .bottom-item {
       display: flex;
-      margin 4rem 0
-      width 80%
-      min-height 60vh
-      margin 1rem auto
-      align-content center
-      cursor: pointer;
+      margin: 4rem 0;
+      width: 80%;
+      min-height: 60vh;
+      margin: 1rem auto;
+      align-content: center;
       flex-flow: column nowrap;
       justify-content: space-around;
+
       .bottom-item-top {
-        flex: 1
+        flex: 1;
       }
+
       .bottom-item-bottom {
-        flex: 2
-        width 100%
+        flex: 2;
+        width: 100%;
       }
-    
     }
+
     .right-item {
       display: flex;
-      min-height 60vh
-      margin 4rem 0
+      min-height: 60vh;
+      margin: 4rem auto;
+      width: 80%;
       flex-flow: row nowrap;
-      // box-shadow 0 0  6px 0 #cccccc
-      cursor: pointer;
-      align-content center
-      align-items center
+      box-shadow 0 0  10px 2px #cccccc
+      padding 2rem
+      align-content: center;
+      align-items: center;
       justify-content: space-around;
+
       .bottom-item-top {
-        flex: 1
+        flex: 1;
       }
+
       .bottom-item-bottom {
-        flex: 1
+        flex: 1;
       }
     }
-     .left-item {
+
+    .left-item {
       display: flex;
-      min-height 60vh
-      margin 4rem 0
+      min-height: 60vh;
+      margin: 4rem auto;
+      width: 80%;
       flex-flow: row nowrap;
-      // box-shadow 0 0  6px 0 #cccccc
-      cursor: pointer;
-      align-items center
-      align-content center
+      box-shadow 0 0  10px 2px #cccccc
+      padding 2rem
+      align-items: center;
+      align-content: center;
       justify-content: space-around;
+
       .bottom-item-top {
-        flex: 1
-        order 1
+        flex: 1;
+        order: 1;
       }
+
       .bottom-item-bottom {
-        flex: 1 
-        order 0
+        flex: 1;
+        order: 0;
       }
     }
-    
   }
+
 .common-img {
   max-height: 30rem;
+  width 100%
 }
 
 

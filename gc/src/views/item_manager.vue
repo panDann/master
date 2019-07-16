@@ -36,9 +36,8 @@
          <v-dialog style="backgroud:red" v-model="dialog" dark width="600px">
         <!-- <v-card-actions>
           <v-btn color="green darken-1" flat="flat" @click="dialog = false">关闭</v-btn>
-          
         </v-card-actions> -->
-        <v-img :src="dialogImage"></v-img>
+        <v-img :src="dialogImage" style="background:#ffffff"></v-img>
 
     </v-dialog>
       <!-- <v-btn color="warning" @click="turnPage" v-if="imageData.length >=10">加载更多>></v-btn> -->
@@ -108,7 +107,7 @@ export default {
       margin: 0.5rem;
       // border-radius .4rem
       float: left;
-      background: #cccccc;
+      background: #ffffff;
       animation: imc-img 1s ease;
     }
 

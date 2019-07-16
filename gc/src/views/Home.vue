@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="home-top">
-      <v-carousel hide-delimiters height="100vh">
+      <v-carousel hide-delimiters height="calc(100vh - 140px)">
         <v-carousel-item
           v-for="(item,i) in items"
           :key="i"
@@ -17,27 +17,32 @@
     <div class="home-bottom">
       <div
         :class="(item.style+'-item')"
-        @click="checkItem(item)"
+        
         v-for="(item, index) in buildingData"
         :key="index"
       >
         <div class="bottom-item-top">
           <h1>{{item.title}}</h1>
           <p>{{item.summary}}</p>
+          <v-btn @click="checkItem(item)" flat color="primary">详情 》</v-btn>
         </div>
-        <img class="common-img bottom-item-bottom" :src="item.image_url" alt />
+        <div class="bottom-item-bottom">
+           <img class="common-img " :src="item.image_url" alt />
+        </div>
       </div>
       <div
         :class="(item.style+'-item')"
-        @click="checkItem(item)"
-        v-for="(item, index) in planBuild"
-        :key="index"
+        v-for="(item) in planBuild"
+        :key="item.id"
       >
         <div class="bottom-item-top">
           <h1>{{item.title}}</h1>
           <p>{{item.summary}}</p>
+          <v-btn @click="checkItem(item)" flat color="primary">详情 》</v-btn>
         </div>
-        <img class="common-img bottom-item-bottom" :src="item.image_url" alt />
+        <div class="bottom-item-bottom">
+        <img class="common-img " :src="item.image_url" alt />
+        </div>
       </div>
     </div>
     <!-- <div  class="building-project">
@@ -65,7 +70,7 @@
           <h2 v-html="dialogData.title"></h2>
 
           <v-expansion-panel style="margin-top:2rem" v-if="dialogData.type == 'building_project'">
-              <v-expansion-panel-content v-for="(item,i) in projectStatusData" :key="i">
+              <v-expansion-panel-content v-for="(item) in projectStatusData" :key="item.id">
                 <template v-slot:header>
                   <div>
                     <v-btn :color="matchStatusType(item.create_time)" flat>{{item.title}}</v-btn>
@@ -103,22 +108,12 @@ export default {
       items: [],
       dialog: false,
       dialogData: {},
-      buildingData: {
-        title: "在建项目",
-        sammary: "在建项目简介",
-        img:
-          "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555425877467&di=f68e00dc709a5e524a88114c024b4bee&imgtype=jpg&src=http%3A%2F%2Fzc.tpri.org.cn%2Fzccre%2Fimages%2Flogin_slider_1.jpg"
-      },
+      buildingData: [],
       currentStatusPage: 1,
       projectStatusData: [],
       loading: false,
       loader: null,
-      planBuild: {
-        title: "在建项目",
-        sammary: "在建项目简介",
-        img:
-          "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555425877467&di=f68e00dc709a5e524a88114c024b4bee&imgtype=jpg&src=http%3A%2F%2Fzc.tpri.org.cn%2Fzccre%2Fimages%2Flogin_slider_1.jpg"
-      },
+      planBuild: [],
       modal: false
     };
   },
@@ -184,26 +179,23 @@ export default {
 <style lang="stylus" scoped>
 .home {
   .home-top {
-    width: 100%;
-    margin-top: -60px;
+    width: 80%;
+    margin: 20px auto;
     position: relative;
     text-align: center;
-
     .home-top-btn {
-      position: absolute;
-      bottom: 2rem;
-      right: 2rem;
+      margin-top 1rem
     }
   }
 
   .home-carousel {
-    min-height: calc(100vh - 0px);
+    min-height: calc(100vh - 140px);
     // height 100%
   }
 
   .home-bottom {
     margin: 1rem auto;
-    width: 95%;
+    width: 100%;
     text-align: center;
 
     img {
@@ -213,11 +205,10 @@ export default {
     .bottom-item {
       display: flex;
       margin: 4rem 0;
-      width: 50%;
+      width: 80%;
       min-height: 60vh;
       margin: 1rem auto;
       align-content: center;
-      cursor: pointer;
       flex-flow: column nowrap;
       justify-content: space-around;
 
@@ -234,30 +225,34 @@ export default {
     .right-item {
       display: flex;
       min-height: 60vh;
-      margin: 4rem 0;
+      margin: 4rem auto;
+      width: 80%;
       flex-flow: row nowrap;
-      // box-shadow 0 0  6px 0 #cccccc
-      cursor: pointer;
+      box-shadow 0 0  10px 2px #cccccc
+      padding 2rem
       align-content: center;
       align-items: center;
       justify-content: space-around;
 
       .bottom-item-top {
+        margin 0 .5rem
         flex: 1;
       }
 
       .bottom-item-bottom {
         flex: 1;
+        width: 100%;
       }
     }
 
     .left-item {
       display: flex;
       min-height: 60vh;
-      margin: 4rem 0;
+      margin: 4rem auto;
+      width: 80%;
       flex-flow: row nowrap;
-      // box-shadow 0 0  6px 0 #cccccc
-      cursor: pointer;
+      box-shadow 0 0  10px 2px #cccccc
+      padding 2rem
       align-items: center;
       align-content: center;
       justify-content: space-around;
@@ -265,11 +260,13 @@ export default {
       .bottom-item-top {
         flex: 1;
         order: 1;
+        margin 0 .5rem
       }
 
       .bottom-item-bottom {
         flex: 1;
         order: 0;
+        width: 100%;
       }
     }
   }
@@ -277,6 +274,8 @@ export default {
 
 .common-img {
   max-height: 30rem;
+  height 100%
+  width 100%
 }
 
 .width80 {

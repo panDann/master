@@ -112,7 +112,7 @@ export default {
   position: sticky;
   width: 100%;
   background: #fff;
-  background: linear-gradient(rgba(204,204,204,.2),rgba(255,255,255,.2)); 
+  background: linear-gradient(rgba(204,204,204,1),rgba(255,255,255,1)); 
   top: 0;
   overflow hidden
   box-shadow: 0 0px 6px 0px #CCC;

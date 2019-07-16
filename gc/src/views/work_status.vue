@@ -2,8 +2,8 @@
   <div class="work_status">
     <div style="width:60%;margin:1rem auto;">
       <transition-group name="slide-x-reverse-transition">
-        <div style="margin-top:.5rem" v-for="(item, index) in workData" :key="index">
-          <v-toolbar>
+  
+          <v-toolbar  style="margin-top:.5rem;border-radius:.4rem;background:linear-gradient(40deg,#a2b194, #85e0cf)" v-for="(item, index) in workData" :key="index">
             <v-icon :color="createColor(item.create_time)">settings_input_antenna</v-icon>
             <v-toolbar-title>{{item.title}}</v-toolbar-title>&nbsp;
             &nbsp;
@@ -13,10 +13,9 @@
             <span>{{item.create_time}}</span>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
-              <v-btn flat @click="checkItem(item)">详情</v-btn>
+              <v-btn flat color="primary" @click="checkItem(item)">详情</v-btn>
             </v-toolbar-items>
           </v-toolbar>
-        </div>
       </transition-group>
       <v-btn color="warning" @click="turnPage" v-if="workData.length >=10">更多动态>></v-btn>
     </div>
@@ -91,7 +90,9 @@ export default {
   width: 90%;
   height: 90%;
 }
-
+.work-item {
+  margin-top .5rem
+}
 .search-area {
   float: right;
   position: relative;

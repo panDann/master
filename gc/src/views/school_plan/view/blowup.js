@@ -87,13 +87,11 @@ let blowup =  function ($,parentEle) {
       // var relY = e.pageY - this.offsetTop;
       var relX = e.pageX - offsetLeft;
       var relY = e.pageY - offsetTop;
-     console.log(e.pageX,this.offsetParent,this.offsetTop)
       // Zoomed image coordinates 
       var zoomX = -Math.floor(relX / $element.width() * NATIVE_IMG.width - $options.width / 2);
       var zoomY = -Math.floor(relY / $element.height() * NATIVE_IMG.height - $options.height / 2);
 
       var backPos = zoomX + "px " + zoomY + "px";
-      console.log(zoomX,zoomY,scaleRate,backPos)
 
       // Apply styles to lens
       $blowupLens.css({
