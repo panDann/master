@@ -3,7 +3,7 @@
 var $blowupLens
 let blowup =  function ($,parentEle) {
 
-  $.fn.blowup = function (attributes) {
+  $.fn.blowup = function (targetId,attributes) {
 
     var $element = this;
 
@@ -45,27 +45,27 @@ let blowup =  function ($,parentEle) {
     $element.css("cursor", $options.cursor ? "crosshair" : "none");
 
     // Create magnification lens element
-    var lens = document.createElement("div");
-    lens.id = "BlowupLens";
+    // var lens = document.createElement("div");
+    // lens.id = "BlowupLens";
 
     // Attack the element to the body
-    $("body").append(lens);
+    // $("body").append(lens);
 
     // Updates styles
-    $blowupLens = $("#BlowupLens");
-    $blowupLens.css({
-      "position"          : "absolute",
-      "visibility"        : "hidden",
-      "pointer-events"    : "none",
-      "zIndex"            : $options.zIndex,
-      "width"             : $options.width,
-      "height"            : $options.height,
-      "border"            : $options.border,
-      "background"        : $options.background,
-      "border-radius"     : $options.round ? "50%" : "none",
-      "box-shadow"        : $options.shadow,
-      "background-repeat" : "no-repeat",
-    });
+    $blowupLens = $(`#${targetId}`);
+    // $blowupLens.css({
+    //   "position"          : "absolute",
+    //   "visibility"        : "hidden",
+    //   "pointer-events"    : "none",
+    //   "zIndex"            : $options.zIndex,
+    //   "width"             : $options.width,
+    //   "height"            : $options.height,
+    //   "border"            : $options.border,
+    //   "background"        : $options.background,
+    //   "border-radius"     : $options.round ? "50%" : "none",
+    //   "box-shadow"        : $options.shadow,
+    //   "background-repeat" : "no-repeat",
+    // });
 
     // Show magnification lens
     $element.mouseenter(function () {
@@ -80,9 +80,10 @@ let blowup =  function ($,parentEle) {
       var lensY = e.pageY - $options.height / 2;
 
       // Relative coordinates of image
-      var offsetLeft = (window.innerWidth - $element.width())/2
-      var offsetTop = (window.innerHeight - $element.height()+60)/2
-
+      var offsetLeft = $element.offset().left
+      var offsetTop = $element.offset().top
+      
+      console.log('offset',$element.offset())
       // var relX = e.pageX - this.offsetLeft;
       // var relY = e.pageY - this.offsetTop;
       var relX = e.pageX - offsetLeft;

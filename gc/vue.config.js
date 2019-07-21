@@ -32,7 +32,7 @@ module.exports = {
             proxy: {
                 '/api': {
                     // target: 'http://127.0.0.1:9000',
-                    target: 'http://3.19.32.76:9000',
+                    target: 'http://104.199.251.77:9000',
                     changeOrigin: true,
                     ws: true,
                     hotOnly:true

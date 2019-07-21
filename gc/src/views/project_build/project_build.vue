@@ -1,15 +1,7 @@
 <template>
   <div class="project">
     <div class="project-bottom">
-      <v-btn
-        large
-        :color="($route.name=='project_build_building_project'? 'primary':'')"
-        @click="$router.push({name:'project_build_building_project'})"
-      >
-        <v-icon>book</v-icon>&nbsp;
-        在建工程
-      </v-btn>
-      <v-btn
+       <v-btn
         large
         :color="($route.name=='project_build_plan_build'? 'primary':'')"
         @click="$router.push({name:'project_build_plan_build'})"
@@ -19,11 +11,20 @@
       </v-btn>
       <v-btn
         large
+        :color="($route.name=='project_build_building_project'? 'primary':'')"
+        @click="$router.push({name:'project_build_building_project'})"
+      >
+        <v-icon>book</v-icon>&nbsp;
+        在建工程
+      </v-btn>
+     
+      <v-btn
+        large
         :color="($route.name=='project_build_built_project'? 'primary':'')"
         @click="$router.push({name:'project_build_built_project'})"
       >
         <v-icon>done_all</v-icon>&nbsp;
-        完建工程
+        完工工程
       </v-btn>
     </div>
     <div>

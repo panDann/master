@@ -7,9 +7,10 @@
         <p class="dch-summary">基建处工作目标：辅佐学校党政科学决策 ，尊重工程建设基本规律，推行全面精细化管理，实现校园基本建设又好快又高又稳发展</p>
         <div class="duty-center-content" :style="activeBorderColor" @click="checkItem($event)">
             <button class="dcc-item" data-id='0'  style="border-color:#f29902;" >工作思路</button>
-            <button class="dcc-item"  data-id='1' style="border-color:pink;" >科室职责</button>
             <!-- <button class="dcc-item" data-id='2' style="border-color:#3eb652;" >内设机构</button> -->
             <button class="dcc-item" data-id='2' style="border-color:#4388ca;" >部门职责</button>
+            <button class="dcc-item"  data-id='1' style="border-color:pink;" >科室职责</button>
+
         </div>
       </div>
             <!-- <div class="policy-header">
@@ -36,16 +37,16 @@
                         <p class="rvi-content" v-html="item.content"></p>
                </div>
             </div> -->
-    <v-dialog style="backgroud:red" v-model="dialog"  width="600px">
+    <v-dialog style="backgroud:red;" v-model="dialog"   width="600px">
       <v-card>
-        <v-card-actions>
+        <v-card-actions >
           <v-spacer></v-spacer>
           <v-btn color="green darken-1" flat="flat" @click="dialog = false">关闭</v-btn>
           
         </v-card-actions>
         <h2 v-html="activeContent.title" style="text-align:center"></h2>
 
-        <v-card-text v-html="activeContent.content"></v-card-text>
+        <v-card-text v-html="activeContent.content" style="min-height:500px"></v-card-text>
 
       </v-card>
     </v-dialog>

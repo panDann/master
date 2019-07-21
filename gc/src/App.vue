@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <div class="gc">
+      <div class="gc-topbar"></div>
       <div class="gc-nav-container">
         <div class="gc-nav">
             <div
@@ -104,7 +105,10 @@ export default {
   letter-spacing: 0.05rem;
   font-weight: 600;
 }
-
+.gc-topbar {
+  height .2rem
+  background red
+}
 .gc-nav-container {
   height: 4rem;
   z-index: 1;

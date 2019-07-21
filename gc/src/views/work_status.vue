@@ -3,24 +3,28 @@
     <div style="width:60%;margin:1rem auto;">
       <transition-group name="slide-x-reverse-transition">
   
-          <v-toolbar  style="margin-top:.5rem;border-radius:.4rem;background:linear-gradient(40deg,#a2b194, #85e0cf)" v-for="(item, index) in workData" :key="index">
-            <v-icon :color="createColor(item.create_time)">settings_input_antenna</v-icon>
-            <v-toolbar-title>{{item.title}}</v-toolbar-title>&nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <span>{{item.create_time}}</span>
+          <v-toolbar  
+          :style="`margin-top:.5rem;border-radius:.4rem;background:hsl(${index*30},30%,90%);`" 
+          @click="checkItem(item)"
+          v-for="(item,index) in workData" :key="item.id">
+            <v-icon :color="createColor(item.create_time)">bookmark_border</v-icon>
+            <div class="work-status-title">
+            <v-toolbar-title>{{item.title}}</v-toolbar-title>
+            <!-- {{createSeparate(item)}} -->
+            <p class="separate"></p>
+            <span>{{formatTime(item.create_time)}}</span>
+            </div>
+           
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
-              <v-btn flat color="primary" @click="checkItem(item)">详情</v-btn>
+              <!-- <v-btn flat color="primary" @click="checkItem(item)">详情</v-btn> -->
             </v-toolbar-items>
           </v-toolbar>
       </transition-group>
-      <v-btn color="warning" @click="turnPage" v-if="workData.length >=10">更多动态>></v-btn>
+      <v-btn color="warning" @click="turnPage" flat v-if="workData.length >=10">更多动态>></v-btn>
     </div>
 
-    <v-dialog style="backgroud:red" v-model="dialog" dark width="600px">
+    <v-dialog style="backgroud:red;height:500px" v-model="dialog" width="60%" >
       <v-card>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -80,6 +84,12 @@ export default {
       if (subTime < 86400000 * 3) return "red";
       if (86400000 * 3 < subTime < 86400000 * 7) return "green";
       if (86400000 * 7 < subTime < 86400000 * 30) return "orange";
+    },
+    formatTime(time) {
+      let t = new Date(time),
+          res  = t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()
+      
+      return res
     }
   }
 };
@@ -97,6 +107,20 @@ export default {
   float: right;
   position: relative;
   right: 3rem;
+}
+.work-status-title {
+  display flex
+  flex-flow row nowrap
+  justify-content space-between
+  align-items center
+  margin 0 1rem
+  width 90%
+  .separate {
+    height 1px
+    flex 3
+    margin auto 1rem
+    border-top 1px dashed black
+  }
 }
 </style>
 

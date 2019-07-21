@@ -1,52 +1,16 @@
 <template>
   
-      <v-layout>
-        <v-flex md10 xs12 sm6 offset-md1>
-          <v-card>
-            <v-container grid-list-sm fluid>
-              <v-layout row wrap>
-                <v-flex v-for="(item, index) in imageData" :key="index" xs3 d-flex>
-                  <v-card flat tile class="d-flex">
-                    <v-img
-                      :src="`${item.image_url}?image=${index * 5 + 10}`"
-                      :lazy-src="`https://picsum.photos/10/6?image=${index * 5 + 10}`"
-                      aspect-ratio="1"
-                      class="grey lighten-2"
-                      @click="checkImage(item.image_url)"
-                    >
-                      <template v-slot:placeholder>
-                        <v-layout fill-height align-center justify-center ma-0>
-                          <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                        </v-layout>
-                      </template>
-                    </v-img>
-                  </v-card>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card>
-        </v-flex>
-         <v-dialog style="backgroud:red" v-model="dialog" dark width="600px">
-        <!-- <v-card-actions>
-          <v-btn color="green darken-1" flat="flat" @click="dialog = false">关闭</v-btn>
-          
-        </v-card-actions> -->
-        <v-img :src="dialogImage"></v-img>
-
-    </v-dialog>
-      </v-layout>
-        
-      <!-- <v-btn color="warning" @click="turnPage" v-if="imageData.length >=10">加载更多>></v-btn> -->
-   
+      <ImageCard :image-data='imageData' />
 </template>
 
 <script>
-
 import Server from "../../../components/server";
+import ImageCard from "../../components/img-card.vue";
 
 export default {
-  name: "home",
-  components: {},
+  components: {
+    ImageCard
+  },
   data() {
     return {
       currentPage: 1,
