@@ -2,6 +2,7 @@ package query
 
 import (
 	"database/sql"
+	"html"
 	_ "github.com/go-sql-driver/mysql"
 	check "gc/log_err"
 )
@@ -31,7 +32,12 @@ func Query(s string)[]map[string]string {
 		checkErr(err)
 		tem :=make(map[string]string)
 		for i,v := range item {
+		 if col[i] == "content" {
+			tem[col[i]] = html.UnescapeString(string(v))
+		 }else {
 			tem[col[i]] = string(v)
+		 }
+		 
 		}
 		msg=append(msg,tem)
 	}

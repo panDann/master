@@ -7,6 +7,7 @@ import (
 	"strings"
 	"encoding/json"
 	"fmt"
+	"html"
 	"github.com/gorilla/sessions"
 	check "gc/log_err"
 	query "gc/query"
@@ -17,6 +18,8 @@ var (
 	p = fmt.Println
 	Fprintf = fmt.Fprintf
 	Query = query.Query
+	H= html.EscapeString
+	host = "http://127.0.0.1/"
 	// create a  session 
 	store = sessions.NewCookieStore([]byte(time.Now().Format("2019-02-23 21:33:22")))
 ) 
@@ -46,6 +49,13 @@ func InitHandleFunc(){
 	 http.HandleFunc("/api/image",HandlePhoto)
 
 
+}
+
+func checkRequest(r *http.Request) {
+				r.ParseMultipartForm(1024)
+			if _,ok := r.Form["content"]; ok {
+				r.Form["content"][0] = H(r.Form["content"][0])
+			}
 }
 
 func CheckAuth(w http.ResponseWriter,r *http.Request)bool{
@@ -88,6 +98,8 @@ func CheckAuth(w http.ResponseWriter,r *http.Request)bool{
 	}
 	return true
 }
+
+
 
 func FormatJson(res map[string]interface{}) string {
 	jsonData,err := json.Marshal(res)

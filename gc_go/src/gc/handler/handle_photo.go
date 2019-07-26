@@ -22,16 +22,16 @@ func HandlePhoto(w http.ResponseWriter,r * http.Request){
 	file,fileHeader,err := r.FormFile("file")
 	checkErr(err)
 	p(file)
-	// path := "C:/Users/Administrator/Desktop/image/"
-	path := "/home/ubuntu/gc_back/images/"
+	path := "C:/Users/Administrator/Desktop/image/"
+	// path := "/home/ubuntu/gc_back/images/"
 	timeStr :=strconv.Itoa(int(time.Now().Unix()))
 	img,err := os.Create(path+timeStr+fileHeader.Filename)
 	checkErr(err)
 	leng,err :=io.Copy(img,file)
 	checkErr(err)
 
-	res["code"] = 10000
-	res["msg"] = timeStr+fileHeader.Filename
+	res["errno"] = 0
+	res["data"] = []string{host+timeStr+fileHeader.Filename}
 	res["len"] = leng
 	Fprintf(w,FormatJson(res))
 }

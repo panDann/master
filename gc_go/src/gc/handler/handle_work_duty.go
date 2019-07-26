@@ -2,10 +2,11 @@ package handler
 
 import (
 	"net/http"
+
 )
 
 func HandleWorkDuty(w http.ResponseWriter,r * http.Request) {//authentic user login 
-
+	checkRequest(r)
 	if r.Method != "GET" {
 		if !CheckAuth(w,r){
 			return
@@ -25,9 +26,9 @@ func HandleWorkDuty(w http.ResponseWriter,r * http.Request) {//authentic user lo
 			r.ParseMultipartForm(1024)
 			title := r.Form["title"][0]
 			summary := r.Form["summary"][0]
-			content := r.Form["content"][0]
+			content :=  r.Form["content"][0]
 			docType:= r.Form["type"][0]
-			queryStr = `insert into work_duty(title,summary,content,type,create_time) Values ("`+title+`","`+summary+`","`+content+`","`+docType+`",now())`
+			queryStr = `insert into work_duty(title,summary,content,type,create_time) Values ("`+title+`","`+summary+`",'`+content+`',"`+docType+`",now())`
 			method = "添加成功"
 			break 
 		case "PUT": 
