@@ -82,7 +82,7 @@ func HandleBuildingDetail(w http.ResponseWriter,r * http.Request) {//authentic u
 			offset:= r.URL.Query()["offset"][0]
 			projectId:= r.URL.Query()["project_id"][0]
 			
-			queryStr = `Select *,(Select count(*) From project_status where project_id=`+projectId+`) count From (Select * From project_status where project_id=`+projectId+`) tem limit `+limit+` offset `+offset+``
+			queryStr = `Select *,(Select count(*) From project_status where project_id=`+projectId+`) count From (Select * From project_status where project_id=`+projectId+`) tem order by create_time desc limit `+limit+` offset `+offset+``
 			method = "GET"
 			break 
 		case "POST": 

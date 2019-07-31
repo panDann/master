@@ -7,6 +7,7 @@ import App from './App.vue'
 import router from './router'
 import Vuetify from 'vuetify/lib'
 import 'vuetify/src/stylus/app.styl'
+// import '@/assets/main.css'
 import Loading from './components/loading/index'
 
 

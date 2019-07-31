@@ -46,7 +46,7 @@
         </v-card-actions>
         <h2 v-html="activeContent.title" style="text-align:center"></h2>
 
-        <v-card-text v-html="activeContent.content" style="min-height:500px"></v-card-text>
+        <v-card-text v-html="activeContent.content" style="min-height:500px" class="img-limit"></v-card-text>
 
       </v-card>
     </v-dialog>
@@ -145,6 +145,10 @@ a:hover
 .status-img
     width 90%
     height 90%
+
+   .img-limit >>> img {
+    width 100%!important
+  }
 .duty 
     text-align center
     height calc(100vh - 60px)

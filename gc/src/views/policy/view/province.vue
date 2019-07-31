@@ -6,7 +6,7 @@
           <div>{{item.title}}</div>
         </template>
         <v-card>
-          <v-card-text v-html="item.content">
+          <v-card-text v-html="item.content" class="img-limit">
 
           </v-card-text>
         </v-card>
@@ -53,4 +53,7 @@ export default {
 .country {
   text-align: left;
 }
+.img-limit >>> img {
+    width: 100% !important
+  }
 </style>

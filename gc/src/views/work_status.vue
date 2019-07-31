@@ -2,7 +2,6 @@
   <div class="work_status">
     <div style="width:60%;margin:1rem auto;">
       <transition-group name="slide-x-reverse-transition">
-  
           <v-toolbar  
           :style="`margin-top:.5rem;border-radius:.4rem;background:hsl(${index*30},30%,90%);`" 
           @click="checkItem(item)"
@@ -23,16 +22,15 @@
       </transition-group>
       <v-btn color="warning" @click="turnPage" flat v-if="workData.length >=10">更多动态>></v-btn>
     </div>
-
-    <v-dialog style="backgroud:red;height:500px" v-model="dialog" width="60%" >
-      <v-card>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat="flat" @click="dialog = false">关闭</v-btn>
-        </v-card-actions>
-        <v-card-text v-html="dialogData.content"></v-card-text>
-      </v-card>
-    </v-dialog>
+    <v-dialog style="backgroud:red"  v-model="dialog" width="60%" >
+          <v-card >
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" flat="flat" @click="dialog = false">关闭</v-btn>
+            </v-card-actions>
+            <v-card-text v-html="dialogData.content" class="img-limit"></v-card-text>
+          </v-card>
+        </v-dialog>
   </div>
 </template>
 
@@ -100,6 +98,10 @@ export default {
   width: 90%;
   height: 90%;
 }
+.img-limit >>> img {
+    width: 100% !important
+    display none
+  }
 .work-item {
   margin-top .5rem
 }

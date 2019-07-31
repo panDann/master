@@ -100,6 +100,9 @@ export default {
 </script>
 
 <style  lang="stylus">
+.img-limit >>> img {
+    width 100%!important
+  }
 .home-font {
   font-size: 1.1rem;
   letter-spacing: 0.05rem;

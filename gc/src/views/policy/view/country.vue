@@ -1,13 +1,14 @@
 <template>
   <div class="country">
-    <v-expansion-panel>
-      <v-expansion-panel-content v-for="(item,i) in itemData" :key="i">
+    <v-expansion-panel
+    popout
+    >
+      <v-expansion-panel-content v-for="(item,i) in itemData" :key="i" @click="test">
         <template v-slot:header>
           <div>{{item.title}}</div>
         </template>
-        <v-card>
-          <v-card-text v-html="item.content">
-
+          <v-card>
+          <v-card-text v-html="item.content" class="img-limit">
           </v-card-text>
         </v-card>
       </v-expansion-panel-content>
@@ -51,4 +52,7 @@ export default {
 .country {
   text-align: left;
 }
+.img-limit >>> img {
+    width: 100% !important
+  }
 </style>

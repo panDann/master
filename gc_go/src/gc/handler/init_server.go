@@ -19,7 +19,7 @@ var (
 	Fprintf = fmt.Fprintf
 	Query = query.Query
 	H= html.EscapeString
-	host = "http://127.0.0.1/"
+	host = "http://104.199.251.77/"
 	// create a  session 
 	store = sessions.NewCookieStore([]byte(time.Now().Format("2019-02-23 21:33:22")))
 ) 

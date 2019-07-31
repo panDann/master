@@ -28,7 +28,7 @@
                 </div>
               </template>
               <v-card>
-                <v-card-text style="margin:0 4rem" v-html="item.content"></v-card-text>
+                <v-card-text  v-html="item.content"  class="img-limit"></v-card-text>
               </v-card>
             </v-expansion-panel-content>
           </v-expansion-panel>
@@ -42,7 +42,7 @@
             @click="getProjectStatus(++currentStatusPage)"
           >更多动态》》</v-btn>
           <!-- <v-btn color="orange" style="float:right" flat ></v-btn> -->
-          <v-card-text v-html="dialogData.content"></v-card-text>
+          <v-card-text v-html="dialogData.content" class="img-limit"></v-card-text>
         </v-flex>
       </v-card>
     </v-dialog>
@@ -204,6 +204,9 @@ export default {
   height: 100%;
   width: 100%;
 }
+.img-limit >>> img {
+    width: 100% !important
+  }
 @font-face {
     font-family: xingshu;
     src: url("../../assets/font.ttf");
