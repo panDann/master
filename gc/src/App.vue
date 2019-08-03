@@ -63,6 +63,7 @@
           <router-view></router-view>
         </transition>
       </div>
+      <div @click="scrollToTop" :class="{'scroll-bar':true,'active-scroll-top':activeTop}">^</div>
       <!-- <v-content>
       <HelloWorld/>
       </v-content>-->
@@ -75,7 +76,8 @@
 export default {
   data() {
     return {
-      activeName: "home"
+      activeName: "home",
+      activeTop:true
     };
   },
   watch: {
@@ -87,14 +89,29 @@ export default {
     // console.log(container.style)
     // if(this.$route.path == "/"){
     //   this.$router.push({name:"home"})
+
     // }
+       window.onscroll = ()=>{
+         this.activeTop = document.documentElement.scrollTop < 300
+       }
   },
   methods: {
     transfer(name) {
       this.activeName = name;
       this.$router.push({ name: name });
     },
-   
+    scrollToTop(){
+      let top =  document.documentElement.scrollTop || document.body.scrollTop,
+          sub = top/10,
+          clear = clearInterval,
+          timer = setInterval(() => {
+              if(top<=0) {
+                clear(timer)
+              }
+              top -= sub
+              document.documentElement.scrollTop = top
+          }, 10);
+    }
   }
 };
 </script>
@@ -209,5 +226,24 @@ export default {
 .trans-out-leave-to {
   transform: translateX(-20px);
   opacity: 0;
+}
+.scroll-bar {
+  position fixed
+  height 3rem
+  width 3rem
+  line-height 3rem
+  font-size 1.5rem
+  text-align center
+  border-radius 100%
+  cursor pointer
+  box-shadow 0 0 6px 5px #CCC
+  color snow 
+  bottom 2rem
+  right 2rem
+  transition transform .2s linear
+  background #409eff
+}
+.active-scroll-top {
+  transform scale(0)
 }
 </style>

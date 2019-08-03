@@ -1,9 +1,8 @@
 <template>
   <div class="country">
     <v-expansion-panel
-    popout
     >
-      <v-expansion-panel-content v-for="(item,i) in itemData" :key="i" @click="test">
+      <v-expansion-panel-content v-for="(item,i) in itemData" :key="i" >
         <template v-slot:header>
           <div>{{item.title}}</div>
         </template>

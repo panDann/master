@@ -78,15 +78,13 @@ export default {
     createColor(time) {
       let timeStamp = new Date(time).getTime(),
         subTime = new Date().getTime() - timeStamp;
-      console.log(subTime);
       if (subTime < 86400000 * 3) return "red";
       if (86400000 * 3 < subTime < 86400000 * 7) return "green";
       if (86400000 * 7 < subTime < 86400000 * 30) return "orange";
     },
     formatTime(time) {
-      let t = new Date(time),
+      let t = new Date(time.replace(/-/g,'\/')),
           res  = t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()
-      
       return res
     }
   }

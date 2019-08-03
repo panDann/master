@@ -17,12 +17,19 @@
       <div class="cs-item sc-left">
         <h1>广州校区</h1>
         <v-btn flat color="primary" @click="leapRoute('school_plan_guangzhou')">点击查看 》</v-btn>
-        <v-img :src="require('@/assets/primary.jpg')"></v-img>
+        <v-img 
+        :src="require('@/assets/primary.jpg')"
+        :lazy-src="`https://picsum.photos/10/6?image=${Math.random()* 5 + 10}`"
+        ></v-img>
       </div>
       <div class="cs-item sc-right">
         <h1>三水校区</h1>
         <v-btn flat color="primary" @click="leapRoute('school_plan_three_water')">点击查看 》</v-btn>
-        <v-img :src="require('@/assets/primary.jpg')"></v-img>
+        <v-img 
+            :src="require('@/assets/primary.jpg')"
+            :lazy-src="`https://picsum.photos/10/6?image=${Math.random()* 5 + 10}`"
+        ></v-img>
+
       </div>
     </div>
 
