@@ -1,0 +1,11 @@
+{
+  "examples": {
+    "custom-color": {
+      "desc": "헬퍼 클래스를 사용하여 리플의 색을 바꿀 수 있습니다."
+    }
+  },
+  "options": {
+    "class": "`v-ripple=\"{ \"class\": 'my-class' }\"` 커스텀 클래스를 리플에 적용. 색상을 바꾸는데 사용됨",
+    "center": "`v-ripple=\"{ \"center\": true }\"` 리플이 타겟의 중심에서 시작되도록 설정"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "becomeSponsor": "Vuetifyを支援する",
+  "features": {
+    "community": {
+      "text": "つまづいてしまったらすぐに助けが必要です。VuetifyはDiscord上で大きなコミュニティによるサポートを用意しています。",
+      "title": "活発なコミュニティ"
+    },
+    "components": {
+      "text": "80種類以上のコンポーネントが用意されており、どんなアプリケーションにも対応することができます。",
+      "title": "セマンティックコンポーネント"
+    },
+    "scaffolding": {
+      "text": "Vuetifyは、Vueの機能をVue CLI 3のプラグインとしてサポートします。コマンドひとつで素晴らしいアイデアを形にしましょう。",
+      "title": "プロジェクトテンプレート"
+    }
+  },
+  "getHelp": "ヘルプ",
+  "getStarted": "はじめよう",
+  "mit": "MIT ライセンス",
+  "whyVuetifyText2": "Vuetifyを選ぶ理由"
+}

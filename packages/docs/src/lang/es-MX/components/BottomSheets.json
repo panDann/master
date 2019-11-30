@@ -1,0 +1,10 @@
+{
+  "examples": {
+    "usage": {
+      "desc": "Aquí mostramos una lista de acciones de ejemplo que podría estar presente en una aplicación."
+    },
+    "inset": {
+      "heading": "### Inset"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "getting-started/quick-start": {
+    "title": "Быстрый старт",
+    "keywords": "quick start, vuetify templates, get started"
+  },
+  "customization/icons": {
+    "title": "Иконки"
+  },
+  "customization/theme": {
+    "title": "Темы",
+    "description": "Setup your custom application theme by changing a few variables."
+  },
+  "components/api-explorer": {
+    "title": "Обзор API"
+  },
+  "professional-support/consulting": {
+    "title": "Консультации и поддержка"
+  },
+  "professional-support/business": {
+    "title": "Консультации и поддержка"
+  }
+}

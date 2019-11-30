@@ -1,0 +1,14 @@
+{
+  "examples": {
+    "custom-transition": {
+      "desc": "您也可以应用您自己的自定义过渡。"
+    },
+    "custom-icons": {
+      "desc": "您也可以更改轮播分隔符的图标。"
+    }
+  },
+  "props": {
+    "delimiterIcon": "设置轮播分隔符的图标",
+    "reverseTransition": "设置反向转换"
+  }
+}

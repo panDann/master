@@ -1,0 +1,10 @@
+{
+  "examples": {
+    "usage": {
+      "desc": "调整您的浏览器窗口大小并观察值的变化.."
+    }
+  },
+  "options": {
+    "value": "`v-resize=\"callback\"` 浏览器窗口发生改变时触发该函数。"
+  }
+}

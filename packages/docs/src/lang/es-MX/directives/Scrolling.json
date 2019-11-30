@@ -1,0 +1,7 @@
+{
+  "examples": {
+    "options": {
+      "desc": "Para una implementación más fina, puedes asignar al objetivo (target) un listener del evento `scroll`"
+    }
+  }
+}

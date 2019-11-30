@@ -1,0 +1,30 @@
+{
+  "examples": {
+    "colored": {
+      "heading": "色付き",
+      "desc": "マテリアルデザインパレットのあらゆる色を使用して Chip に色を付けることができます。"
+    },
+    "icon": {
+      "heading": "アイコン",
+      "desc": "Chip にはテキストのほか、Material Icons フォントに含まれるアイコンを使用することができます。"
+    },
+    "outlined": {
+      "desc": "アウトライン Chip は指定されているテキストの色を元にボーダーカラーが適用されます。"
+    },
+    "label": {
+      "desc": "ラベル Chip は `v-card` の border-radius を使用します。"
+    },
+    "in-selects": {
+      "desc": "Select では、選択された項目を表示するために Chip を使用することができます。"
+    },
+    "filter": {
+      "heading": "### フィルター"
+    }
+  },
+  "props": {
+    "close": "閉じるボタンを追加します。",
+    "disabled": "Chip を無効化し、選択できないようにします。",
+    "label": "丸みを削除します。",
+    "outlined": "背景を削除しテキストカラーとボーダーカラーを適用します。"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "examples": {
+    "visibility": {
+      "heading": "### Видимость"
+    },
+    "inline": {
+      "desc": "Badge также могут быть помещены в линию с текстом."
+    },
+    "icon": {
+      "heading": "### Иконка",
+      "desc": "Иконки поддерживаются только Material Design."
+    }
+  }
+}

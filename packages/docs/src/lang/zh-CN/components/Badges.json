@@ -1,0 +1,14 @@
+{
+  "examples": {
+    "visibility": {
+      "heading": "可见性"
+    },
+    "inline": {
+      "desc": "徽章也可以内联地放在文本内。"
+    },
+    "icon": {
+      "heading": "图标",
+      "desc": "徽章可以使用所有当前支持的图标集。"
+    }
+  }
+}

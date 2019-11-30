@@ -1,0 +1,13 @@
+{
+  "examples": {
+    "date-events": {
+      "desc": "You can specify events using arrays, objects, and functions. To change the default color of the event use **event-color** prop."
+    },
+    "month-allowed-months": {
+      "desc": "You can specify allowed months using arrays, objects, and functions."
+    },
+    "month-events": {
+      "desc": "You can specify events using arrays, objects, and functions. To change the default color of the event use **event-color** prop."
+    }
+  }
+}

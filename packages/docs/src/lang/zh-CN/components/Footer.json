@@ -1,0 +1,16 @@
+{
+  "examples": {
+    "company-footer": {
+      "desc": "使用 footer 组件制作一个包含一些页面链接的公司页脚。"
+    },
+    "indigo-footer": {
+      "desc": "使用 footer 组件制作一个靛蓝背景以及包含一些社交媒体图标按钮的页脚。"
+    },
+    "teal-footer": {
+      "desc": "使用 footer 组件制作一个蓝绿色顶部以及几个行列链接的页脚。"
+    }
+  },
+  "props": {
+    "inset": "定位工具栏偏离应用程序的`v-navigation-drawer`的位置"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "examples": {
+    "headers": {
+      "desc": "`items` と `headers` スロットは <kbd>td/th</kbd> タグを受け付けることができます。行の全体を制御したい場合は、 <kbd>tr</kbd> を受け付けることができます。"
+    },
+    "progress": {
+      "desc": "`progress` スロットは、Data Table のローディング状態の表示をカスタマイズする際に使用します。デフォルトでは `indeterminate` が設定された `v-progress-linear` が使用されます。"
+    },
+    "search": {
+      "desc": "Data table ではデータをフィルタリングするために `search` prop が用意されています"
+    },
+    "paginate": {
+      "desc": "`pagination` prop を使用することで外部からページネーションを制御できます。 使用するには `.sync` modifier を適用する必要があります。"
+    },
+    "sort": {
+      "desc": "`pagination` prop を使用することで外部からソートも制御できます。 使用するには `.sync` modifier を適用する必要があります。 prop でデフォルトでソートに使用するカラムを設定することもできます。"
+    },
+    "edit-dialog": {
+      "desc": "`v-edit-dialog` コンポーネントは Data table 内部でインライン編集する際に使用します。"
+    },
+    "crud": {
+      "desc": "各行を編集するために `v-dialog` コンポーネントを使用した、CRUD アクション付き Data table のサンプルです。"
+    }
+  },
+  "props": {
+    "v-edit-dialog": {
+      "cancelText": "**large** prop を使用した際に表示されるキャンセルボタンのデフォルトテキストを設定します。",
+      "saveText": "**large** prop を使用した際に表示される保存ボタンのデフォルトテキストを設定します。"
+    },
+    "v-data-table": {
+      "headers": "ヘッダーのカラムとなる配列のオブジェクトを設定します。 全プロパティの定義については下記の例を参照してください。"
+    }
+  }
+}

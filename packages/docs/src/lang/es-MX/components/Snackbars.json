@@ -1,0 +1,10 @@
+{
+  "examples": {
+    "contextual": {
+      "desc": "Puedes también aplicar un color al snackbar para que vaya mejor con tu implementación."
+    }
+  },
+  "props": {
+    "timeout": "El tiempo de espera hasta que el snackbar se haga completamente invisible"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "examples": {
+    "custom-transition": {
+      "desc": "独自のカスタムトランジションを適用することもできます。"
+    }
+  },
+  "props": {
+    "delimiterIcon": "Carousel のデリミターとして使用するアイコンを設定します。",
+    "reverseTransition": "戻す際のトランジションを設定します。"
+  }
+}
